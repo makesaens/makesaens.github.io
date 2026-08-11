@@ -15,8 +15,8 @@
 @font-face{font-family:'TT Firs Neue';src:url('fonts/firs-regular.woff2') format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'TT Firs Neue';src:url('fonts/firs-demibold.woff2') format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:'PP Air Mono';src:url('fonts/air-mono.woff2') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'PP Neue Machina';src:url('fonts/machina-regular.woff2') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'Druk';src:url('fonts/druk-super.woff2') format('woff2');font-weight:900;font-display:block}
+@font-face{font-family:'PP Editorial Old';src:url('fonts/editorial-regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'PP Editorial Old';src:url('fonts/editorial-italic.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap}
 
 /* ---------- Tokens — repris de css/main.css ---------- */
 :root{
@@ -26,10 +26,9 @@
   --grey-dark:#55534e;
   --hairline:rgba(242,240,235,0.09);
   --dash:rgba(242,240,235,0.42);
-  --f-druk:'Druk','Arial Narrow',sans-serif;
   --f-body:'TT Firs Neue','Helvetica Neue',Arial,sans-serif;
   --f-mono:'PP Air Mono',ui-monospace,'SF Mono',Menlo,monospace;
-  --f-machina:'PP Neue Machina','Helvetica Neue',Arial,sans-serif;
+  --f-serif:'PP Editorial Old',Georgia,serif;
   /* pile réservée aux caractères ⌁ et ↯ : PP Air Mono ne les contient pas */
   --f-sym:'Apple Symbols','Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif;
   --pad-x:clamp(18px,calc(7px + 1.45vw),30px);
@@ -43,7 +42,7 @@ body{
   font-family:var(--f-body);font-weight:400;font-size:16px;line-height:1.6;
   -webkit-font-smoothing:antialiased;
   min-height:100svh;display:flex;flex-direction:column;
-  padding:clamp(20px,3.4vh,34px) var(--pad-x) clamp(18px,3vh,28px);
+  padding:clamp(20px,3.4vh,34px) var(--pad-x) clamp(72px,10vh,92px);
   overflow-x:hidden;
 }
 body::after{
@@ -66,54 +65,54 @@ body::after{
 .top .logo{width:19px;height:auto;display:block}
 .top .logo path{fill:var(--ink)}
 
-/* ---------- Wordmark Druk centré ---------- */
-.markwrap{margin:clamp(26px,6vh,60px) 0 0;position:relative;text-align:center}
-/* canvas de l'effet xmcp posé sur le wordmark (même principe que le hero du site) */
-/* PLEIN ÉCRAN et rattaché au body, pas au container : à l'ouverture les particules
-   partent de toute la page. z-index 1 = sous le contenu (.wrap est en z-index 2).
-   NB : jamais de balise entre chevrons dans un commentaire CSS — le parseur la lit
-   comme une vraie balise et fait sortir toute la feuille de style en texte. */
-.mark-fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
-/* fx actif : le texte DOM ne sert plus qu'à l'accessibilité — ni visible, ni sélectionnable,
-   ni curseur texte au survol */
-.mark.fx-on{color:transparent;pointer-events:none;cursor:default}
-.mark{
-  font-family:var(--f-druk);font-weight:900;
-  line-height:0.78;letter-spacing:-0.012em;
-  white-space:nowrap;
-  display:inline-block;      /* hug le contenu : indispensable pour mesurer la largeur réelle */
-  font-size:100px;           /* recalé en JS pour remplir la largeur */
-  transform-origin:left top;
-  user-select:none;
-}
-.mark .ch{display:inline-block}
+/* ---------- Nuage de points du heros (js/hero-points.js, repris de site-v2) ----------
+   Le script mesure #hero et peint dans #hero-points. #hero est une couche de fond d'un
+   HORS FLUX : sans position:absolute il redevient un bloc normal, prend la hauteur par
+   defaut du canvas (150 px) et pousse toute la page vers le bas.
+   60svh, pas 100 : sur le site le nuage vit DANS la section heros et s'arrete avant le
+   contenu. A pleine hauteur il passait sur les liens et mangeait les puces mono. Le
+   script fond deja ses 12 % du bas — la coupure ne se voit pas. */
+#hero{position:absolute;top:0;left:0;width:100vw;height:52svh;z-index:0;pointer-events:none;overflow:hidden}
+#hero-points{position:absolute;inset:0;width:100%;height:100%}
 
-/* ---------- Tagline bi-typo (signature du site) ---------- */
-.tag{
-  margin-top:clamp(20px,3.6vh,34px);
-  font-size:clamp(15px,1.75vw,21px);line-height:1.4;letter-spacing:0;
-  margin-left:auto;margin-right:auto;text-align:center;position:relative;z-index:3;
+/* ---------- Texte du heros — repris tel quel de site-v2 (.hero-top / .hero-statement /
+   .hero-sub). Seule adaptation : la marge haute. Sur le site le heros occupe
+   un ecran entier ; ici la page porte aussi les liens, le pied et le dock. ---------- */
+.hero-top{position:relative;z-index:6;text-align:center;margin-top:clamp(78px,22svh,230px)}
+.hero-statement{
+  font-family:var(--f-body);font-weight:600;
+  font-size:clamp(32px,4vw,56px);line-height:1.0;letter-spacing:-0.01em;
+  color:var(--ink);white-space:nowrap;
 }
-/* PP Neue Machina : sans-serif (aucun empattement), géométrique et caractérisée —
-   son esperluette est dessinée, contrairement à celle de TT Firs */
-.tag .t1,.tag .t2{font-family:var(--f-machina);font-weight:400;font-style:normal;color:var(--ink);display:inline}
-.type-in{opacity:0;transition:opacity 0.2s}
-.type-in.go{opacity:1}
+/* La seconde ligne en empattement : les deux registres se repondent, seul le dessin
+   de la lettre change (decision du 07/08 sur le site). */
+.hero-sub{
+  font-family:var(--f-serif);font-style:normal;
+  font-size:clamp(19px,2.15vw,30px);line-height:1.18;letter-spacing:-0.015em;
+  color:var(--ink);margin-top:clamp(10px,1.6vh,18px);
+}
+@media(max-width:900px){
+  .hero-statement{white-space:normal;font-size:clamp(26px,7vw,36px)}
+  .hero-sub{font-size:clamp(18px,4.6vw,26px)}
+}
+
+
 
 /* ---------- Mise en scène : rien n'existe tant que le mot n'est pas formé ----------
    La classe .stage est posée en JS (donc sans JS, ou en reduced-motion, tout reste
    visible). .revealed déclenche l'apparition en cascade. */
-.stage .top,.stage .tag,.stage .tri,.stage .cols,.stage .foot{
+.stage .top,.stage .hero-top,.stage .tri,.stage .cols,.stage .foot,.stage .dock{
   opacity:0;transform:translateY(8px);
   transition:opacity 0.75s var(--ease),transform 0.75s var(--ease);
 }
-.stage.revealed .top,.stage.revealed .tag,.stage.revealed .tri,
-.stage.revealed .cols,.stage.revealed .foot{opacity:1;transform:none}
+.stage.revealed .top,.stage.revealed .hero-top,.stage.revealed .tri,
+.stage.revealed .cols,.stage.revealed .foot,.stage.revealed .dock{opacity:1;transform:none}
 .stage.revealed .top {transition-delay:0s}
-.stage.revealed .tag {transition-delay:0.10s}
+.stage.revealed .hero-top{transition-delay:0.10s}
 .stage.revealed .tri {transition-delay:0.20s}
 .stage.revealed .cols{transition-delay:0.30s}
 .stage.revealed .foot{transition-delay:0.42s}
+.stage.revealed .dock{transition-delay:0.54s}
 
 .tri{
   margin-top:16px;font-family:var(--f-mono);font-weight:500;
@@ -144,9 +143,11 @@ body::after{
 .row-i{font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;color:var(--grey-dark);flex:none;width:22px}
 .row:hover .row-i{color:var(--bg);opacity:.5}
 .row-n{font-weight:600;font-size:16px;flex:none}
-.row-d{font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--grey);margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.row:hover .row-d{color:var(--bg);opacity:.55}
+.row-d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--grey);margin-left:auto;white-space:nowrap;
+  border:1px solid var(--hairline);border-radius:2px;padding:4px 8px;line-height:1;
+  transition:border-color 0.3s var(--ease),color 0.3s var(--ease)}
+.row:hover .row-d{color:var(--bg);border-color:rgba(5,5,4,0.28);opacity:.62}
 .sq{
   width:22px;height:22px;flex:none;border-radius:2px;
   background:var(--ink);color:var(--bg);
@@ -172,10 +173,37 @@ body::after{
   font-family:var(--f-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--grey-dark);
 }
 
+/* ---------- Dock flottant — geometrie reprise de site-v2 (.dock/.dock-pill/.btn-cta) :
+     meme hauteur stricte de 30px pour les trois cases, meme rayon de 3px, meme verre depoli. */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;align-items:center;
+  justify-content:center;gap:8px;padding:0 18px 16px;pointer-events:none}
+.dock>*{pointer-events:auto}
+.dock .logo-sq{width:30px;height:30px;border-radius:3px;background:var(--ink);display:grid;place-items:center}
+.dock .logo-sq svg{width:10px;height:auto;display:block}
+.dock .logo-sq path{fill:var(--bg)}
+.dock-pill{height:30px;display:flex;align-items:center;gap:9px;padding:0 17px;
+  border:1px solid var(--hairline);border-radius:3px;background:rgba(5,5,4,0.6);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font-family:var(--f-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--grey)}
+.dock-pill .dot{width:5px;height:5px;border-radius:50%;background:var(--ink);flex:none}
+.btn-cta{font-family:var(--f-body);font-size:14px;font-weight:600;text-decoration:none;
+  background:var(--ink);color:var(--bg);height:30px;padding:0 4px 0 13px;border-radius:3px;
+  display:inline-flex;align-items:center;gap:10px}
+.btn-cta .sq{width:22px;height:22px;background:var(--bg);color:var(--ink);border-radius:2px;
+  display:grid;place-items:center;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1)}
+.btn-cta:hover .sq{transform:scale(0.85)}
+.btn-cta .sq svg{width:10px;height:10px;display:block}
+
 @media(max-width:760px){
+  /* En petit ecran la page se resserre et les liens remontent : a 52svh le nuage
+     leur passait dessus (mesure : 50 px de recouvrement a 390x844). */
+  /* La page doit tenir en UN ecran : sinon, au chargement, le pied de page se
+     retrouve derriere le dock fixe et ca se lit comme un bug. On resserre la
+     marge haute du heros, et le nuage suit pour ne pas mordre sur les liens. */
+  .hero-top{margin-top:clamp(52px,12svh,120px)}
+  #hero{height:26svh}
   .cols{grid-template-columns:1fr;gap:0}
   .grp + .grp{margin-top:18px}
-  .tag{max-width:none}
 }
 @media(max-width:430px){
   .row-d{display:none}
@@ -186,6 +214,8 @@ body::after{
 </head>
 <body>
 
+<div class="hero" id="hero" aria-hidden="true"><canvas id="hero-points"></canvas></div>
+
 <main class="wrap">
 
   <div class="top">
@@ -195,14 +225,10 @@ body::after{
     <span class="brace">liens</span>
   </div>
 
-  <div class="markwrap">
-    <h1 class="mark" id="mark" data-word="SAENS">SAENS</h1>
+  <div class="hero-top">
+    <h1 class="hero-statement">Saens Studio</h1>
+    <p class="hero-sub">making sense of the cultural and social noise.</p>
   </div>
-
-  <p class="tag">
-    <span class="t1 type-in" data-txt="try to make s{ae}ns of the"></span>
-    <span class="t2 type-in" data-txt="cultural &amp; social noise."></span>
-  </p>
 
   <p class="tri">building<span class="sym">⌁</span>breaking<span class="sym">⌁</span>documenting</p>
 
@@ -224,27 +250,41 @@ body::after{
         <span class="row-d">cas clients</span>
         <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
       </a>
+
+      <a class="row" href="mailto:guigs.prat@gmail.com">
+        <span class="row-i">03</span>
+        <span class="row-n scr">E&#8209;mail</span>
+        <span class="row-d">écrire directement</span>
+        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
+      </a>
     </section>
 
     <section class="grp">
       <span class="brace">l'atelier</span>
 
       <a class="row" href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener">
-        <span class="row-i">03</span>
+        <span class="row-i">04</span>
         <span class="row-n scr">Instagram</span>
         <span class="row-d">le backstage</span>
         <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
       </a>
 
       <a class="row" href="https://x.com/MakeSaens" target="_blank" rel="noopener">
-        <span class="row-i">04</span>
+        <span class="row-i">05</span>
         <span class="row-n scr">X</span>
         <span class="row-d">le labo</span>
         <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
       </a>
 
+      <a class="row" href="https://github.com/makesaens" target="_blank" rel="noopener">
+        <span class="row-i">06</span>
+        <span class="row-n scr">GitHub</span>
+        <span class="row-d">le code</span>
+        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
+      </a>
+
       <span class="row is-soon">
-        <span class="row-i">05</span>
+        <span class="row-i">07</span>
         <span class="row-n">saens.studio</span>
         <span class="soon">bientôt</span>
       </span>
@@ -259,7 +299,13 @@ body::after{
 
 </main>
 
-<script src="js/xmcp.js"></script>
+<div class="dock">
+  <span class="logo-sq" aria-hidden="true"><svg viewBox="0 0 709.28 964.66"><path d="M370.07,424.14c-3.56-19.45,1.13-51.34,22.42-65.3,12.42-7.36,27.37-7.54,40.77-8.02,22.66-.36,51.19.03,72.28-.27,27.22-1.21,48.74,2.49,53.45-32.93,13.35-75.7,39.99-222.56,51.28-292.56.92-9.03,1.13-16.55-6.08-20.67-5.7-3.15-16.03-3.92-31.07-4.19-34.13-.42-80.96.03-116.4-.14-39.38.02-76.12-.06-115.93-.05-21.68,1.26-49.89-3.84-69.14,11.23-9.44,7.32-14.38,28.82-17.2,44.5-4.52,23.77-8.61,50.23-13.35,73.57-3.62,17.25-7.61,29.37-15.56,36.16-7.98,7.05-20.55,8.97-38.22,9.55-27.92.84-73.9-.57-100.47,1.16-27.29,1.09-31.53,13.66-35.46,36.94C39.66,282.5,12.63,426.92.28,505.94c-.58,6.23-.32,10.62,1.36,13.6,3.31,5.26,9.79,5.71,16.99,6.29,69.37,1.12,183.26.05,266.95.41,37.73-.12,60.36-3.63,53.3,36.73-3.66,16.86-14.48,36.18-31.26,44.72-13.62,6.46-28.2,5.9-42.61,6.2-27.39.75-69.58-1.99-92.15,3.42-18.16,3.32-21.64,22.92-24.09,37.48-3.54,19.69-8.42,47.66-13.91,78.71-13.69,81.93-29.5,158.92-36.84,214.18-1.34,14.17,8.24,16.45,22.05,16.62,80.22.77,223.02,0,288.67.18,23.57.06,35.15-2.48,40.9-29.95,6.09-26.09,12.8-71.42,18.48-99.03,6.59-34.1,15.74-44.99,50.03-45.86,32.81-1.49,82.29,1.54,113.78-2.45,22.66-2.53,23.56-24.18,27.01-41.26,12.45-75.32,39.59-216.1,50.25-289.55.61-10.5-1.79-14.9-11.35-16.59-70.96-3.19-221.79-.17-295.89-1.26-13.36-.25-28.53-.2-31.81-14.15l-.06-.24Z"/></svg></span>
+  <span class="dock-pill"><span class="dot" aria-hidden="true"></span><span>liens</span></span>
+  <a class="btn-cta" href="mailto:guigs.prat@gmail.com"><span>Ready</span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span></a>
+</div>
+
+<script src="js/hero-points.js"></script>
 <script>
 (function(){
   'use strict';
@@ -271,7 +317,7 @@ body::after{
      Au chargement : page noire + bruit seulement. Tout le reste attend que le mot soit
      formé. Le masquage est posé ICI (en JS) et non dans le HTML : sans JS, si WebGL
      échoue ou en reduced-motion, la page reste entièrement lisible. */
-  var scene = !reduce && !!window.XMCP;
+  var scene = !reduce;
   if(scene) document.body.classList.add('stage');
 
   var revele = false;
@@ -279,135 +325,14 @@ body::after{
     if(revele) return;
     revele = true;
     document.body.classList.add('revealed');
-    demarrerTagline();          // la phrase se tape une fois le décor en place
   }
-  // filet de sécurité : si l'effet ne démarre jamais, on révèle quand même
-  setTimeout(reveler, 5000);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(reveler);
+  setTimeout(reveler, 1200);   // filet : on ne laisse jamais la page noire
 
-  /* ---- Wordmark : fit à la largeur + entrée lettre par lettre ---- */
-  var mark = document.getElementById('mark');
-  function fit(){
-    if(!mark) return;
-    var avail = mark.parentNode.clientWidth;
-    mark.style.fontSize = '100px';
-    var w = mark.getBoundingClientRect().width;   // inline-block : largeur réelle du mot
-    if(w <= 0 || avail <= 0) return;
-    var byWidth  = 100 * avail / w;
-    // borne haute : le wordmark ne mange jamais plus de ~30 % de la hauteur d'écran
-    // (sinon il pousse le pied de page hors de vue sur les grands écrans)
-    var byHeight = (window.innerHeight * 0.30) / 0.78;   /* 0.78 = line-height */
-    mark.style.fontSize = Math.min(byWidth, byHeight) + 'px';
-  }
-  if(mark){
-    // Pas d'entrée brouillée : le wordmark naît DIRECTEMENT avec l'effet.
-    fit();
-    if(document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-    var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(fit, 150); });
-    initMarkFx();
-  }
+  /* ---- Mise en scene ----
+     Le mot en particules a laisse la place au texte du heros (11/08). La revelation
+     n'attend donc plus la formation d'un mot : elle part des que les polices sont la. ---- */
 
-  /* ---- Effet xmcp sur le wordmark (moteur js/xmcp.js, réglages de base) ---- */
-  function initMarkFx(){
-    if(reduce || !window.XMCP || !mark) return;
-    var canvas = document.createElement('canvas');
-    canvas.className = 'mark-fx';
-    document.body.appendChild(canvas);   // au <body> : le canvas couvre la page entière
-
-    var P = Object.assign({}, XMCP.DEFAULTS);   // réglages de BASE (ceux du footer font foi)
-    var inst = XMCP.create({ canvas: canvas, params: P });
-    if(!inst){ canvas.remove(); return; }
-
-    /* Image-texte calée sur la position RÉELLE du wordmark dans le canvas.
-       (XMCP.textPicture centre le mot dans un canvas 2048 de ratio libre → le shader
-       corrige l'aspect et le mot finit centré + rétréci : décalage visible à l'allumage.
-       Ici on génère une image au MÊME ratio que le canvas d'affichage, mot posé à sa place.) */
-    function picture(offX, offY, box, dispW, dispH){
-      var F = parseFloat(getComputedStyle(mark).fontSize);
-      var W = 2048, k = W / dispW, H = Math.max(2, Math.round(dispH * k));
-      var c = document.createElement('canvas');
-      c.width = W; c.height = H;
-      var x = c.getContext('2d');
-      x.fillStyle = '#000'; x.fillRect(0, 0, W, H);
-      x.font = '900 ' + (F * k) + 'px Druk, "Arial Narrow", Arial';
-      x.textAlign = 'left'; x.textBaseline = 'middle';
-      x.shadowColor = 'rgba(255,255,255,0.55)';   // léger halo, comme textPicture
-      x.shadowBlur = F * k * 0.03;
-      x.fillStyle = '#fff';                        // le moteur lit le canal ROUGE : texte blanc obligatoire
-      x.fillText(mark.getAttribute('data-word'),
-                 Math.round(offX * k),
-                 Math.round((offY + box.height / 2) * k));
-      return c;
-    }
-
-    function build(){
-      var box = mark.getBoundingClientRect();   // coordonnées VIEWPORT (canvas en position:fixed)
-      if(!box.width) return;
-
-      /* Le canvas = la fenêtre entière. Les particules partent donc de partout sur la page,
-         et sortent par les bords de l'écran — aucun bord de container à voir. */
-      var w = window.innerWidth, h = window.innerHeight;
-      inst.resize(w, h);
-      var pic = picture(box.left, box.top, box, w, h);
-      if(pic){ inst.setPicture(pic); mark.classList.add('fx-on'); }
-    }
-
-    /* ---- Entrée : les particules naissent éclatées puis se rassemblent en SAENS ----
-       Le moteur gère déjà ça nativement (uniform uForm du mode totem) : à 0 chaque point
-       part d'une position aléatoire hors cadre, à 1 il rejoint sa case dans le mot.
-       Les départs sont étalés par point (stag = smoothstep sur aIntensity) → arrivée
-       progressive, pas un bloc. On anime juste 0 → 1. */
-    var FORM_MS = 2400, DELAI = 180, t0 = null;
-    function easeOutCubic(x){ return 1 - Math.pow(1 - x, 3); }
-
-    var running = true, raf = null;
-    function frame(ms){
-      if(!running){ raf = null; return; }
-      if(t0 === null) t0 = ms;
-      var p = Math.min(1, Math.max(0, (ms - t0 - DELAI) / FORM_MS));
-      inst.render(ms, { form: easeOutCubic(p) });
-      // le mot est stabilisé (~85 %) : le décor peut entrer
-      if(p >= 0.85) reveler();
-      raf = requestAnimationFrame(frame);
-    }
-    function start(){ if(!raf) raf = requestAnimationFrame(frame); }
-    if(window.IntersectionObserver){
-      new IntersectionObserver(function(en){ running = en[0].isIntersecting; if(running) start(); },
-        { threshold: 0.02 }).observe(canvas);
-    }
-    build();
-    if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ setTimeout(build, 60); });
-    var bt; window.addEventListener('resize', function(){ clearTimeout(bt); bt = setTimeout(build, 280); });
-    start();
-  }
-
-  /* ---- typeIn : frappe de code avec tête brouillée (repris de js/main.js) ---- */
-  function typeIn(el, txt, durationMs, head, onDone){
-    head = head || 4;
-    clearInterval(el._ti);
-    el.classList.add('go');
-    if(reduce){ el.textContent = txt; if(onDone) onDone(); return; }
-    el.textContent = '';
-    var TICK = 22;   // cadence de brouillage : 22 ms → les lettres défilent plus vite qu'à 34
-    var pos = 0, per = Math.max(1, Math.round(txt.length / ((durationMs||1100)/TICK)));
-    el._ti = setInterval(function(){
-      pos += per;
-      var out = txt.slice(0, Math.min(pos, txt.length)), h = '';
-      if(pos < txt.length){ for(var i=0;i<head;i++) h += WGL[(Math.random()*WGL.length)|0]; }
-      el.textContent = out + h;
-      if(pos >= txt.length){ clearInterval(el._ti); el.textContent = txt; if(onDone) onDone(); }
-    }, TICK);
-  }
-  // une seule ligne : les deux membres se tapent à la suite, sans rupture.
-  // Déclenchée par reveler(), pas au chargement — la phrase arrive après le mot.
-  var t1 = document.querySelector('.tag .t1'), t2 = document.querySelector('.tag .t2');
-  function demarrerTagline(){
-    setTimeout(function(){
-      typeIn(t1, t1.getAttribute('data-txt'), 380, 4, function(){
-        typeIn(t2, t2.getAttribute('data-txt'), 340, 4);
-      });
-    }, scene ? 180 : 0);
-  }
-  if(!scene) demarrerTagline();   // pas de mise en scène : la phrase se tape tout de suite
 
   /* ---- Scramble au survol des libellés (règle : textes courts = scramble) ---- */
   document.querySelectorAll('.row').forEach(function(row){
