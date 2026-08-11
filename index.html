@@ -65,6 +65,16 @@ body::after{
 .top .logo{width:19px;height:auto;display:block}
 .top .logo path{fill:var(--ink)}
 
+/* ---------- Texte en pixels (js/texte-pixels.js, repris de site-v2) ----------
+   Le vrai texte RESTE dans le DOM pour le referencement et les lecteurs d'ecran :
+   il devient transparent et le canvas le double, en carres jointifs que le curseur
+   ecarte. .rv-w / .rv-i sont les enveloppes de mots que le moteur lit — sur le site
+   c'est le decoupeur de main.js qui les pose, ici c'est le script en bas de page. */
+.rv-w,.rv-i{display:inline-block}
+.txt-px{position:absolute;z-index:3;display:block;pointer-events:none}
+.hero-top.txt-px-on .hero-statement,
+.hero-top.txt-px-on .hero-sub{color:transparent}
+
 /* ---------- Nuage de points du heros (js/hero-points.js, repris de site-v2) ----------
    Le script mesure #hero et peint dans #hero-points. #hero est une couche de fond d'un
    HORS FLUX : sans position:absolute il redevient un bloc normal, prend la hauteur par
@@ -359,6 +369,31 @@ body::after{
     row.addEventListener('mouseleave', function(){ clearInterval(el._s); el.textContent = txt; });
   });
 
+  /* ---- Texte en pixels : les deux crochets que le moteur attend ----
+     1. des <span class="rv-i"> autour de chaque mot. Sur le site ils viennent du
+        moteur d'apparition de main.js ; on ne reprend ici que le decoupage.
+     2. window.__reglages, l'objet de l'effet de mare au scroll. Il n'a pas d'objet
+        sur une page qui tient en un ecran — mais sans lui le moteur se remet en
+        file toutes les 200 ms indefiniment. On le fournit a zero. */
+  window.__reglages = window.__reglages ||
+    { SC:{trainee:1, cisail:0, courbe:1, fente:0}, SCROLL:{retard:0} };
+
+  function decouperEnMots(el){
+    if(!el) return;
+    var mots = el.textContent.split(/(\s+)/);
+    el.textContent = '';
+    mots.forEach(function(m){
+      if(m === '') return;
+      if(/^\s+$/.test(m)){ el.appendChild(document.createTextNode(m)); return; }
+      var enveloppe = document.createElement('span'); enveloppe.className = 'rv-w';
+      var mot = document.createElement('span'); mot.className = 'rv-i';
+      mot.textContent = m;
+      enveloppe.appendChild(mot); el.appendChild(enveloppe);
+    });
+  }
+  decouperEnMots(document.querySelector('.hero-statement'));
+  decouperEnMots(document.querySelector('.hero-sub'));
+
   /* ---- Horloge Lyon ---- */
   var clock = document.getElementById('clock');
   function tick(){
@@ -371,6 +406,7 @@ body::after{
   tick(); setInterval(tick, 30000);
 })();
 </script>
+<script src="js/texte-pixels.js"></script>
 
 </body>
 </html>
