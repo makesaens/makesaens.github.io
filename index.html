@@ -1,412 +1,187 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Saens — building ⌁ breaking ⌁ documenting</title>
-<meta name="description" content="try to make s{ae}ns of the cultural & social noise. Design & systèmes IA, Lyon.">
-<meta name="theme-color" content="#050504">
-<meta property="og:title" content="Saens">
-<meta property="og:description" content="try to make s{ae}ns of the cultural & social noise.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saens Studio — Le travail qui se répète n'a pas besoin de vous</title>
+<meta name="description" content="Outils métier et automatisations IA à Lyon. Je cherche où partent vos heures, je construis le système qui les ramène — et je le livre chez vous. Diagnostic de 30 min, offert s'il n'y a rien à automatiser.">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Saens Studio — Le travail qui se répète n'a pas besoin de vous.">
+<meta property="og:description" content="Faire disparaître les corvées, ou construire l'outil qui n'existe pas. Diagnostic de 30 min, offert s'il n'y a rien à automatiser.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 709 965'><rect width='709' height='965' fill='%23050504'/><path fill='%23f2f0eb' d='M370.07,424.14c-3.56-19.45,1.13-51.34,22.42-65.3,12.42-7.36,27.37-7.54,40.77-8.02,22.66-.36,51.19.03,72.28-.27,27.22-1.21,48.74,2.49,53.45-32.93,13.35-75.7,39.99-222.56,51.28-292.56.92-9.03,1.13-16.55-6.08-20.67-5.7-3.15-16.03-3.92-31.07-4.19-34.13-.42-80.96.03-116.4-.14-39.38.02-76.12-.06-115.93-.05-21.68,1.26-49.89-3.84-69.14,11.23-9.44,7.32-14.38,28.82-17.2,44.5-4.52,23.77-8.61,50.23-13.35,73.57-3.62,17.25-7.61,29.37-15.56,36.16-7.98,7.05-20.55,8.97-38.22,9.55-27.92.84-73.9-.57-100.47,1.16-27.29,1.09-31.53,13.66-35.46,36.94C39.66,282.5,12.63,426.92.28,505.94c-.58,6.23-.32,10.62,1.36,13.6,3.31,5.26,9.79,5.71,16.99,6.29,69.37,1.12,183.26.05,266.95.41,37.73-.12,60.36-3.63,53.3,36.73-3.66,16.86-14.48,36.18-31.26,44.72-13.62,6.46-28.2,5.9-42.61,6.2-27.39.75-69.58-1.99-92.15,3.42-18.16,3.32-21.64,22.92-24.09,37.48-3.54,19.69-8.42,47.66-13.91,78.71-13.69,81.93-29.5,158.92-36.84,214.18-1.34,14.17,8.24,16.45,22.05,16.62,80.22.77,223.02,0,288.67.18,23.57.06,35.15-2.48,40.9-29.95,6.09-26.09,12.8-71.42,18.48-99.03,6.59-34.1,15.74-44.99,50.03-45.86,32.81-1.49,82.29,1.54,113.78-2.45,22.66-2.53,23.56-24.18,27.01-41.26,12.45-75.32,39.59-216.1,50.25-289.55.61-10.5-1.79-14.9-11.35-16.59-70.96-3.19-221.79-.17-295.89-1.26-13.36-.25-28.53-.2-31.81-14.15l-.06-.24Z'/></svg>">
-
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050505'/%3E%3Ctext x='16' y='22' font-family='sans-serif' font-size='18' font-weight='600' fill='%232AABEE' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
 <style>
-@font-face{font-family:'TT Firs Neue';src:url('fonts/firs-regular.woff2') format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'TT Firs Neue';src:url('fonts/firs-demibold.woff2') format('woff2');font-weight:600;font-display:swap}
-@font-face{font-family:'PP Air Mono';src:url('fonts/air-mono.woff2') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'PP Editorial Old';src:url('fonts/editorial-regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
-@font-face{font-family:'PP Editorial Old';src:url('fonts/editorial-italic.woff2') format('woff2');font-style:italic;font-weight:400;font-display:swap}
-
-/* ---------- Tokens — repris de css/main.css ---------- */
-:root{
-  --bg:#050504;            /* noir 98-99 % — jamais 100 % */
-  --ink:#f2f0eb;
-  --grey:#8f8d86;
-  --grey-dark:#55534e;
-  --hairline:rgba(242,240,235,0.09);
-  --dash:rgba(242,240,235,0.42);
-  --f-body:'TT Firs Neue','Helvetica Neue',Arial,sans-serif;
-  --f-mono:'PP Air Mono',ui-monospace,'SF Mono',Menlo,monospace;
-  --f-serif:'PP Editorial Old',Georgia,serif;
-  /* pile réservée aux caractères ⌁ et ↯ : PP Air Mono ne les contient pas */
-  --f-sym:'Apple Symbols','Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans',sans-serif;
-  --pad-x:clamp(18px,calc(7px + 1.45vw),30px);
-  --grain-o:0.055;
-  --ease:cubic-bezier(0.65,0,0.15,1);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{
-  background:var(--bg);color:var(--ink);
-  font-family:var(--f-body);font-weight:400;font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  min-height:100svh;display:flex;flex-direction:column;
-  padding:clamp(20px,3.4vh,34px) var(--pad-x) clamp(72px,10vh,92px);
-  overflow-x:hidden;
-}
-body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:9;opacity:var(--grain-o);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.wrap{width:100%;max-width:1120px;margin:0 auto;flex:1;display:flex;flex-direction:column;position:relative;z-index:2}
-
-/* ---------- Label mono à accolades ---------- */
-.brace{
-  font-family:var(--f-mono);font-weight:500;font-size:10px;
-  letter-spacing:0.18em;text-transform:uppercase;color:var(--grey);
-  display:inline-flex;gap:6px;align-items:center;
-}
-.brace::before{content:"{"}
-.brace::after{content:"}"}
-
-/* ---------- Barre haute ---------- */
-.top{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.top .logo{width:19px;height:auto;display:block}
-.top .logo path{fill:var(--ink)}
-
-/* ---------- Texte en pixels (js/texte-pixels.js, repris de site-v2) ----------
-   Le vrai texte RESTE dans le DOM pour le referencement et les lecteurs d'ecran :
-   il devient transparent et le canvas le double, en carres jointifs que le curseur
-   ecarte. .rv-w / .rv-i sont les enveloppes de mots que le moteur lit — sur le site
-   c'est le decoupeur de main.js qui les pose, ici c'est le script en bas de page. */
-.rv-w,.rv-i{display:inline-block}
-.txt-px{position:absolute;z-index:3;display:block;pointer-events:none}
-.hero-top.txt-px-on .hero-statement,
-.hero-top.txt-px-on .hero-sub{color:transparent}
-
-/* ---------- Nuage de points du heros (js/hero-points.js, repris de site-v2) ----------
-   Le script mesure #hero et peint dans #hero-points. #hero est une couche de fond d'un
-   HORS FLUX : sans position:absolute il redevient un bloc normal, prend la hauteur par
-   defaut du canvas (150 px) et pousse toute la page vers le bas.
-   60svh, pas 100 : sur le site le nuage vit DANS la section heros et s'arrete avant le
-   contenu. A pleine hauteur il passait sur les liens et mangeait les puces mono. Le
-   script fond deja ses 12 % du bas — la coupure ne se voit pas. */
-#hero{position:absolute;top:0;left:0;width:100vw;height:52svh;z-index:0;pointer-events:none;overflow:hidden}
-#hero-points{position:absolute;inset:0;width:100%;height:100%}
-
-/* ---------- Texte du heros — repris tel quel de site-v2 (.hero-top / .hero-statement /
-   .hero-sub). Seule adaptation : la marge haute. Sur le site le heros occupe
-   un ecran entier ; ici la page porte aussi les liens, le pied et le dock. ---------- */
-.hero-top{position:relative;z-index:6;text-align:center;margin-top:clamp(78px,22svh,230px)}
-.hero-statement{
-  font-family:var(--f-body);font-weight:600;
-  font-size:clamp(32px,4vw,56px);line-height:1.0;letter-spacing:-0.01em;
-  color:var(--ink);white-space:nowrap;
-}
-/* La seconde ligne en empattement : les deux registres se repondent, seul le dessin
-   de la lettre change (decision du 07/08 sur le site). */
-.hero-sub{
-  font-family:var(--f-serif);font-style:normal;
-  font-size:clamp(19px,2.15vw,30px);line-height:1.18;letter-spacing:-0.015em;
-  color:var(--ink);margin-top:clamp(10px,1.6vh,18px);
-}
-@media(max-width:900px){
-  .hero-statement{white-space:normal;font-size:clamp(26px,7vw,36px)}
-  .hero-sub{font-size:clamp(18px,4.6vw,26px)}
-}
-
-
-
-/* ---------- Mise en scène : rien n'existe tant que le mot n'est pas formé ----------
-   La classe .stage est posée en JS (donc sans JS, ou en reduced-motion, tout reste
-   visible). .revealed déclenche l'apparition en cascade. */
-.stage .top,.stage .hero-top,.stage .tri,.stage .cols,.stage .foot,.stage .dock{
-  opacity:0;transform:translateY(8px);
-  transition:opacity 0.75s var(--ease),transform 0.75s var(--ease);
-}
-.stage.revealed .top,.stage.revealed .hero-top,.stage.revealed .tri,
-.stage.revealed .cols,.stage.revealed .foot,.stage.revealed .dock{opacity:1;transform:none}
-.stage.revealed .top {transition-delay:0s}
-.stage.revealed .hero-top{transition-delay:0.10s}
-.stage.revealed .tri {transition-delay:0.20s}
-.stage.revealed .cols{transition-delay:0.30s}
-.stage.revealed .foot{transition-delay:0.42s}
-.stage.revealed .dock{transition-delay:0.54s}
-
-.tri{
-  margin-top:16px;font-family:var(--f-mono);font-weight:500;
-  font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--grey);
-  text-align:center;
-}
-/* le VRAI caractère ⌁, dans une pile qui le possède */
-.sym{font-family:var(--f-sym);font-size:1.45em;color:var(--dash);padding:0 6px;line-height:1;
-  vertical-align:-0.06em;letter-spacing:0}
-
-/* ---------- Grille des liens ---------- */
-.cols{
-  margin-top:auto;padding-top:clamp(28px,5vh,54px);
-  display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(24px,4vw,64px);
-  align-items:start;
-}
-.grp{border-top:1px solid var(--hairline);padding-top:14px}
-.grp .brace{margin-bottom:6px;display:flex}
-
-.row{
-  display:flex;align-items:center;gap:12px;
-  text-decoration:none;color:var(--ink);
-  height:44px;padding:0 6px 0 0;border-radius:3px;
-  border-bottom:1px solid var(--hairline);
-  transition:background 0.3s var(--ease),color 0.3s var(--ease),padding 0.3s var(--ease);
-}
-.row:hover,.row:focus-visible{background:var(--ink);color:var(--bg);padding-left:12px;padding-right:6px;outline:none}
-.row-i{font-family:var(--f-mono);font-size:10px;letter-spacing:0.1em;color:var(--grey-dark);flex:none;width:22px}
-.row:hover .row-i{color:var(--bg);opacity:.5}
-.row-n{font-weight:600;font-size:16px;flex:none}
-.row-d{font-family:var(--f-mono);font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--grey);margin-left:auto;white-space:nowrap;
-  border:1px solid var(--hairline);border-radius:2px;padding:4px 8px;line-height:1;
-  transition:border-color 0.3s var(--ease),color 0.3s var(--ease)}
-.row:hover .row-d{color:var(--bg);border-color:rgba(5,5,4,0.28);opacity:.62}
-.sq{
-  width:22px;height:22px;flex:none;border-radius:2px;
-  background:var(--ink);color:var(--bg);
-  display:grid;place-items:center;
-  transition:transform 0.35s cubic-bezier(0.22,1,0.36,1),background 0.3s var(--ease),color 0.3s var(--ease);
-}
-.row:hover .sq{background:var(--bg);color:var(--ink);transform:scale(0.85)}
-.sq svg{width:10px;height:10px;transform:rotate(-45deg);transition:transform 0.55s var(--ease)}
-.row:hover .sq svg{transform:rotate(360deg)}
-
-.row.is-soon{pointer-events:none;border-bottom-color:transparent}
-.row.is-soon .row-n{color:var(--grey-dark)}
-.soon{
-  font-family:var(--f-body);font-weight:600;font-size:12px;
-  height:26px;display:inline-flex;align-items:center;padding:0 11px;
-  border:1px dashed var(--dash);border-radius:3px;color:var(--grey);flex:none;margin-left:auto;
-}
-
-/* ---------- Pied ---------- */
-.foot{
-  margin-top:clamp(22px,4vh,44px);padding-top:14px;border-top:1px solid var(--hairline);
-  display:flex;justify-content:space-between;align-items:center;gap:14px;
-  font-family:var(--f-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--grey-dark);
-}
-
-/* ---------- Dock flottant — geometrie reprise de site-v2 (.dock/.dock-pill/.btn-cta) :
-     meme hauteur stricte de 30px pour les trois cases, meme rayon de 3px, meme verre depoli. */
-.dock{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;align-items:center;
-  justify-content:center;gap:8px;padding:0 18px 16px;pointer-events:none}
-.dock>*{pointer-events:auto}
-.dock .logo-sq{width:30px;height:30px;border-radius:3px;background:var(--ink);display:grid;place-items:center}
-.dock .logo-sq svg{width:10px;height:auto;display:block}
-.dock .logo-sq path{fill:var(--bg)}
-.dock-pill{height:30px;display:flex;align-items:center;gap:9px;padding:0 17px;
-  border:1px solid var(--hairline);border-radius:3px;background:rgba(5,5,4,0.6);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  font-family:var(--f-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--grey)}
-.dock-pill .dot{width:5px;height:5px;border-radius:50%;background:var(--ink);flex:none}
-.btn-cta{font-family:var(--f-body);font-size:14px;font-weight:600;text-decoration:none;
-  background:var(--ink);color:var(--bg);height:30px;padding:0 4px 0 13px;border-radius:3px;
-  display:inline-flex;align-items:center;gap:10px}
-.btn-cta .sq{width:22px;height:22px;background:var(--bg);color:var(--ink);border-radius:2px;
-  display:grid;place-items:center;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1)}
-.btn-cta:hover .sq{transform:scale(0.85)}
-.btn-cta .sq svg{width:10px;height:10px;display:block}
-
-@media(max-width:760px){
-  /* En petit ecran la page se resserre et les liens remontent : a 52svh le nuage
-     leur passait dessus (mesure : 50 px de recouvrement a 390x844). */
-  /* La page doit tenir en UN ecran : sinon, au chargement, le pied de page se
-     retrouve derriere le dock fixe et ca se lit comme un bug. On resserre la
-     marge haute du heros, et le nuage suit pour ne pas mordre sur les liens. */
-  .hero-top{margin-top:clamp(52px,12svh,120px)}
-  #hero{height:26svh}
-  .cols{grid-template-columns:1fr;gap:0}
-  .grp + .grp{margin-top:18px}
-}
-@media(max-width:430px){
-  .row-d{display:none}
-  .sq{margin-left:auto}   /* la colonne de droite disparaît : la flèche reprend le ferrage */
-}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@font-face{font-family:'Plus Jakarta Sans';src:url('fonts/plus-jakarta-var-latin.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+@font-face{font-family:'Geist';src:url('fonts/geist-var-latin.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+:root{--nuit:#050505;--blanc:#f4f4f2;--bleu:#2aabee;--m-100:#f4f4f2;--m-60:rgba(255,255,255,.62);--m-50:rgba(255,255,255,.52);--m-40:rgba(255,255,255,.42);--m-28:rgba(255,255,255,.28);--m-20:rgba(255,255,255,.16);--m-07:rgba(255,255,255,.07);--bord:rgba(255,255,255,.08);--pan-a:rgba(255,255,255,.05);--pan-b:rgba(255,255,255,.015);--btn-bg:#f2f2f0;--btn-text:#161615;--ease:cubic-bezier(.22,1,.36,1);--roll:cubic-bezier(.65,0,.15,1)}
+*,*:before,*:after{box-sizing:border-box}
+html{background:var(--nuit)}
+body{margin:0;background:var(--nuit);color:var(--blanc);font-family:'Plus Jakarta Sans','Geist',system-ui,sans-serif;font-size:16px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--bleu);color:#0e1319}
+mark{color:var(--bleu);background:transparent}
+.page{width:min(100% - 2.5rem,640px);margin:0 auto;padding:72px 0 40px;flex:1;display:flex;flex-direction:column}
+.tete{display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
+.logo{height:38px;width:auto;display:block;color:var(--blanc)}
+.nom{font-size:14px;letter-spacing:-.28px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px}
+.nom:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
+h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:500;line-height:1.04;letter-spacing:-.035em;white-space:nowrap}
+.lead{margin:0;font-size:clamp(1rem,2.1vw,1.15rem);line-height:1.35;letter-spacing:-.025em;font-weight:500;color:var(--m-50);max-width:44ch}
+.lead strong{color:var(--blanc);font-weight:500}
+/* les deux façons, condensées, côte à côte */
+.offres{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.offre{border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:20px 20px 22px;display:flex;flex-direction:column;gap:8px;transition:transform .45s var(--ease),border-color .45s var(--ease)}
+.offre:hover{transform:translateY(-4px) scale(1.015);border-color:var(--m-28)}
+.offre .k{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;transition:color .35s var(--ease)}
+.offre:hover .k{color:var(--bleu)}
+.offre .k:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
+.offre h2{margin:0;font-size:1.2rem;font-weight:500;line-height:1.15;letter-spacing:-.025em}
+.offre p{margin:0;font-size:14px;line-height:1.4;letter-spacing:-.02em;color:var(--m-50)}
+.offre p strong{color:var(--blanc);font-weight:500}
+/* l'action, la première offre */
+.action{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.note{margin:0;font-size:13px;letter-spacing:-.26px;color:var(--m-40);text-align:center}
+/* le bouton du site, tel quel */
+.btn-cta{font-family:inherit;font-size:14px;font-weight:600;background:var(--btn-bg);color:var(--btn-text);height:30px;padding:0 4px 0 13px;border-radius:3px;display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;white-space:nowrap}
+.btn-cta .txt{position:relative;overflow:hidden;display:block;height:30px;line-height:30px}
+.btn-cta .txt span{display:block;transition:transform .45s var(--roll)}
+.btn-cta .txt span+span{position:absolute;left:0;top:100%}
+.btn-cta:hover .txt span,.btn-cta:focus-visible .txt span{transform:translateY(-100%)}
+.btn-cta .sq{width:22px;height:22px;background:var(--btn-text);color:var(--btn-bg);border-radius:2px;display:grid;place-items:center;transition:transform .35s var(--ease)}
+.btn-cta .sq svg{width:10px;height:10px;transform:rotate(-45deg);transition:transform .55s var(--roll)}
+.btn-cta:hover .sq,.btn-cta:focus-visible .sq{transform:scale(.85)}
+.btn-cta:hover .sq svg,.btn-cta:focus-visible .sq svg{transform:rotate(360deg)}
+/* le calculateur : une ligne blanche douce qui ouvre un panneau sombre, comme les deux façons */
+.calc{margin-top:40px;border-radius:8px;background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);box-shadow:0 0 0 1px var(--bord)}
+.calc summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;height:46px;padding:0 14px 0 16px;border-radius:8px;background:rgba(244,244,242,.84);color:#141413;font-size:15px;font-weight:600;letter-spacing:-.28px;transition:background-color .3s var(--ease)}
+.calc summary:hover{background:rgba(244,244,242,.94)}
+.calc summary:focus-visible{outline:2px solid var(--bleu);outline-offset:2px}
+.calc[open] summary{border-radius:8px 8px 0 0}
+.calc summary::-webkit-details-marker{display:none}
+.calc summary .lib{display:block;transition:transform .45s var(--ease)}
+.calc summary:hover .lib{transform:translateX(6px)}
+.calc summary .pl{width:16px;height:16px;display:block;flex-shrink:0;color:inherit}
+.calc summary .pl svg{width:16px;height:16px;display:block;transform-origin:50% 50%;transition:transform .55s var(--roll)}
+.calc summary:hover .pl svg{transform:rotate(360deg)}
+.calc[open] summary .pl svg{transform:rotate(45deg)}
+.calc[open] summary:hover .pl svg{transform:rotate(405deg)}
+.calc[open] .calc-corps{animation:deplie .5s var(--ease) both}
+@keyframes deplie{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.calc-corps{padding:18px 16px 22px;display:flex;flex-direction:column;gap:16px}
+.champ{display:flex;flex-direction:column;gap:6px}
+.etiq{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-size:14px;letter-spacing:-.28px;color:var(--blanc)}
+.etiq b{font-size:1.25rem;font-weight:500;letter-spacing:-.02em;color:var(--blanc);font-variant-numeric:tabular-nums}
+.etiq b span{font-size:13px;color:var(--m-60);margin-left:.25em}
+input[type=range]{appearance:none;-webkit-appearance:none;width:100%;height:28px;margin:0;border:0;background:linear-gradient(var(--bleu),var(--bleu)) no-repeat 0 50%/var(--p,0%) 6px,linear-gradient(var(--m-20),var(--m-20)) no-repeat 0 50%/100% 2px;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--bleu);border:2px solid var(--nuit);box-shadow:0 0 0 1px var(--m-28);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--bleu);border:2px solid var(--nuit);cursor:pointer}
+input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px}
+.sortie{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pil{border-radius:18px;background:var(--m-07);padding:12px 14px 10px}
+.pil>span{display:block;font-size:12.5px;letter-spacing:-.25px;color:var(--blanc);margin-bottom:3px}
+.pil b{display:flex;align-items:baseline;gap:.12em;font-size:1.7rem;font-weight:500;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--blanc)}
+.pil b.bleu{color:var(--bleu)}
+.pil b i{font-style:normal;font-size:.5em;color:var(--m-60)}
+.calc-corps p.trad{margin:0;font-size:13px;line-height:1.4;letter-spacing:-.02em;color:var(--m-60);font-variant-numeric:tabular-nums}
+.calc-corps .btn-cta{align-self:center;margin-top:4px}
+/* les liens : mineurs */
+.liste{margin-top:28px}
+.lbl{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;margin:14px 0 0}
+.lbl:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
+.lc{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--bord);transition:padding-left .35s var(--ease)}
+.lc:hover{padding-left:6px}
+.lc-t{font-size:15px;font-weight:500;letter-spacing:-.02em;color:var(--m-60)}
+.lc:hover .lc-t{color:var(--m-100)}
+.lc-p{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.lc:hover .lc-p{color:var(--bleu)}
+.lc-p i{width:12px;height:12px;display:grid;place-items:center;opacity:0;transform:translate(-4px,4px) rotate(-45deg);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.lc-p i svg{width:9px;height:9px}
+.lc:hover .lc-p i{opacity:1;transform:translate(0,0) rotate(-45deg)}
+.lc--eteint{opacity:.45;pointer-events:none}
+.pied{margin-top:auto;padding-top:48px;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-size:13px;letter-spacing:-.26px;color:var(--m-40)}
+.pied b{font-weight:500;color:var(--blanc)}
+@media(max-width:600px){h1{white-space:normal}.offres{grid-template-columns:1fr}.sortie{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.lc,.lc-p i,.btn-cta .txt span,.btn-cta .sq,.btn-cta .sq svg,.calc summary,.calc summary .lib,.calc summary .pl svg,.offre,.offre .k{transition:none}.calc[open] .calc-corps{animation:none}}
 </style>
 </head>
 <body>
+<main class="page">
+  <header class="tete">
+    <svg viewBox="0 0 709.28 964.66" class="logo" aria-label="Saens Studio"><path d="M370.07,424.14c-3.56-19.45,1.13-51.34,22.42-65.3,12.42-7.36,27.37-7.54,40.77-8.02,22.66-.36,51.19.03,72.28-.27,27.22-1.21,48.74,2.49,53.45-32.93,13.35-75.7,39.99-222.56,51.28-292.56.92-9.03,1.13-16.55-6.08-20.67-5.7-3.15-16.03-3.92-31.07-4.19-34.13-.42-80.96.03-116.4-.14-39.38.02-76.12-.06-115.93-.05-21.68,1.26-49.89-3.84-69.14,11.23-9.44,7.32-14.38,28.82-17.2,44.5-4.52,23.77-8.61,50.23-13.35,73.57-3.62,17.25-7.61,29.37-15.56,36.16-7.98,7.05-20.55,8.97-38.22,9.55-27.92.84-73.9-.57-100.47,1.16-27.29,1.09-31.53,13.66-35.46,36.94C39.66,282.5,12.63,426.92.28,505.94c-.58,6.23-.32,10.62,1.36,13.6,3.31,5.26,9.79,5.71,16.99,6.29,69.37,1.12,183.26.05,266.95.41,37.73-.12,60.36-3.63,53.3,36.73-3.66,16.86-14.48,36.18-31.26,44.72-13.62,6.46-28.2,5.9-42.61,6.2-27.39.75-69.58-1.99-92.15,3.42-18.16,3.32-21.64,22.92-24.09,37.48-3.54,19.69-8.42,47.66-13.91,78.71-13.69,81.93-29.5,158.92-36.84,214.18-1.34,14.17,8.24,16.45,22.05,16.62,80.22.77,223.02,0,288.67.18,23.57.06,35.15-2.48,40.9-29.95,6.09-26.09,12.8-71.42,18.48-99.03,6.59-34.1,15.74-44.99,50.03-45.86,32.81-1.49,82.29,1.54,113.78-2.45,22.66-2.53,23.56-24.18,27.01-41.26,12.45-75.32,39.59-216.1,50.25-289.55.61-10.5-1.79-14.9-11.35-16.59-70.96-3.19-221.79-.17-295.89-1.26-13.36-.25-28.53-.2-31.81-14.15l-.06-.24Z" fill="currentColor"/></svg>
+    <span class="nom">Saens Studio · Outils métier, automatisations IA · Lyon</span>
+    <h1>Le travail qui <mark>se répète</mark><br>n'a pas besoin <mark>de vous</mark>.</h1>
+    <p class="lead"><strong>Je cherche où partent vos heures. Je construis le système qui les ramène.</strong> Et je le livre chez vous : le code, les données, les accès — rien à louer, rien à rendre.</p>
+  </header>
 
-<div class="hero" id="hero" aria-hidden="true"><canvas id="hero-points"></canvas></div>
+  <section class="offres" aria-label="Deux façons de récupérer vos heures">
+    <article class="offre">
+      <span class="k">Première façon</span>
+      <h2>Faire disparaître <mark>les corvées.</mark></h2>
+      <p>Ce qui se répète part à la machine, <strong>dans les logiciels que vous utilisez déjà</strong>. Vous gardez ce qui demande un jugement.</p>
+    </article>
+    <article class="offre">
+      <span class="k">Deuxième façon</span>
+      <h2>Construire, reprendre, <mark>ou rendre la main.</mark></h2>
+      <p>L'outil qui n'existe pas, construit pour votre métier. <strong>Le système vous appartient</strong> : code, données, documentation.</p>
+    </article>
+  </section>
 
-<main class="wrap">
-
-  <div class="top">
-    <svg class="logo" viewBox="0 0 709.28 964.66" aria-label="Saens" role="img">
-      <path d="M370.07,424.14c-3.56-19.45,1.13-51.34,22.42-65.3,12.42-7.36,27.37-7.54,40.77-8.02,22.66-.36,51.19.03,72.28-.27,27.22-1.21,48.74,2.49,53.45-32.93,13.35-75.7,39.99-222.56,51.28-292.56.92-9.03,1.13-16.55-6.08-20.67-5.7-3.15-16.03-3.92-31.07-4.19-34.13-.42-80.96.03-116.4-.14-39.38.02-76.12-.06-115.93-.05-21.68,1.26-49.89-3.84-69.14,11.23-9.44,7.32-14.38,28.82-17.2,44.5-4.52,23.77-8.61,50.23-13.35,73.57-3.62,17.25-7.61,29.37-15.56,36.16-7.98,7.05-20.55,8.97-38.22,9.55-27.92.84-73.9-.57-100.47,1.16-27.29,1.09-31.53,13.66-35.46,36.94C39.66,282.5,12.63,426.92.28,505.94c-.58,6.23-.32,10.62,1.36,13.6,3.31,5.26,9.79,5.71,16.99,6.29,69.37,1.12,183.26.05,266.95.41,37.73-.12,60.36-3.63,53.3,36.73-3.66,16.86-14.48,36.18-31.26,44.72-13.62,6.46-28.2,5.9-42.61,6.2-27.39.75-69.58-1.99-92.15,3.42-18.16,3.32-21.64,22.92-24.09,37.48-3.54,19.69-8.42,47.66-13.91,78.71-13.69,81.93-29.5,158.92-36.84,214.18-1.34,14.17,8.24,16.45,22.05,16.62,80.22.77,223.02,0,288.67.18,23.57.06,35.15-2.48,40.9-29.95,6.09-26.09,12.8-71.42,18.48-99.03,6.59-34.1,15.74-44.99,50.03-45.86,32.81-1.49,82.29,1.54,113.78-2.45,22.66-2.53,23.56-24.18,27.01-41.26,12.45-75.32,39.59-216.1,50.25-289.55.61-10.5-1.79-14.9-11.35-16.59-70.96-3.19-221.79-.17-295.89-1.26-13.36-.25-28.53-.2-31.81-14.15l-.06-.24Z"/>
-    </svg>
-    <span class="brace">liens</span>
+  <div class="action">
+    <a href="mailto:guigs.prat@gmail.com" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
+    <p class="note">30 min · offert s'il n'y a rien à automatiser</p>
   </div>
 
-  <div class="hero-top">
-    <h1 class="hero-statement">Saens Studio</h1>
-    <p class="hero-sub">making sense of the cultural and social noise.</p>
-  </div>
+  <details class="calc">
+    <summary><span class="lib">Calculer le temps que vous perdez</span><span class="pl" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v11M2.5 8h11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
+    <div class="calc-corps">
+      <div class="champ">
+        <label class="etiq" for="h">Heures par semaine perdues en corvées <b><span data-aff="h">3</span><span>h</span></b></label>
+        <input id="h" type="range" min="1" max="30" step="1" value="3" aria-valuetext="3 heures par semaine">
+      </div>
+      <div class="champ">
+        <label class="etiq" for="p">Personnes concernées <b><span data-aff="p">1</span></b></label>
+        <input id="p" type="range" min="1" max="15" step="1" value="1" aria-valuetext="1 personne">
+      </div>
+      <div class="sortie" aria-live="polite">
+        <div class="pil"><span>Heures récupérées par an</span><b class="bleu"><span data-out="h">79</span><i>h</i></b></div>
+        <div class="pil"><span>Payées en trop chaque année</span><b><span data-out="e">4 345</span><i>€</i></b></div>
+      </div>
+      <p class="trad">Sur <span data-out="m">144</span> h par an passées en tâches répétitives, 55 % sont comptées récupérables, sur 48 semaines, à 55 € l'heure chargée. Le diagnostic affine le reste.</p>
+      <a href="mailto:guigs.prat@gmail.com" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
+    </div>
+  </details>
 
-  <p class="tri">building<span class="sym">⌁</span>breaking<span class="sym">⌁</span>documenting</p>
-
-  <div class="cols">
-
-    <section class="grp">
-      <span class="brace">travailler ensemble</span>
-
-      <a class="row" href="https://www.malt.fr/profile/guillaumeprat" target="_blank" rel="noopener">
-        <span class="row-i">01</span>
-        <span class="row-n scr">Malt</span>
-        <span class="row-d">missions IA</span>
-        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
-      </a>
-
-      <a class="row" href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener">
-        <span class="row-i">02</span>
-        <span class="row-n scr">LinkedIn</span>
-        <span class="row-d">cas clients</span>
-        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
-      </a>
-
-      <a class="row" href="mailto:guigs.prat@gmail.com">
-        <span class="row-i">03</span>
-        <span class="row-n scr">E&#8209;mail</span>
-        <span class="row-d">écrire directement</span>
-        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
-      </a>
-    </section>
-
-    <section class="grp">
-      <span class="brace">l'atelier</span>
-
-      <a class="row" href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener">
-        <span class="row-i">04</span>
-        <span class="row-n scr">Instagram</span>
-        <span class="row-d">le backstage</span>
-        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
-      </a>
-
-      <a class="row" href="https://x.com/MakeSaens" target="_blank" rel="noopener">
-        <span class="row-i">05</span>
-        <span class="row-n scr">X</span>
-        <span class="row-d">le labo</span>
-        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
-      </a>
-
-      <a class="row" href="https://github.com/makesaens" target="_blank" rel="noopener">
-        <span class="row-i">06</span>
-        <span class="row-n scr">GitHub</span>
-        <span class="row-d">le code</span>
-        <span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span>
-      </a>
-
-      <span class="row is-soon">
-        <span class="row-i">07</span>
-        <span class="row-n">saens.studio</span>
-        <span class="soon">bientôt</span>
-      </span>
-    </section>
-
-  </div>
-
-  <div class="foot">
-    <span>Lyon, France</span>
-    <span><span class="sym">↯</span> <span id="clock">—</span></span>
-  </div>
-
+  <section class="liste" aria-label="Mes liens">
+    <p class="lbl">Mes liens</p>
+      <a class="lc" href="https://www.malt.fr/profile/guillaumeprat" target="_blank" rel="noopener"><span class="lc-t">Malt</span><span class="lc-p">Missions IA<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
+      <a class="lc" href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener"><span class="lc-t">LinkedIn</span><span class="lc-p">Cas clients<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
+      <a class="lc" href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener"><span class="lc-t">Instagram</span><span class="lc-p">Backstage<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
+      <a class="lc" href="https://x.com/MakeSaens" target="_blank" rel="noopener"><span class="lc-t">X</span><span class="lc-p">Le labo<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
+      <a class="lc" href="https://github.com/makesaens" target="_blank" rel="noopener"><span class="lc-t">GitHub</span><span class="lc-p">Le code<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
+      <span class="lc lc--eteint" aria-disabled="true"><span class="lc-t">Le site complet</span><span class="lc-p">Bientôt</span></span>
+  </section>
+  <footer class="pied">
+    <span><b>Saens Studio</b> · Lyon, France</span>
+    <span>© 2026</span>
+  </footer>
 </main>
-
-<div class="dock">
-  <span class="logo-sq" aria-hidden="true"><svg viewBox="0 0 709.28 964.66"><path d="M370.07,424.14c-3.56-19.45,1.13-51.34,22.42-65.3,12.42-7.36,27.37-7.54,40.77-8.02,22.66-.36,51.19.03,72.28-.27,27.22-1.21,48.74,2.49,53.45-32.93,13.35-75.7,39.99-222.56,51.28-292.56.92-9.03,1.13-16.55-6.08-20.67-5.7-3.15-16.03-3.92-31.07-4.19-34.13-.42-80.96.03-116.4-.14-39.38.02-76.12-.06-115.93-.05-21.68,1.26-49.89-3.84-69.14,11.23-9.44,7.32-14.38,28.82-17.2,44.5-4.52,23.77-8.61,50.23-13.35,73.57-3.62,17.25-7.61,29.37-15.56,36.16-7.98,7.05-20.55,8.97-38.22,9.55-27.92.84-73.9-.57-100.47,1.16-27.29,1.09-31.53,13.66-35.46,36.94C39.66,282.5,12.63,426.92.28,505.94c-.58,6.23-.32,10.62,1.36,13.6,3.31,5.26,9.79,5.71,16.99,6.29,69.37,1.12,183.26.05,266.95.41,37.73-.12,60.36-3.63,53.3,36.73-3.66,16.86-14.48,36.18-31.26,44.72-13.62,6.46-28.2,5.9-42.61,6.2-27.39.75-69.58-1.99-92.15,3.42-18.16,3.32-21.64,22.92-24.09,37.48-3.54,19.69-8.42,47.66-13.91,78.71-13.69,81.93-29.5,158.92-36.84,214.18-1.34,14.17,8.24,16.45,22.05,16.62,80.22.77,223.02,0,288.67.18,23.57.06,35.15-2.48,40.9-29.95,6.09-26.09,12.8-71.42,18.48-99.03,6.59-34.1,15.74-44.99,50.03-45.86,32.81-1.49,82.29,1.54,113.78-2.45,22.66-2.53,23.56-24.18,27.01-41.26,12.45-75.32,39.59-216.1,50.25-289.55.61-10.5-1.79-14.9-11.35-16.59-70.96-3.19-221.79-.17-295.89-1.26-13.36-.25-28.53-.2-31.81-14.15l-.06-.24Z"/></svg></span>
-  <span class="dock-pill"><span class="dot" aria-hidden="true"></span><span>liens</span></span>
-  <a class="btn-cta" href="mailto:guigs.prat@gmail.com"><span>Ready</span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></span></a>
-</div>
-
-<script src="js/hero-points.js"></script>
 <script>
 (function(){
-  'use strict';
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Même alphabet de brouillage que le site (js/main.js)
-  var WGL = 'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789#{}()/*+<>=%&AEKMSTZ';
-
-  /* ---- Mise en scène ----
-     Au chargement : page noire + bruit seulement. Tout le reste attend que le mot soit
-     formé. Le masquage est posé ICI (en JS) et non dans le HTML : sans JS, si WebGL
-     échoue ou en reduced-motion, la page reste entièrement lisible. */
-  var scene = !reduce;
-  if(scene) document.body.classList.add('stage');
-
-  var revele = false;
-  function reveler(){
-    if(revele) return;
-    revele = true;
-    document.body.classList.add('revealed');
+  var eH = document.getElementById('h'), eP = document.getElementById('p');
+  var fr = function(n){ return Math.round(n).toLocaleString('fr-FR').replace(/\u202f|\s/g, '\u00a0'); };
+  function progress(i){ i.style.setProperty('--p', ((i.value - i.min) / (i.max - i.min) * 100) + '%'); }
+  function maj(){
+    var h = +eH.value, p = +eP.value;
+    var manuelles = Math.round(Math.min(h, 20) * Math.min(p, 10) * 48), recuperees = Math.round(manuelles * .55), argent = recuperees * 55;
+    document.querySelector('[data-aff="h"]').textContent = h; document.querySelector('[data-aff="p"]').textContent = p;
+    eH.setAttribute('aria-valuetext', h + ' heures par semaine'); eP.setAttribute('aria-valuetext', p + ' personne' + (p > 1 ? 's' : ''));
+    document.querySelector('[data-out="h"]').textContent = fr(recuperees);
+    document.querySelector('[data-out="e"]').textContent = fr(argent);
+    document.querySelector('[data-out="m"]').textContent = fr(manuelles);
+    progress(eH); progress(eP);
   }
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(reveler);
-  setTimeout(reveler, 1200);   // filet : on ne laisse jamais la page noire
-
-  /* ---- Mise en scene ----
-     Le mot en particules a laisse la place au texte du heros (11/08). La revelation
-     n'attend donc plus la formation d'un mot : elle part des que les polices sont la. ---- */
-
-
-  /* ---- Scramble au survol des libellés (règle : textes courts = scramble) ---- */
-  document.querySelectorAll('.row').forEach(function(row){
-    var el = row.querySelector('.scr');
-    if(!el || reduce) return;
-    var txt = el.textContent;
-    /* Durée FIXE quel que soit le mot : « Malt » (4 lettres) et « Instagram » (9) mettent
-       le même temps. L'ancienne version révélait 1 lettre par frame → les mots courts
-       étaient expédiés en ~170 ms. */
-    var DUR = 640, STEP = 42, TICKS = Math.round(DUR / STEP);
-    row.addEventListener('mouseenter', function(){
-      var t = 0, n = txt.length;
-      clearInterval(el._s);
-      el._s = setInterval(function(){
-        t++;
-        var shown = Math.floor(n * t / TICKS), out = '';
-        for(var i=0;i<n;i++){
-          out += (i < shown) ? txt[i] : WGL[(Math.random()*WGL.length)|0];
-        }
-        el.textContent = out;
-        if(t >= TICKS){ clearInterval(el._s); el.textContent = txt; }
-      }, STEP);
-    });
-    row.addEventListener('mouseleave', function(){ clearInterval(el._s); el.textContent = txt; });
-  });
-
-  /* ---- Texte en pixels : les deux crochets que le moteur attend ----
-     1. des <span class="rv-i"> autour de chaque mot. Sur le site ils viennent du
-        moteur d'apparition de main.js ; on ne reprend ici que le decoupage.
-     2. window.__reglages, l'objet de l'effet de mare au scroll. Il n'a pas d'objet
-        sur une page qui tient en un ecran — mais sans lui le moteur se remet en
-        file toutes les 200 ms indefiniment. On le fournit a zero. */
-  window.__reglages = window.__reglages ||
-    { SC:{trainee:1, cisail:0, courbe:1, fente:0}, SCROLL:{retard:0} };
-
-  function decouperEnMots(el){
-    if(!el) return;
-    var mots = el.textContent.split(/(\s+)/);
-    el.textContent = '';
-    mots.forEach(function(m){
-      if(m === '') return;
-      if(/^\s+$/.test(m)){ el.appendChild(document.createTextNode(m)); return; }
-      var enveloppe = document.createElement('span'); enveloppe.className = 'rv-w';
-      var mot = document.createElement('span'); mot.className = 'rv-i';
-      mot.textContent = m;
-      enveloppe.appendChild(mot); el.appendChild(enveloppe);
-    });
-  }
-  decouperEnMots(document.querySelector('.hero-statement'));
-  decouperEnMots(document.querySelector('.hero-sub'));
-
-  /* ---- Horloge Lyon ---- */
-  var clock = document.getElementById('clock');
-  function tick(){
-    try{
-      clock.textContent = new Intl.DateTimeFormat('fr-FR',{
-        timeZone:'Europe/Paris', hour:'2-digit', minute:'2-digit'
-      }).format(new Date());
-    }catch(e){ clock.textContent=''; }
-  }
-  tick(); setInterval(tick, 30000);
+  eH.addEventListener('input', maj); eP.addEventListener('input', maj); maj();
 })();
 </script>
-<script src="js/texte-pixels.js"></script>
-
 </body>
 </html>
