@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Saens Studio — Le travail qui se répète n'a pas besoin de vous</title>
-<meta name="description" content="Outils métier et automatisations IA à Lyon. Je cherche où partent vos heures, je construis le système qui les ramène — et je le livre chez vous. Diagnostic de 30 min, offert s'il n'y a rien à automatiser.">
-<meta name="theme-color" content="#050505">
+<meta name="description" content="Outils métier et automatisations IA à Lyon. Je cherche où partent vos heures, je construis le système qui les rend — et je le livre chez vous. Diagnostic offert, 30 min, sans engagement.">
+<meta name="theme-color" content="#07090c">
 <meta property="og:title" content="Saens Studio — Le travail qui se répète n'a pas besoin de vous.">
-<meta property="og:description" content="Faire disparaître les corvées, ou construire l'outil qui n'existe pas. Diagnostic de 30 min, offert s'il n'y a rien à automatiser.">
+<meta property="og:description" content="Faire disparaître les corvées, ou construire l'outil qui n'existe pas. Diagnostic offert, 30 min, sans engagement.">
 <meta property="og:type" content="website">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -15,21 +15,36 @@
 <style>
 @font-face{font-family:'Plus Jakarta Sans';src:url('fonts/plus-jakarta-var-latin.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
 @font-face{font-family:'Geist';src:url('fonts/geist-var-latin.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
-:root{--nuit:#050505;--blanc:#f4f4f2;--bleu:#2aabee;--m-100:#f4f4f2;--m-60:rgba(255,255,255,.62);--m-50:rgba(255,255,255,.52);--m-40:rgba(255,255,255,.42);--m-28:rgba(255,255,255,.28);--m-20:rgba(255,255,255,.16);--m-07:rgba(255,255,255,.07);--bord:rgba(255,255,255,.08);--pan-a:rgba(255,255,255,.05);--pan-b:rgba(255,255,255,.015);--btn-bg:#f2f2f0;--btn-text:#161615;--ease:cubic-bezier(.22,1,.36,1);--roll:cubic-bezier(.65,0,.15,1)}
+/* ————— DA du site, reprise telle quelle (19/09) : encre froide #101c2e, papier bleuté,
+   un seul bleu #2aabee, le pavé penché pour surligner un titre, le trait au crayon pour souligner un mot ————— */
+:root{--nuit:#07090c;--blanc:#f2f5f9;--bleu:#2aabee;--encre:#101c2e;--m-100:#f2f5f9;--m-60:rgba(255,255,255,.62);--m-50:rgba(255,255,255,.52);--m-40:rgba(255,255,255,.42);--m-28:rgba(255,255,255,.28);--m-20:rgba(255,255,255,.16);--m-07:rgba(255,255,255,.07);--bord:rgba(255,255,255,.08);--pan-a:rgba(255,255,255,.05);--pan-b:rgba(255,255,255,.015);--surface-haute:#1f1f1e;--bord-btn:rgba(255,255,255,.14);--ease:cubic-bezier(.22,1,.36,1);--roll:cubic-bezier(.65,0,.15,1);
+--pave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 5 C 60 3.5, 140 4.5, 196 4 C 197.5 14, 196.5 26, 196 36 C 140 37.2, 60 35.6, 4 36.4 C 3.2 26, 3.8 14, 4 5 Z' fill='%232aabee'/%3E%3C/svg%3E")}
 *,*:before,*:after{box-sizing:border-box}
 html{background:var(--nuit)}
 body{margin:0;background:var(--nuit);color:var(--blanc);font-family:'Plus Jakarta Sans','Geist',system-ui,sans-serif;font-size:16px;line-height:1.5;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--bleu);color:#0e1319}
-mark{color:var(--bleu);background:transparent}
+/* on SURLIGNE un grand titre : pavé bleu tracé à la main, penché, l'encre du site à l'intérieur */
+h1 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.06;padding:.08em .3em .12em;margin:0 -.12em;rotate:-.7deg;transform-origin:50% 60%;font-weight:inherit}
+h1 mark:nth-of-type(2){rotate:.6deg}
+/* dans les cartes, on surligne aussi : le pavé, en plus petit et à peine penché */
+.offre h2 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
+.offre:nth-of-type(2) h2 mark{rotate:.45deg}
+/* les listes des deux cartes : la puce carrée bleue du site */
+.puces{margin:4px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.puces li{position:relative;padding-left:15px;font-size:13.5px;line-height:1.35;letter-spacing:-.02em;color:var(--m-50)}
+.puces li:before{content:"";position:absolute;left:0;top:.5em;width:4px;height:4px;border-radius:1px;background:var(--bleu)}
+.offre:hover .puces li{color:var(--m-60)}
+/* on SOULIGNE un mot dans du texte courant : le trait de crayon bleu, jamais droit */
+.lead strong{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 60 3.6, 140 5.8, 198 4.2' fill='none' stroke='%232aabee' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:0 calc(100% + .02em);background-size:100% .22em;padding-bottom:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:var(--blanc);font-weight:500;background-color:transparent}
 .page{width:min(100% - 2.5rem,640px);margin:0 auto;padding:72px 0 40px;flex:1;display:flex;flex-direction:column}
 .tete{display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
 .logo{height:38px;width:auto;display:block;color:var(--blanc)}
 .nom{font-size:14px;letter-spacing:-.28px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px}
 .nom:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
-h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:500;line-height:1.04;letter-spacing:-.035em;white-space:nowrap}
+h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:600;line-height:1.42;letter-spacing:-.03em;white-space:nowrap}
 .lead{margin:0;font-size:clamp(1rem,2.1vw,1.15rem);line-height:1.35;letter-spacing:-.025em;font-weight:500;color:var(--m-50);max-width:44ch}
-.lead strong{color:var(--blanc);font-weight:500}
+
 /* les deux façons, condensées, côte à côte */
 .offres{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .offre{border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:20px 20px 22px;display:flex;flex-direction:column;gap:8px;transition:transform .45s var(--ease),border-color .45s var(--ease)}
@@ -37,21 +52,22 @@ h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:500;line-heig
 .offre .k{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;transition:color .35s var(--ease)}
 .offre:hover .k{color:var(--bleu)}
 .offre .k:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
-.offre h2{margin:0;font-size:1.2rem;font-weight:500;line-height:1.15;letter-spacing:-.025em}
+.offre h2{margin:0;font-size:1.08rem;font-weight:500;line-height:1.15;letter-spacing:-.025em}
 .offre p{margin:0;font-size:14px;line-height:1.4;letter-spacing:-.02em;color:var(--m-50)}
-.offre p strong{color:var(--blanc);font-weight:500}
+
 /* l'action, la première offre */
 .action{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:12px}
 .note{margin:0;font-size:13px;letter-spacing:-.26px;color:var(--m-40);text-align:center}
 /* le bouton du site, tel quel */
-.btn-cta{font-family:inherit;font-size:14px;font-weight:600;background:var(--btn-bg);color:var(--btn-text);height:30px;padding:0 4px 0 13px;border-radius:3px;display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;white-space:nowrap}
+.btn-cta{transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease);font-family:inherit;font-size:14px;font-weight:600;background:var(--surface-haute);color:var(--blanc);border:1px solid var(--bord-btn);height:30px;padding:0 4px 0 13px;border-radius:3px;display:inline-flex;align-items:center;gap:10px;cursor:pointer;white-space:nowrap}
 .btn-cta .txt{position:relative;overflow:hidden;display:block;height:30px;line-height:30px}
 .btn-cta .txt span{display:block;transition:transform .45s var(--roll)}
 .btn-cta .txt span+span{position:absolute;left:0;top:100%}
 .btn-cta:hover .txt span,.btn-cta:focus-visible .txt span{transform:translateY(-100%)}
-.btn-cta .sq{width:22px;height:22px;background:var(--btn-text);color:var(--btn-bg);border-radius:2px;display:grid;place-items:center;transition:transform .35s var(--ease)}
+.btn-cta .sq{width:22px;height:22px;background:transparent;color:var(--blanc);border:1px solid var(--bord-btn);border-radius:2px;display:grid;place-items:center;transition:transform .35s var(--ease),background-color .3s var(--ease),color .3s var(--ease)}
 .btn-cta .sq svg{width:10px;height:10px;transform:rotate(-45deg);transition:transform .55s var(--roll)}
-.btn-cta:hover .sq,.btn-cta:focus-visible .sq{transform:scale(.85)}
+.btn-cta:hover,.btn-cta:focus-visible{background:transparent;color:var(--bleu);border-color:var(--bleu)}
+.btn-cta:hover .sq,.btn-cta:focus-visible .sq{transform:scale(.85);background:var(--bleu);color:#0b1520;border-color:var(--bleu)}
 .btn-cta:hover .sq svg,.btn-cta:focus-visible .sq svg{transform:rotate(360deg)}
 /* le calculateur : une ligne blanche douce qui ouvre un panneau sombre, comme les deux façons */
 .calc{margin-top:40px;border-radius:8px;background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);box-shadow:0 0 0 1px var(--bord)}
@@ -84,6 +100,8 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
 .pil b{display:flex;align-items:baseline;gap:.12em;font-size:1.7rem;font-weight:500;letter-spacing:-.03em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--blanc)}
 .pil b.bleu{color:var(--bleu)}
 .pil b i{font-style:normal;font-size:.5em;color:var(--m-60)}
+.calc-corps p.alerte{margin:0;font-size:12.5px;line-height:1.35;letter-spacing:-.02em;color:var(--bleu)}
+.calc-corps p.trad strong{color:var(--blanc);font-weight:500}
 .calc-corps p.trad{margin:0;font-size:13px;line-height:1.4;letter-spacing:-.02em;color:var(--m-60);font-variant-numeric:tabular-nums}
 .calc-corps .btn-cta{align-self:center;margin-top:4px}
 /* les liens : mineurs */
@@ -103,7 +121,7 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
 .pied{margin-top:auto;padding-top:48px;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-size:13px;letter-spacing:-.26px;color:var(--m-40)}
 .pied b{font-weight:500;color:var(--blanc)}
 @media(max-width:600px){h1{white-space:normal}.offres{grid-template-columns:1fr}.sortie{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){.lc,.lc-p i,.btn-cta .txt span,.btn-cta .sq,.btn-cta .sq svg,.calc summary,.calc summary .lib,.calc summary .pl svg,.offre,.offre .k{transition:none}.calc[open] .calc-corps{animation:none}}
+@media(prefers-reduced-motion:reduce){h1 mark{rotate:none}.lc,.lc-p i,.btn-cta .txt span,.btn-cta .sq,.btn-cta .sq svg,.calc summary,.calc summary .lib,.calc summary .pl svg,.offre,.offre .k{transition:none}.calc[open] .calc-corps{animation:none}}
 </style>
 </head>
 <body>
@@ -112,43 +130,56 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
     <svg viewBox="0 0 709.28 964.66" class="logo" aria-label="Saens Studio"><path d="M370.07,424.14c-3.56-19.45,1.13-51.34,22.42-65.3,12.42-7.36,27.37-7.54,40.77-8.02,22.66-.36,51.19.03,72.28-.27,27.22-1.21,48.74,2.49,53.45-32.93,13.35-75.7,39.99-222.56,51.28-292.56.92-9.03,1.13-16.55-6.08-20.67-5.7-3.15-16.03-3.92-31.07-4.19-34.13-.42-80.96.03-116.4-.14-39.38.02-76.12-.06-115.93-.05-21.68,1.26-49.89-3.84-69.14,11.23-9.44,7.32-14.38,28.82-17.2,44.5-4.52,23.77-8.61,50.23-13.35,73.57-3.62,17.25-7.61,29.37-15.56,36.16-7.98,7.05-20.55,8.97-38.22,9.55-27.92.84-73.9-.57-100.47,1.16-27.29,1.09-31.53,13.66-35.46,36.94C39.66,282.5,12.63,426.92.28,505.94c-.58,6.23-.32,10.62,1.36,13.6,3.31,5.26,9.79,5.71,16.99,6.29,69.37,1.12,183.26.05,266.95.41,37.73-.12,60.36-3.63,53.3,36.73-3.66,16.86-14.48,36.18-31.26,44.72-13.62,6.46-28.2,5.9-42.61,6.2-27.39.75-69.58-1.99-92.15,3.42-18.16,3.32-21.64,22.92-24.09,37.48-3.54,19.69-8.42,47.66-13.91,78.71-13.69,81.93-29.5,158.92-36.84,214.18-1.34,14.17,8.24,16.45,22.05,16.62,80.22.77,223.02,0,288.67.18,23.57.06,35.15-2.48,40.9-29.95,6.09-26.09,12.8-71.42,18.48-99.03,6.59-34.1,15.74-44.99,50.03-45.86,32.81-1.49,82.29,1.54,113.78-2.45,22.66-2.53,23.56-24.18,27.01-41.26,12.45-75.32,39.59-216.1,50.25-289.55.61-10.5-1.79-14.9-11.35-16.59-70.96-3.19-221.79-.17-295.89-1.26-13.36-.25-28.53-.2-31.81-14.15l-.06-.24Z" fill="currentColor"/></svg>
     <span class="nom">Saens Studio · Outils métier, automatisations IA · Lyon</span>
     <h1>Le travail qui <mark>se répète</mark><br>n'a pas besoin <mark>de vous</mark>.</h1>
-    <p class="lead"><strong>Je cherche où partent vos heures. Je construis le système qui les ramène.</strong> Et je le livre chez vous : le code, les données, les accès — rien à louer, rien à rendre.</p>
+    <p class="lead">Je cherche où partent vos heures, je construis <strong>le système qui les rend</strong>.<br>Livré chez vous : le code, les données, les accès.</p>
   </header>
 
-  <section class="offres" aria-label="Deux façons de récupérer vos heures">
+  <section class="offres" aria-label="Deux façons de vous rendre vos heures">
     <article class="offre">
-      <span class="k">Première façon</span>
-      <h2>Faire disparaître <mark>les corvées.</mark></h2>
-      <p>Ce qui se répète part à la machine, <strong>dans les logiciels que vous utilisez déjà</strong>. Vous gardez ce qui demande un jugement.</p>
+      <span class="k">D'abord · ce qui revient chaque semaine</span>
+      <h2>Les corvées les plus fréquentes,<br><mark>réglées en premier.</mark></h2>
+      <ul class="puces">
+        <li>Répondre aux mails et aux formulaires</li>
+        <li>Faire les devis, les factures, les relances</li>
+        <li>Être prévenu quand ça casse</li>
+      </ul>
     </article>
     <article class="offre">
-      <span class="k">Deuxième façon</span>
-      <h2>Construire, reprendre, <mark>ou rendre la main.</mark></h2>
-      <p>L'outil qui n'existe pas, construit pour votre métier. <strong>Le système vous appartient</strong> : code, données, documentation.</p>
+      <span class="k">Ensuite · quand l'outil n'existe pas</span>
+      <h2>Quand l'outil n'existe pas,<br><mark>on le construit.</mark></h2>
+      <ul class="puces">
+        <li>Trouver la donnée</li>
+        <li>Relier ce qui ne se parle pas</li>
+        <li>Construire, ou reprendre ce qui casse</li>
+      </ul>
     </article>
   </section>
 
   <div class="action">
     <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
-    <p class="note">30 min · offert s'il n'y a rien à automatiser</p>
+    <p class="note">Diagnostic offert · 30 min · Sans engagement</p>
   </div>
 
   <details class="calc">
     <summary><span class="lib">Calculer le temps que vous perdez</span><span class="pl" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v11M2.5 8h11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
     <div class="calc-corps">
       <div class="champ">
-        <label class="etiq" for="h">Heures par semaine perdues en corvées <b><span data-aff="h">3</span><span>h</span></b></label>
-        <input id="h" type="range" min="1" max="30" step="1" value="3" aria-valuetext="3 heures par semaine">
+        <label class="etiq" for="h">Heures par semaine perdues en corvées <b><span data-aff="h">8</span><span>h</span></b></label>
+        <input id="h" type="range" min="1" max="30" step="1" value="8" aria-valuetext="8 heures par semaine">
       </div>
       <div class="champ">
-        <label class="etiq" for="p">Personnes concernées <b><span data-aff="p">1</span></b></label>
-        <input id="p" type="range" min="1" max="15" step="1" value="1" aria-valuetext="1 personne">
+        <label class="etiq" for="p">Personnes concernées <b><span data-aff="p">3</span></b></label>
+        <input id="p" type="range" min="1" max="15" step="1" value="3" aria-valuetext="3 personnes">
+      </div>
+      <div class="champ">
+        <label class="etiq" for="t">Taux horaire chargé <b><span data-aff="t">55</span><span>€</span></b></label>
+        <input id="t" type="range" min="20" max="150" step="5" value="55" aria-valuetext="55 euros de l'heure">
       </div>
       <div class="sortie" aria-live="polite">
-        <div class="pil"><span>Heures récupérées par an</span><b class="bleu"><span data-out="h">79</span><i>h</i></b></div>
-        <div class="pil"><span>Payées en trop chaque année</span><b><span data-out="e">4 345</span><i>€</i></b></div>
+        <div class="pil"><span>Heures rendues par an</span><b class="bleu"><span data-out="h">634</span><i>h</i></b></div>
+        <div class="pil"><span>Payées en trop chaque année</span><b><span data-out="e">34&nbsp;870</span><i>€</i></b></div>
       </div>
-      <p class="trad">Sur <span data-out="m">144</span> h par an passées en tâches répétitives, 55 % sont comptées récupérables, sur 48 semaines, à 55 € l'heure chargée. Le diagnostic affine le reste.</p>
+      <p class="trad"><strong>Comment on compte&nbsp;:</strong> <span data-out="hIn">8</span>&nbsp;h par semaine × <span data-out="pIn">3</span> personnes × 48 semaines = <span data-out="m">1&nbsp;152</span>&nbsp;h de tâches répétitives par an. En pratique, 55&nbsp;% peuvent tourner sans vous&nbsp;: <span data-out="h2">634</span>&nbsp;h, l'équivalent de <span data-out="sem">18</span> semaines de travail. À <span data-out="tIn">55</span>&nbsp;€ de l'heure chargée, ce sont <span data-out="e2">34&nbsp;870</span>&nbsp;€ payés chaque année pour du travail qui pourrait tourner seul.</p>
+      <p class="alerte" data-alerte hidden>Estimation plafonnée&nbsp;: au-delà, c'est l'audit réel qui chiffre.</p>
       <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
     </div>
   </details>
@@ -157,10 +188,10 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
     <p class="lbl">Mes liens</p>
       <a class="lc" href="https://www.malt.fr/profile/guillaumeprat" target="_blank" rel="noopener"><span class="lc-t">Malt</span><span class="lc-p">Missions IA<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener"><span class="lc-t">LinkedIn</span><span class="lc-p">Cas clients<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
-      <a class="lc" href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener"><span class="lc-t">Instagram</span><span class="lc-p">Backstage<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://x.com/MakeSaens" target="_blank" rel="noopener"><span class="lc-t">X</span><span class="lc-p">Le labo<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://github.com/makesaens" target="_blank" rel="noopener"><span class="lc-t">GitHub</span><span class="lc-p">Le code<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
-      <span class="lc lc--eteint" aria-disabled="true"><span class="lc-t">Le site complet</span><span class="lc-p">Bientôt</span></span>
+      <a class="lc" href="https://saens-studio.fr" target="_blank" rel="noopener"><span class="lc-t">Le site</span><span class="lc-p">saens-studio.fr<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
+      <a class="lc" href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener"><span class="lc-t">Instagram</span><span class="lc-p">Backstage<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
   </section>
   <footer class="pied">
     <span><b>Saens Studio</b> · Lyon, France</span>
@@ -169,20 +200,42 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
 </main>
 <script>
 (function(){
-  var eH = document.getElementById('h'), eP = document.getElementById('p');
+  /* la formule du site, reprise telle quelle : plafonds à 20 h et 10 personnes, 55 % de ce qui reste */
+  var eH = document.getElementById('h'), eP = document.getElementById('p'), eT = document.getElementById('t');
+  var alerte = document.querySelector('[data-alerte]');
   var fr = function(n){ return Math.round(n).toLocaleString('fr-FR').replace(/\u202f|\s/g, '\u00a0'); };
+  var out = function(k){ return document.querySelector('[data-out="' + k + '"]'); };
   function progress(i){ i.style.setProperty('--p', ((i.value - i.min) / (i.max - i.min) * 100) + '%'); }
-  function maj(){
-    var h = +eH.value, p = +eP.value;
-    var manuelles = Math.round(Math.min(h, 20) * Math.min(p, 10) * 48), recuperees = Math.round(manuelles * .55), argent = recuperees * 55;
-    document.querySelector('[data-aff="h"]').textContent = h; document.querySelector('[data-aff="p"]').textContent = p;
-    eH.setAttribute('aria-valuetext', h + ' heures par semaine'); eP.setAttribute('aria-valuetext', p + ' personne' + (p > 1 ? 's' : ''));
-    document.querySelector('[data-out="h"]').textContent = fr(recuperees);
-    document.querySelector('[data-out="e"]').textContent = fr(argent);
-    document.querySelector('[data-out="m"]').textContent = fr(manuelles);
-    progress(eH); progress(eP);
+  function calcule(h, p, taux){
+    var hc = Math.min(h,20), pc = Math.min(p,10);
+    var plafonne = h>=20 || p>=10;
+    var manuelles = Math.round(hc*pc*48);
+    var recuperees = Math.round(manuelles*.55);
+    return {manuelles:manuelles, recuperees:recuperees, argent:recuperees*taux, semaines:Math.round(recuperees/35), plafonne:plafonne};
   }
-  eH.addEventListener('input', maj); eP.addEventListener('input', maj); maj();
+  function maj(){
+    var h = +eH.value, p = +eP.value, t = +eT.value;
+    var r = calcule(h, p, t);
+    document.querySelector('[data-aff="h"]').textContent = h;
+    document.querySelector('[data-aff="p"]').textContent = p;
+    document.querySelector('[data-aff="t"]').textContent = t;
+    eH.setAttribute('aria-valuetext', h + ' heures par semaine');
+    eP.setAttribute('aria-valuetext', p + ' personne' + (p > 1 ? 's' : ''));
+    eT.setAttribute('aria-valuetext', t + " euros de l'heure");
+    out('h').textContent = fr(r.recuperees);
+    out('h2').textContent = fr(r.recuperees);
+    out('e').textContent = fr(r.argent);
+    out('e2').textContent = fr(r.argent);
+    out('m').textContent = fr(r.manuelles);
+    out('sem').textContent = fr(r.semaines);
+    out('hIn').textContent = h;
+    out('pIn').textContent = p;
+    out('tIn').textContent = t;
+    if(alerte) alerte.hidden = !r.plafonne;
+    progress(eH); progress(eP); progress(eT);
+  }
+  [eH, eP, eT].forEach(function(i){ i.addEventListener('input', maj); });
+  maj();
 })();
 </script>
 </body>
