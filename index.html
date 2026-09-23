@@ -28,13 +28,8 @@ a{color:inherit;text-decoration:none}
 h1 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.06;padding:.08em .3em .12em;margin:0 -.12em;rotate:-.7deg;transform-origin:50% 60%;font-weight:inherit}
 h1 mark:nth-of-type(2){rotate:.6deg}
 /* dans les cartes, on surligne aussi : le pavé, en plus petit et à peine penché */
-.offre h2 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
-.offre:nth-of-type(2) h2 mark{rotate:.45deg}
+.rdv h2 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
 /* les listes des deux cartes : la puce carrée bleue du site */
-.puces{margin:4px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
-.puces li{position:relative;padding-left:15px;font-size:13.5px;line-height:1.35;letter-spacing:-.02em;color:var(--m-50)}
-.puces li:before{content:"";position:absolute;left:0;top:.5em;width:4px;height:4px;border-radius:1px;background:var(--bleu)}
-.offre:hover .puces li{color:var(--m-60)}
 /* on SOULIGNE un mot dans du texte courant : le trait de crayon bleu, jamais droit */
 .lead strong{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 60 3.6, 140 5.8, 198 4.2' fill='none' stroke='%232aabee' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:0 calc(100% + .02em);background-size:100% .22em;padding-bottom:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:var(--blanc);font-weight:500;background-color:transparent}
 .page{width:min(100% - 2.5rem,640px);margin:0 auto;padding:72px 0 40px;flex:1;display:flex;flex-direction:column}
@@ -46,17 +41,22 @@ h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:600;line-heig
 .lead{margin:0;font-size:clamp(1rem,2.1vw,1.15rem);line-height:1.35;letter-spacing:-.025em;font-weight:500;color:var(--m-50);max-width:44ch}
 
 /* les deux façons, condensées, côte à côte */
-.offres{margin-top:44px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.offre{border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:20px 20px 22px;display:flex;flex-direction:column;gap:8px;transition:transform .45s var(--ease),border-color .45s var(--ease)}
-.offre:hover{transform:translateY(-4px) scale(1.015);border-color:var(--m-28)}
-.offre .k{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;transition:color .35s var(--ease)}
-.offre:hover .k{color:var(--bleu)}
-.offre .k:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
-.offre h2{margin:0;font-size:1.08rem;font-weight:500;line-height:1.15;letter-spacing:-.025em}
-.offre p{margin:0;font-size:14px;line-height:1.4;letter-spacing:-.02em;color:var(--m-50)}
+/* ————— 23/09 : le calendrier Cal.com remplace les deux cartes — on réserve sans quitter la page ————— */
+.rdv{margin-top:44px;display:flex;flex-direction:column;gap:9px}
+.rdv .k{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px}
+.rdv .k:before{content:"";width:4px;height:4px;border-radius:1px;background:var(--bleu)}
+.rdv h2{margin:0;font-size:1.5rem;font-weight:500;line-height:1.15;letter-spacing:-.03em}
+.rdv-note{margin:0;font-size:14px;line-height:1.45;letter-spacing:-.02em;color:var(--m-50)}
+.rdv-meta{display:inline-block;margin-top:5px;font-size:13px;color:var(--m-40)}
+.cal-boite{position:relative;margin-top:10px;border-radius:20px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);overflow:hidden;min-height:560px}
+#cal-inline{width:100%;min-height:560px;overflow:auto}
+#cal-inline>*{width:100%}
+.cal-repli{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:1.5rem;text-align:center;font-size:13.5px;letter-spacing:-.02em;color:var(--m-40);pointer-events:none}
+.cal-repli a{color:var(--bleu);text-decoration:underline;text-underline-offset:3px;pointer-events:auto}
+.cal-repli[hidden]{display:none}
+@media(max-width:560px){.cal-boite,#cal-inline{min-height:640px}}
 
-/* l'action, la première offre */
-.action{margin-top:36px;display:flex;flex-direction:column;align-items:center;gap:12px}
+/* le bouton principal */
 .note{margin:0;font-size:13px;letter-spacing:-.26px;color:var(--m-40);text-align:center}
 /* le bouton du site, tel quel */
 .btn-cta{transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease);font-family:inherit;font-size:14px;font-weight:600;background:var(--surface-haute);color:var(--blanc);border:1px solid var(--bord-btn);height:30px;padding:0 4px 0 13px;border-radius:3px;display:inline-flex;align-items:center;gap:10px;cursor:pointer;white-space:nowrap}
@@ -120,8 +120,8 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
 .lc--eteint{opacity:.45;pointer-events:none}
 .pied{margin-top:auto;padding-top:48px;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-size:13px;letter-spacing:-.26px;color:var(--m-40)}
 .pied b{font-weight:500;color:var(--blanc)}
-@media(max-width:600px){h1{white-space:normal}.offres{grid-template-columns:1fr}.sortie{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){h1 mark{rotate:none}.lc,.lc-p i,.btn-cta .txt span,.btn-cta .sq,.btn-cta .sq svg,.calc summary,.calc summary .lib,.calc summary .pl svg,.offre,.offre .k{transition:none}.calc[open] .calc-corps{animation:none}}
+@media(max-width:600px){h1{white-space:normal}.sortie{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){h1 mark{rotate:none}.lc,.lc-p i,.btn-cta .txt span,.btn-cta .sq,.btn-cta .sq svg,.calc summary,.calc summary .lib,.calc summary .pl svg{transition:none}.calc[open] .calc-corps{animation:none}}
 </style>
 </head>
 <body>
@@ -133,33 +133,16 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
     <p class="lead">Je cherche où partent vos heures, je construis <strong>le système qui les rend</strong>.<br>Livré chez vous : le code, les données, les accès.</p>
   </header>
 
-  <section class="offres" aria-label="Deux façons de vous rendre vos heures">
-    <article class="offre">
-      <span class="k">D'abord · ce qui revient chaque semaine</span>
-      <h2>Les corvées les plus fréquentes,<br><mark>réglées en premier.</mark></h2>
-      <ul class="puces">
-        <li>Répondre aux mails et aux formulaires</li>
-        <li>Faire les devis, les factures, les relances</li>
-        <li>Être prévenu quand ça casse</li>
-      </ul>
-    </article>
-    <article class="offre">
-      <span class="k">Ensuite · quand l'outil n'existe pas</span>
-      <h2>Quand l'outil n'existe pas,<br><mark>on le construit.</mark></h2>
-      <ul class="puces">
-        <li>Trouver la donnée</li>
-        <li>Relier ce qui ne se parle pas</li>
-        <li>Construire, ou reprendre ce qui casse</li>
-      </ul>
-    </article>
+  <section class="rdv" id="rdv" aria-label="Réserver un diagnostic">
+    <span class="k">Le premier pas · sans engagement</span>
+    <h2>Réserver <mark>mon diagnostic.</mark></h2>
+    <p class="rdv-note">Trente minutes en visio, offertes. Je vous dis où partent vos heures, et si ça vaut une journée chez vous.<br><span class="rdv-meta">30 min · Google Meet · sans engagement</span></p>
+    <div class="cal-boite"><div id="cal-inline" aria-label="Calendrier de réservation"></div>
+      <p class="cal-repli" data-cal-repli>Chargement du calendrier… <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener">l'ouvrir sur cal.com</a></p>
+    </div>
   </section>
 
-  <div class="action">
-    <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
-    <p class="note">Diagnostic offert · 30 min · Sans engagement</p>
-  </div>
-
-  <details class="calc">
+  <details class="calc" open>
     <summary><span class="lib">Calculer le temps que vous perdez</span><span class="pl" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.5v11M2.5 8h11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span></summary>
     <div class="calc-corps">
       <div class="champ">
@@ -180,17 +163,17 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
       </div>
       <p class="trad"><strong>Comment on compte&nbsp;:</strong> <span data-out="hIn">8</span>&nbsp;h par semaine × <span data-out="pIn">3</span> personnes × 48 semaines = <span data-out="m">1&nbsp;152</span>&nbsp;h de tâches répétitives par an. En pratique, 55&nbsp;% peuvent tourner sans vous&nbsp;: <span data-out="h2">634</span>&nbsp;h, l'équivalent de <span data-out="sem">18</span> semaines de travail. À <span data-out="tIn">55</span>&nbsp;€ de l'heure chargée, ce sont <span data-out="e2">34&nbsp;870</span>&nbsp;€ payés chaque année pour du travail qui pourrait tourner seul.</p>
       <p class="alerte" data-alerte hidden>Estimation plafonnée&nbsp;: au-delà, c'est l'audit réel qui chiffre.</p>
-      <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
+      <a href="#rdv" class="btn-cta"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
     </div>
   </details>
 
   <section class="liste" aria-label="Mes liens">
     <p class="lbl">Mes liens</p>
+      <a class="lc" href="https://saens-studio.fr" target="_blank" rel="noopener"><span class="lc-t">Le site</span><span class="lc-p">saens-studio.fr<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://www.malt.fr/profile/guillaumeprat" target="_blank" rel="noopener"><span class="lc-t">Malt</span><span class="lc-p">Missions IA<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener"><span class="lc-t">LinkedIn</span><span class="lc-p">Cas clients<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://x.com/MakeSaens" target="_blank" rel="noopener"><span class="lc-t">X</span><span class="lc-p">Le labo<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://github.com/makesaens" target="_blank" rel="noopener"><span class="lc-t">GitHub</span><span class="lc-p">Le code<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
-      <a class="lc" href="https://saens-studio.fr" target="_blank" rel="noopener"><span class="lc-t">Le site</span><span class="lc-p">saens-studio.fr<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
       <a class="lc" href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener"><span class="lc-t">Instagram</span><span class="lc-p">Backstage<i aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></i></span></a>
   </section>
   <footer class="pied">
@@ -198,6 +181,26 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
     <span>© 2026</span>
   </footer>
 </main>
+<!-- ————— Cal.com, en ligne dans la page (service tiers : le script vient de app.cal.com) ————— -->
+<script>
+(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); };})(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", "diagnostic", {origin:"https://app.cal.com"});
+Cal.ns.diagnostic("inline", {
+  elementOrSelector: "#cal-inline",
+  config: {"layout":"month_view","theme":"dark"},
+  calLink: "saens-studio/diagnostic"
+});
+Cal.ns.diagnostic("ui", {"theme":"dark","cssVarsPerTheme":{"dark":{"cal-brand":"#2aabee"}},"hideEventTypeDetails":true,"layout":"month_view"});
+/* le mot d'attente disparaît dès que le calendrier a pris la place */
+(function(){
+  var boite = document.getElementById('cal-inline'), repli = document.querySelector('[data-cal-repli]');
+  if(!boite || !repli) return;
+  var obs = new MutationObserver(function(){ if(boite.querySelector('iframe')){ repli.hidden = true; obs.disconnect(); } });
+  obs.observe(boite, {childList:true, subtree:true});
+  setTimeout(function(){ if(!boite.querySelector('iframe')) repli.firstChild.textContent = "Le calendrier n'a pas pu se charger — "; }, 9000);
+})();
+</script>
+
 <script>
 (function(){
   /* la formule du site, reprise telle quelle : plafonds à 20 h et 10 personnes, 55 % de ce qui reste */
