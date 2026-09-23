@@ -42,19 +42,20 @@ h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:600;line-heig
 
 /* les deux façons, condensées, côte à côte */
 /* ————— 23/09 : le calendrier Cal.com remplace les deux cartes — on réserve sans quitter la page ————— */
-.rdv{margin-top:44px;display:flex;flex-direction:column;gap:9px}
+.rdv{margin-top:44px;width:min(100vw - 2.5rem,820px);margin-inline:calc((100% - min(100vw - 2.5rem,820px)) / 2);display:flex;flex-direction:column;gap:9px}
 .rdv .k{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px}
 .rdv .k:before{content:"";width:4px;height:4px;border-radius:1px;background:var(--bleu)}
 .rdv h2{margin:0;font-size:1.5rem;font-weight:500;line-height:1.15;letter-spacing:-.03em}
-.rdv-note{margin:0;font-size:14px;line-height:1.45;letter-spacing:-.02em;color:var(--m-50)}
+.rdv-note{margin:0;max-width:66ch;font-size:14px;line-height:1.45;letter-spacing:-.02em;color:var(--m-50)}
 .rdv-meta{display:inline-block;margin-top:5px;font-size:13px;color:var(--m-40)}
-.cal-boite{position:relative;margin-top:10px;border-radius:20px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);overflow:hidden;min-height:560px}
-#cal-inline{width:100%;min-height:560px;overflow:auto}
+.cal-boite{position:relative;margin-top:12px;border-radius:20px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);overflow:hidden;min-height:560px}
+#cal-inline{width:100%;min-height:560px;overflow:hidden}
 #cal-inline>*{width:100%}
 .cal-repli{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:1.5rem;text-align:center;font-size:13.5px;letter-spacing:-.02em;color:var(--m-40);pointer-events:none}
 .cal-repli a{color:var(--bleu);text-decoration:underline;text-underline-offset:3px;pointer-events:auto}
 .cal-repli[hidden]{display:none}
-@media(max-width:560px){.cal-boite,#cal-inline{min-height:640px}}
+/* sous 768 px Cal repasse de lui-même en affichage téléphone : on lui laisse la hauteur qu'il demande */
+@media(max-width:880px){.cal-boite,#cal-inline{min-height:640px}}
 
 /* le bouton principal */
 .note{margin:0;font-size:13px;letter-spacing:-.26px;color:var(--m-40);text-align:center}
