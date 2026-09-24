@@ -513,7 +513,7 @@ Règles :
 var SAENS=(function(){
   var endpoint='https://script.google.com/macros/s/AKfycbz9aLIqCLqCeTILABonxJ11dbmS-ogNq2FSSI8uuiwhgKRG8zzpk2yiGiEJqBKKIKbF/exec';   /* récepteur make.saens, branché le 24/09 */
   var ressource='terrain', vid='?';
-  try{ vid=localStorage.getItem('saens_vid'); if(!vid){ vid=Math.random().toString(36).slice(2,10); localStorage.setItem('saens_vid',vid); } }catch(e){ vid='?'; }
+  try{ vid=localStorage.getItem('saens_vid'); var n=+localStorage.getItem('saens_vid_t')||0; if(!vid||Date.now()-n>34128e6){ vid=Math.random().toString(36).slice(2,10); localStorage.setItem('saens_vid',vid); localStorage.setItem('saens_vid_t',Date.now()); } }catch(e){ vid='?'; }   /* renouvelé au bout de 13 mois au plus (CNIL, mesure d'audience exemptée) */
   var src=(new URLSearchParams(location.search).get('src')||'direct').slice(0,30);
   var app=/Mobi|Android|iPhone/i.test(navigator.userAgent)?'mobile':'ordinateur';
   var ref=(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0];
