@@ -284,8 +284,6 @@ details.plus-loin .corps p{margin:0 0 10px;font-size:14px;color:var(--m-60)}
       <p class="limite"><b>Ce qu'il ne dit pas :</b> l'ombre de l'arbre du voisin ou de la maison d'à côté.</p>
       <a class="lien" href="https://re.jrc.ec.europa.eu/pvg_tools/fr/" target="_blank" rel="noopener">Ouvrir PVGIS →</a></article></div>
 
-  <div class="sous-cle">
-
   <h2>Les lire en dix minutes, dans cet ordre</h2>
   <p class="chap">Du plus bloquant au plus fin : on vérifie d'abord qu'on a le droit de faire, ensuite comment.</p>
   <div class="tabwrap">
@@ -330,6 +328,46 @@ Règles :
 - Termine par les trois points que je devrai vérifier sur place, pour mon métier.</pre></div>
   <p class="limite"><b>À savoir :</b> un assistant se trompe parfois de point ou saute une source. C'est pour ça qu'il doit vous donner le lien de chaque ligne : un clic, et vous vérifiez.</p>
 
+  <h2>Et un de plus, pour mes voisins de la métropole de Lyon</h2>
+  <p class="chap">Je vous en avais promis cinq. Voici un sixième, pour tous ceux qui travaillent dans la métropole.</p>
+  <article class="pan fiche plus">
+    <div class="fiche-tete"><h3>6 · Le cadastre solaire de la Métropole de Lyon</h3><span class="verdict v-peut">Lyon seulement</span></div>
+    <p><strong>Chaque pan de toit</strong>, avec sa surface, son orientation, son ensoleillement mois par mois et la production qu'on pourrait en tirer. Calculé par la Métropole à partir de ses bâtiments en 3D.</p>
+    <div class="ex"><span class="t">Sur la même maison d'Écully</span>Cinq pans de toit. Le pan sud : <b>82,84 m²</b>, orienté <b>199°</b>, <b>1 244 kWh/m²</b> par an, <b>8 386 kWh/an</b> de production possible.</div>
+    <p class="limite"><span class="attention">Attention</span>il ne couvre que la métropole de Lyon, ne donne pas la pente exacte du toit, et date de 2018.</p>
+    <a class="lien" href="https://www.data.gouv.fr/datasets/cadastre-solaire-de-la-metropole-de-lyon" target="_blank" rel="noopener">Ouvrir le cadastre solaire →</a>
+  </article>
+
+  <h2>Ce que tout ça ne remplace pas</h2>
+  <p class="chap"><span class="attention">Attention</span>Dans l'ordre, du plus grave au plus bénin.</p>
+  <div class="pan">
+    <ol class="controle">
+      <li><span><b>Une étude de sol.</b> Une carte des risques donne une zone, jamais ce qu'il y a sous la parcelle.</span></li>
+      <li><span><b>Vos yeux sur place.</b> L'ombre de l'arbre du voisin, l'état du mur, l'accès pour l'engin : aucun fichier ne les donne.</span></li>
+      <li><span><b>Votre expérience.</b> Les fichiers vous disent où regarder. C'est vous qui savez ce que ça coûte.</span></li>
+      <li><span><b>Les réseaux enterrés.</b> Ils ne figurent dans aucun de ces fichiers.</span></li>
+    </ol>
+  </div>
+
+  <h2>Et voilà ce que j'arrive à sortir d'une seule adresse</h2>
+  <p class="chap">Ces cinq fichiers, et beaucoup d'autres que j'ai dans mon arsenal, lus et rangés par métier, jusqu'à la maison du client avec sa pergola ou ses panneaux posés dessus.</p>
+  <div class="cas" id="cas">
+    <figure class="cas-v"><figcaption><span>Cas</span> pergola</figcaption>
+      <video src="terrain-videos/pergola.mp4" poster="terrain-videos/pergola.jpg" muted loop playsinline preload="metadata" aria-label="Démonstration : une adresse, le jardin et la pergola"></video>
+      <span class="cas-a">Survolez pour lancer · cliquez pour agrandir</span></figure>
+    <figure class="cas-v"><figcaption><span>Cas</span> photovoltaïque</figcaption>
+      <video src="terrain-videos/photovoltaique.mp4" poster="terrain-videos/photovoltaique.jpg" muted loop playsinline preload="metadata" aria-label="Démonstration : une adresse, le toit et le photovoltaïque"></video>
+      <span class="cas-a">Survolez pour lancer · cliquez pour agrandir</span></figure>
+  </div>
+
+  <div class="fin">
+    <h2>Vous voulez que cette recherche <mark>se fasse sans vous</mark> ?</h2>
+    <p>Un prompt, c'est une adresse à la fois, à la main. Ce que je construis <strong>tourne tout seul, sur chaque demande qui arrive</strong>, et range le résultat <strong>dans votre dossier client</strong>.</p>
+    <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Écrivez-moi</span><span aria-hidden="true">Écrivez-moi</span></span><span class="sq"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <p class="note">un message sur LinkedIn suffit · ou <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">prenez 30 minutes avec moi</a></p>
+  </div>
+
+  <div class="sous-cle">
   <h2>Pour aller plus loin, fichier par fichier</h2>
   <p class="chap">Des prompts plus poussés, un par source : comparateur photo et cadastre, règlement résumé, carte de chaleur sur la photo satellite… Plus longs à tourner, et ils demandent un assistant qui sait naviguer et calculer.</p>
   <details class="plus-loin"><summary>1 · Le cadastre, en profondeur<span class="o">Voir le prompt ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><div class="copie"><div class="copie-tete"><span>À coller dans ChatGPT ou Claude</span><button class="btn-copier" type="button">Copier</button></div><pre>Adresse du projet : [ADRESSE]
@@ -428,16 +466,7 @@ Rendu : fais-moi une page web interactive (un artifact dans Claude, un canvas da
 Règles :
 - Pour chaque ligne, donne la source et le lien exact de la requête.
 - Si une donnée manque, écris « non trouvé ». N&#x27;estime jamais, n&#x27;invente jamais.</pre></div></div></details>
-
-  <h2>Et un de plus, pour mes voisins de la métropole de Lyon</h2>
-  <p class="chap">Je vous en avais promis cinq. Voici un sixième, pour tous ceux qui travaillent dans la métropole.</p>
-  <article class="pan fiche plus">
-    <div class="fiche-tete"><h3>6 · Le cadastre solaire de la Métropole de Lyon</h3><span class="verdict v-peut">Lyon seulement</span></div>
-    <p><strong>Chaque pan de toit</strong>, avec sa surface, son orientation, son ensoleillement mois par mois et la production qu'on pourrait en tirer. Calculé par la Métropole à partir de ses bâtiments en 3D.</p>
-    <div class="ex"><span class="t">Sur la même maison d'Écully</span>Cinq pans de toit. Le pan sud : <b>82,84 m²</b>, orienté <b>199°</b>, <b>1 244 kWh/m²</b> par an, <b>8 386 kWh/an</b> de production possible.</div>
-    <p class="limite"><span class="attention">Attention</span>il ne couvre que la métropole de Lyon, ne donne pas la pente exacte du toit, et date de 2018.</p>
-    <a class="lien" href="https://www.data.gouv.fr/datasets/cadastre-solaire-de-la-metropole-de-lyon" target="_blank" rel="noopener">Ouvrir le cadastre solaire →</a>
-    <details class="plus-loin"><summary>Le prompt de la toiture<span class="o">Voir le prompt ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><div class="copie"><div class="copie-tete"><span>À coller dans ChatGPT ou Claude</span><button class="btn-copier" type="button">Copier</button></div><pre>Adresse du projet : [ADRESSE] (dans la métropole de Lyon)
+  <details class="plus-loin"><summary>6 · La toiture, métropole de Lyon<span class="o">Voir le prompt ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><div class="copie"><div class="copie-tete"><span>À coller dans ChatGPT ou Claude</span><button class="btn-copier" type="button">Copier</button></div><pre>Adresse du projet : [ADRESSE] (dans la métropole de Lyon)
 
 Tu prépares la fiche « toiture » de cette adresse. Dans l&#x27;ordre :
 1. Coordonnées : ouvre https://api-adresse.data.gouv.fr/search/?q=[ADRESSE]&amp;limit=1 et relève la longitude, la latitude et le code INSEE de la commune.
@@ -450,46 +479,17 @@ Rendu : fais-moi une page web interactive (un artifact dans Claude, un canvas da
 Règles :
 - Pour chaque ligne, donne la source et le lien exact de la requête.
 - Si une donnée manque, écris « non trouvé ». N&#x27;estime jamais, n&#x27;invente jamais.</pre></div></div></details>
-  </article>
 
-  <h2>Ce que tout ça ne remplace pas</h2>
-  <p class="chap"><span class="attention">Attention</span>Dans l'ordre, du plus grave au plus bénin.</p>
-  <div class="pan">
-    <ol class="controle">
-      <li><span><b>Une étude de sol.</b> Une carte des risques donne une zone, jamais ce qu'il y a sous la parcelle.</span></li>
-      <li><span><b>Vos yeux sur place.</b> L'ombre de l'arbre du voisin, l'état du mur, l'accès pour l'engin : aucun fichier ne les donne.</span></li>
-      <li><span><b>Votre expérience.</b> Les fichiers vous disent où regarder. C'est vous qui savez ce que ça coûte.</span></li>
-      <li><span><b>Les réseaux enterrés.</b> Ils ne figurent dans aucun de ces fichiers.</span></li>
-    </ol>
-  </div>
-
-  <h2>Et voilà ce que j'arrive à sortir d'une seule adresse</h2>
-  <p class="chap">Ces cinq fichiers, et beaucoup d'autres que j'ai dans mon arsenal, lus et rangés par métier, jusqu'à la maison du client avec sa pergola ou ses panneaux posés dessus.</p>
-  <div class="cas" id="cas">
-    <figure class="cas-v"><figcaption><span>Cas</span> pergola</figcaption>
-      <video src="terrain-videos/pergola.mp4" poster="terrain-videos/pergola.jpg" muted loop playsinline preload="metadata" aria-label="Démonstration : une adresse, le jardin et la pergola"></video>
-      <span class="cas-a">Survolez pour lancer · cliquez pour agrandir</span></figure>
-    <figure class="cas-v"><figcaption><span>Cas</span> photovoltaïque</figcaption>
-      <video src="terrain-videos/photovoltaique.mp4" poster="terrain-videos/photovoltaique.jpg" muted loop playsinline preload="metadata" aria-label="Démonstration : une adresse, le toit et le photovoltaïque"></video>
-      <span class="cas-a">Survolez pour lancer · cliquez pour agrandir</span></figure>
-  </div>
-
-  <div class="fin">
-    <h2>Vous voulez que cette recherche <mark>se fasse sans vous</mark> ?</h2>
-    <p>Un prompt, c'est une adresse à la fois, à la main. Ce que je construis <strong>tourne tout seul, sur chaque demande qui arrive</strong>, et range le résultat <strong>dans votre dossier client</strong>.</p>
-    <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Écrivez-moi</span><span aria-hidden="true">Écrivez-moi</span></span><span class="sq"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
-    <p class="note">un message sur LinkedIn suffit · ou <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">prenez 30 minutes avec moi</a></p>
   </div>
 
   <footer class="pied"><span><b>Saens Studio</b> · Le travail qui se répète n'a pas besoin de vous.</span><span>Données publiques : IGN, Géorisques, Géoportail de l'urbanisme, Commission européenne, Métropole de Lyon · <a href="https://saens-studio.fr/confidentialite.html" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">Confidentialité</a></span></footer>
-  </div>
 </main>
 
 <div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-titre">
   <div class="gate-carte">
     <div class="gate-lock" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-    <h3 id="gate-titre">La suite est réservée</h3>
-    <p class="gate-sub">Le prompt qui vous sort toute la fiche d'un coup, les prompts détaillés fichier par fichier, et un sixième fichier pour la métropole de Lyon. Dites-moi qui vous êtes et je débloque la suite.</p>
+    <h3 id="gate-titre">Les prompts détaillés sont réservés</h3>
+    <p class="gate-sub">Les prompts détaillés, fichier par fichier : comparateur photo et cadastre, règlement résumé, carte de chaleur sur la photo satellite, et la toiture pour la métropole de Lyon. Dites-moi qui vous êtes et je les débloque.</p>
     <form id="gate-form" novalidate>
       <div class="gate-row">
         <input class="gate-field" id="gate-prenom" name="prenom" type="text" placeholder="Prénom" autocomplete="given-name" required>
@@ -573,11 +573,12 @@ function secours(txt,fini){var z=document.createElement('textarea');z.value=txt;
   function ouvrir(){ if(declenche) return; declenche=true; SAENS.evt('verrou_vu'); document.body.classList.add('gate-on');
     setTimeout(function(){ try{document.getElementById('gate-prenom').focus();}catch(e){} },420); }
   var s=document.createElement('div'); s.setAttribute('aria-hidden','true'); s.style.cssText='width:1px;height:1px';
-  cle.insertBefore(s, cle.firstChild);
+  var ch=cle.querySelector('.chap'); cle.insertBefore(s, ch ? ch.nextSibling : cle.firstChild);
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){ouvrir();io.disconnect();}});});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){ouvrir();io.disconnect();}});},{rootMargin:'0px 0px -140px 0px'});
     io.observe(s);
   } else { ouvrir(); }
+  cle.addEventListener('click',function(e){ if(e.target.closest('summary')&&!document.body.classList.contains('gate-on')){ try{ if(localStorage.getItem(CLE)==='1') return; }catch(x){} e.preventDefault(); declenche=false; ouvrir(); } },true);
   function debloquer(garder){ if(garder){ try{localStorage.setItem(CLE,'1');}catch(e){} } document.body.classList.remove('gate-on'); }
   var commence=false;
   form.addEventListener('focusin',function(){ if(!commence){ commence=true; SAENS.evt('formulaire_commence'); } });
