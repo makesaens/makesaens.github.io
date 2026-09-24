@@ -593,8 +593,9 @@ function secours(txt,fini){var z=document.createElement('textarea');z.value=txt;
     if(tel.length<10){ err.textContent='Ce numéro n’a pas l’air complet.'; return; }
     d.append('ressource','terrain'); d.append('visiteur',SAENS.vid); d.append('src',SAENS.src); d.append('appareil',SAENS.app); SAENS.evt('debloque'); d.append('page',location.href); d.append('quand',new Date().toISOString());
     var btn=form.querySelector('.gate-submit'); btn.disabled=true; btn.textContent='Un instant…';
-    fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:new URLSearchParams(d)}).then(function(){ debloquer(true); })
-      .catch(function(){ debloquer(true); });   /* on ne punit jamais le lecteur d'une panne chez nous */
+    var fait=false, fin=function(){ if(!fait){ fait=true; debloquer(true); } };
+    try{ fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,body:new URLSearchParams(d)}).then(fin,fin); }catch(e){ fin(); }
+    setTimeout(fin,1200);   /* on n'attend jamais Google plus d'une seconde : l'envoi continue en arrière-plan */
   });
 })();
 </script>
