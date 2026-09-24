@@ -28,7 +28,7 @@ a{color:inherit;text-decoration:none}
 h1 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.06;padding:.08em .3em .12em;margin:0 -.12em;rotate:-.7deg;transform-origin:50% 60%;font-weight:inherit}
 h1 mark:nth-of-type(2){rotate:.6deg}
 /* dans les cartes, on surligne aussi : le pavé, en plus petit et à peine penché */
-.rdv h2 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
+.duo h2 mark{display:inline-block;color:var(--encre);background-color:transparent;background-image:var(--pave);background-repeat:no-repeat;background-size:100% 100%;background-position:0 0;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
 /* les listes des deux cartes : la puce carrée bleue du site */
 /* on SOULIGNE un mot dans du texte courant : le trait de crayon bleu, jamais droit */
 .lead strong{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 60 3.6, 140 5.8, 198 4.2' fill='none' stroke='%232aabee' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:0 calc(100% + .02em);background-size:100% .22em;padding-bottom:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:var(--blanc);font-weight:500;background-color:transparent}
@@ -45,25 +45,21 @@ h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:600;line-heig
 /* ————— 24/09 : sur grand écran, le calculateur à gauche et la prise de rendez-vous à droite.
    La colonne de droite ne descend jamais sous 820 px : en dessous, Cal bascule en affichage
    téléphone et le calendrier repasse de 570 à 1 410 px de haut. D'où la bascule à 1300. ————— */
-.duo{margin-top:46px;width:min(100vw - 2.5rem,1300px);margin-inline:calc((100% - min(100vw - 2.5rem,1300px)) / 2);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,820px);grid-template-rows:auto 1fr;gap:16px 30px}
-/* chaque colonne épouse les deux rangées de la grille : les titres se calent sur le plus haut,
-   et les deux boîtes démarrent donc exactement à la même ligne */
-.duo>*{display:grid;grid-template-rows:subgrid;grid-row:span 2;min-width:0}
+/* 24/09 : les deux blocs l'un sous l'autre — le rendez-vous, puis le calculateur, ouvert.
+   Même largeur que le calendrier, qui ne descend jamais sous 820 px sans rebasculer en
+   affichage téléphone. */
+.duo{margin-top:46px;width:min(100vw - 2.5rem,820px);margin-inline:calc((100% - min(100vw - 2.5rem,820px)) / 2);display:flex;flex-direction:column;gap:50px}
+.duo>*{display:flex;flex-direction:column;min-width:0}
 .ent{display:flex;flex-direction:column;gap:9px}
 /* les deux titres : un trait de crayon, un pavé bleu, le même dessin que dans le reste de la page */
 .duo h2{margin:0;font-size:1.5rem;font-weight:500;line-height:1.15;letter-spacing:-.03em}
+.rdv h2 mark{rotate:.45deg}
 .duo h2 strong{font-weight:inherit;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 60 3.6, 140 5.8, 198 4.2' fill='none' stroke='%232aabee' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:0 calc(100% + .02em);background-size:100% .2em;padding-bottom:.12em}
-@media(max-width:1360px){
-  .duo{grid-template-columns:minmax(0,1fr);grid-template-rows:none;gap:40px;width:min(100vw - 2.5rem,820px);margin-inline:calc((100% - min(100vw - 2.5rem,820px)) / 2)}
-  .duo>*{grid-template-rows:none;grid-row:auto;display:flex;flex-direction:column}
-  .duo>.rdv{order:1}
-  .duo>.calcbloc{order:2}
-}
 .duo .k{font-size:13px;letter-spacing:-.26px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px}
 .duo .k:before{content:"";width:4px;height:4px;border-radius:1px;background:var(--bleu)}
 .rdv-note{margin:0;max-width:66ch;font-size:14px;line-height:1.45;letter-spacing:-.02em;color:var(--m-50)}
 .rdv-meta{display:inline-block;margin-top:5px;font-size:13px;color:var(--m-40)}
-.cal-boite{position:relative;margin-top:12px;padding-top:34px;align-self:stretch;border-radius:20px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);overflow:hidden;min-height:560px}
+.cal-boite{position:relative;margin-top:12px;padding-top:34px;border-radius:20px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);overflow:hidden;min-height:560px}
 #cal-inline{width:100%;min-height:560px;overflow:hidden}
 #cal-inline>*{width:100%}
 .cal-repli{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:1.5rem;text-align:center;font-size:13.5px;letter-spacing:-.02em;color:var(--m-40);pointer-events:none}
@@ -88,8 +84,7 @@ h1{margin:10px 0;font-size:clamp(1.75rem,8.6vw,3.8rem);font-weight:600;line-heig
 /* le calculateur : une ligne blanche douce qui ouvre un panneau sombre, comme les deux façons */
 .calc-boite{margin-top:12px;border-radius:20px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);display:flex;flex-direction:column}
 @keyframes deplie{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.calc-corps{flex:1;padding:26px 24px 28px;display:flex;flex-direction:column;gap:18px}
-.calc-corps .trad{margin-top:auto}
+.calc-corps{padding:26px 24px 28px;display:flex;flex-direction:column;gap:18px}
 .champ{display:flex;flex-direction:column;gap:6px}
 .etiq{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;font-size:14px;letter-spacing:-.28px;color:var(--blanc)}
 .etiq b{font-size:1.25rem;font-weight:500;letter-spacing:-.02em;color:var(--blanc);font-variant-numeric:tabular-nums}
@@ -138,6 +133,16 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
   </header>
 
   <div class="duo">
+  <section class="rdv" id="rdv" aria-label="Réserver un diagnostic">
+    <div class="ent">
+      <span class="k">Le premier pas · sans engagement</span>
+      <h2>Réserver <mark>mon diagnostic.</mark></h2>
+      <p class="rdv-note">Trente minutes en visio, offertes. Je vous dis où partent vos heures, et si ça vaut une journée chez vous.<br><span class="rdv-meta">30 min · Google Meet · sans engagement</span></p>
+    </div>
+    <div class="cal-boite"><div id="cal-inline" aria-label="Calendrier de réservation"></div>
+      <p class="cal-repli" data-cal-repli>Chargement du calendrier… <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener">l'ouvrir sur cal.com</a></p>
+    </div>
+  </section>
   <section class="calcbloc" id="calcul" aria-label="Calculer le temps perdu">
     <div class="ent">
       <span class="k">Avant même de se parler · en dix secondes</span>
@@ -166,16 +171,6 @@ input[type=range]:focus-visible{outline:2px solid var(--bleu);outline-offset:4px
       <p class="alerte" data-alerte hidden>Estimation plafonnée&nbsp;: au-delà, c'est l'audit réel qui chiffre.</p>
       <button type="button" class="btn-cta" data-cal-link="saens-studio/diagnostic" data-cal-namespace="fenetre" data-cal-config='{"layout":"month_view","theme":"dark"}'><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></button>
     </div>
-    </div>
-  </section>
-  <section class="rdv" id="rdv" aria-label="Réserver un diagnostic">
-    <div class="ent">
-      <span class="k">Le premier pas · sans engagement</span>
-      <h2>Réserver <mark>mon diagnostic.</mark></h2>
-      <p class="rdv-note">Trente minutes en visio, offertes. Je vous dis où partent vos heures, et si ça vaut une journée chez vous.<br><span class="rdv-meta">30 min · Google Meet · sans engagement</span></p>
-    </div>
-    <div class="cal-boite"><div id="cal-inline" aria-label="Calendrier de réservation"></div>
-      <p class="cal-repli" data-cal-repli>Chargement du calendrier… <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener">l'ouvrir sur cal.com</a></p>
     </div>
   </section>
   </div>
