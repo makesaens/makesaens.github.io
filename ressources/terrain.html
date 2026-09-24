@@ -223,7 +223,27 @@ details.plus-loin .corps p{margin:0 0 10px;font-size:14px;color:var(--m-60)}
 .fl .pan{padding:18px 20px 18px}
 .fl h3{margin:0 0 6px;font-size:1.08rem;font-weight:500;letter-spacing:-.025em}
 .fl p{margin:0;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
-.fl p strong{color:var(--blanc);font-weight:500}</style>
+.fl p strong{color:var(--blanc);font-weight:500}
+.cas{width:min(100vw - 2.5rem,1180px);margin:22px 0 0 50%;transform:translateX(-50%);display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cas-v{margin:0;display:flex;flex-direction:column;gap:10px}
+.cas-v figcaption{font-size:15px;font-weight:500;letter-spacing:-.02em}
+.cas-v figcaption span{font-size:12px;color:var(--bleu);margin-right:6px;letter-spacing:-.2px}
+.cas-v video{width:100%;aspect-ratio:1280/628;object-fit:cover;border-radius:16px;box-shadow:0 0 0 1px var(--bord);background:#0b0b0b;cursor:zoom-in;transition:box-shadow .35s var(--ease),transform .35s var(--ease)}
+.cas-v video:hover{box-shadow:0 0 0 1px var(--bleu);transform:translateY(-2px)}
+.cas-a{font-size:12px;color:var(--m-40);letter-spacing:-.2px}
+@media(max-width:820px){.cas{grid-template-columns:1fr;width:100%;margin-left:0;transform:none}}
+@media(hover:none){.cas-a{display:none}}
+.pop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:2rem;background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.pop.on{opacity:1;pointer-events:auto}
+.pop-c{position:relative;width:min(75vw,1200px);max-height:75vh;transform:scale(.94);transition:transform .35s var(--ease)}
+.pop.on .pop-c{transform:none}
+.pop-c video{display:block;width:100%;max-height:75vh;object-fit:contain;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 30px 80px rgba(0,0,0,.6);background:#0b0b0b}
+.pop-t{position:absolute;left:0;top:-34px;font-size:14px;font-weight:500;letter-spacing:-.02em;color:var(--blanc)}
+.pop-t span{color:var(--bleu);font-size:12px;margin-right:6px}
+.pop-x{position:absolute;right:-6px;top:-40px;width:32px;height:32px;border-radius:9px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--blanc);font:inherit;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.pop-x:hover{border-color:var(--bleu);color:var(--bleu)}
+@media(max-width:820px){.pop-c{width:92vw}}
+@media (prefers-reduced-motion:reduce){.pop,.pop-c{transition:none}}</style>
 </head>
 <body>
 <main class="page">
@@ -445,9 +465,14 @@ Règles :
 
   <h2>Et voilà ce que j'arrive à sortir d'une seule adresse</h2>
   <p class="chap">Ces cinq fichiers, et beaucoup d'autres que j'ai dans mon arsenal, lus et rangés par métier, jusqu'à la maison du client avec sa pergola ou ses panneaux posés dessus.</p>
-  <!-- ⬇ EXEMPLES CADRAN À INSÉRER (Guillaume) : rendu pergola, rendu photovoltaïque, fiche données.
-       Remplacer le bloc .demo par des <img src="terrain-cadran/…" style="width:100%;border-radius:20px"> -->
-  <div class="demo"><div><b>Une adresse, et tout ce qui en sort</b>Les exemples arrivent ici.</div></div>
+  <div class="cas" id="cas">
+    <figure class="cas-v"><figcaption><span>Cas</span> pergola</figcaption>
+      <video src="terrain-videos/pergola.mp4" poster="terrain-videos/pergola.jpg" muted loop playsinline preload="metadata" aria-label="Démonstration : une adresse, le jardin et la pergola"></video>
+      <span class="cas-a">Survolez pour lancer · cliquez pour agrandir</span></figure>
+    <figure class="cas-v"><figcaption><span>Cas</span> photovoltaïque</figcaption>
+      <video src="terrain-videos/photovoltaique.mp4" poster="terrain-videos/photovoltaique.jpg" muted loop playsinline preload="metadata" aria-label="Démonstration : une adresse, le toit et le photovoltaïque"></video>
+      <span class="cas-a">Survolez pour lancer · cliquez pour agrandir</span></figure>
+  </div>
 
   <div class="fin">
     <h2>Vous voulez que cette recherche <mark>se fasse sans vous</mark> ?</h2>
@@ -573,5 +598,40 @@ function secours(txt,fini){var z=document.createElement('textarea');z.value=txt;
   });
 })();
 </script>
+<script>
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('.cas-v video'));
+  /* la fenêtre : une seule, partagée par les deux vidéos */
+  var pop=document.createElement('div'); pop.className='pop'; pop.setAttribute('role','dialog'); pop.setAttribute('aria-modal','true'); pop.setAttribute('aria-label','Vidéo agrandie');
+  pop.innerHTML='<div class="pop-c"><div class="pop-t"></div><button class="pop-x" type="button" aria-label="Fermer">×</button><video muted loop playsinline controls></video></div>';
+  document.body.appendChild(pop);
+  var pv=pop.querySelector('video'), pt=pop.querySelector('.pop-t'), px=pop.querySelector('.pop-x'), avant=null;
+  function ouvrePop(v){
+    vids.forEach(function(x){ x.pause(); });
+    avant=document.activeElement;
+    pv.src=v.getAttribute('src'); pv.poster=v.getAttribute('poster')||'';
+    try{ pv.currentTime=v.currentTime||0; }catch(e){}
+    pt.innerHTML=v.closest('.cas-v').querySelector('figcaption').innerHTML;
+    pop.classList.add('on'); document.body.style.overflow='hidden';
+    var p=pv.play(); if(p&&p.catch) p.catch(function(){});
+    setTimeout(function(){ px.focus(); },50);
+  }
+  function fermePop(){ pop.classList.remove('on'); pv.pause(); document.body.style.overflow=''; if(avant&&avant.focus) try{ avant.focus(); }catch(e){} }
+  pop.addEventListener('click',function(e){ if(e.target===pop) fermePop(); });
+  px.addEventListener('click',fermePop);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&pop.classList.contains('on')) fermePop(); });
+  var survol=window.matchMedia('(hover:hover)').matches;
+  vids.forEach(function(v){
+    var nom=v.getAttribute('src').split('/').pop().replace('.mp4','');
+    var vu=false; function lance(){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); if(!vu){ vu=true; if(window.SAENS) SAENS.evt('video_lancee',nom); } }
+    if(survol){ v.addEventListener('mouseenter',lance); v.addEventListener('mouseleave',function(){ v.pause(); }); }
+    else if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting&&e.intersectionRatio>.6) lance(); else v.pause(); }); },{threshold:[0,.6]}).observe(v);
+    }
+    v.addEventListener('click',function(){ ouvrePop(v); if(window.SAENS) SAENS.evt('video_agrandie',nom); });
+  });
+})();
+</script>
+
 </body>
 </html>
