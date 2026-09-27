@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le classeur — brancher ton IA sur tes outils · Saens Studio</title>
+<meta name="description" content="Les connecteurs qui comptent pour un patron, l'ordre pour les brancher, et les consignes à copier pour chaque geste : messagerie, agenda, banque, compta, clients.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<style>@font-face{font-family:'Plus Jakarta Sans';src:url('../fonts/plus-jakarta-var-latin.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+@font-face{font-family:'Geist';src:url('../fonts/geist-var-latin.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+:root{--nuit:#050505;--blanc:#f4f4f2;--bleu:#2aabee;
+ --m-60:rgba(255,255,255,.62);--m-50:rgba(255,255,255,.52);--m-40:rgba(255,255,255,.42);
+ --m-28:rgba(255,255,255,.28);--m-20:rgba(255,255,255,.16);--m-07:rgba(255,255,255,.07);
+ --bord:rgba(255,255,255,.08);--pan-a:rgba(255,255,255,.05);--pan-b:rgba(255,255,255,.015);
+ --btn-bg:#f2f2f0;--btn-text:#161615;--oui:#7fd18c;--non:#f0857d;--peut:#f0c661;
+ --ease:cubic-bezier(.22,1,.36,1);--roll:cubic-bezier(.65,0,.15,1)}
+*,*:before,*:after{box-sizing:border-box}
+html{background:var(--nuit)}
+body{margin:0;background:var(--nuit);color:var(--blanc);font-family:'Plus Jakarta Sans','Geist',system-ui,sans-serif;
+ font-size:16px;line-height:1.55;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--bleu);color:#0e1319}
+mark{color:var(--bleu);background:transparent}
+.page{width:min(100% - 2.5rem,820px);margin:0 auto;padding:44px 0 64px}
+/* tête */
+.retour{font-size:13px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;transition:color .3s var(--ease)}
+.retour:hover{color:var(--blanc)}
+.retour:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
+.kicker{margin:30px 0 0;font-size:13px;letter-spacing:-.26px;color:var(--bleu)}
+h1{margin:8px 0 12px;font-size:clamp(1.9rem,5.4vw,2.9rem);font-weight:500;line-height:1.06;letter-spacing:-.035em}
+.lead{margin:0;font-size:clamp(1rem,2vw,1.1rem);line-height:1.45;letter-spacing:-.022em;color:var(--m-50);max-width:56ch}
+.lead strong{color:var(--blanc);font-weight:500}
+.signature{margin-top:18px;font-size:13px;color:var(--m-40)}
+h2{margin:52px 0 6px;font-size:1.32rem;font-weight:500;letter-spacing:-.028em;line-height:1.2}
+h2 + .chap{margin:0 0 20px;font-size:14px;color:var(--m-50);letter-spacing:-.02em;max-width:60ch}
+/* panneau générique */
+.pan{border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:22px 22px 24px}
+.pan + .pan{margin-top:12px}
+/* conditions préalables */
+.cond{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.cond li{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.cond li b{color:var(--blanc);font-weight:500}
+.cond .n{width:22px;height:22px;border-radius:6px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;font-size:12px;font-weight:600}
+/* fiche outil */
+.fiche{margin-top:12px}
+.fiche-tete{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.fiche h3{margin:0;font-size:1.22rem;font-weight:500;letter-spacing:-.028em}
+.verdict{font-size:12px;font-weight:600;letter-spacing:-.2px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.v-oui{color:var(--oui);background:rgba(127,209,140,.12)}
+.v-non{color:var(--non);background:rgba(240,133,125,.12)}
+.v-peut{color:var(--peut);background:rgba(240,198,97,.12)}
+.fiche p{margin:12px 0 0;font-size:14.5px;line-height:1.5;letter-spacing:-.02em;color:var(--m-60)}
+.fiche p strong{color:var(--blanc);font-weight:500}
+.lbl{margin:20px 0 8px;font-size:12px;letter-spacing:-.22px;color:var(--m-40);text-transform:none}
+/* pour qui */
+.qui{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-top:8px}
+.qui div{border-radius:14px;background:var(--m-07);padding:10px 12px}
+.qui span{display:block;font-size:12px;color:var(--m-40);letter-spacing:-.22px;margin-bottom:2px}
+.qui b{font-size:13.5px;font-weight:500;letter-spacing:-.02em}
+.qui b.o{color:var(--oui)}
+.qui b.n{color:var(--non)}
+.qui b.p{color:var(--peut)}
+/* bloc à copier */
+.copie{margin-top:8px;border-radius:14px;background:rgba(255,255,255,.035);box-shadow:0 0 0 1px var(--bord);overflow:hidden}
+.copie-tete{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-bottom:1px solid var(--bord)}
+.copie-tete span{font-size:12px;color:var(--m-40);letter-spacing:-.22px}
+.btn-copier{font-family:inherit;font-size:12px;font-weight:600;letter-spacing:-.2px;background:var(--m-07);color:var(--blanc);
+ border:0;border-radius:8px;height:26px;padding:0 11px;cursor:pointer;transition:background-color .25s var(--ease),color .25s var(--ease)}
+.btn-copier:hover{background:rgba(255,255,255,.14)}
+.btn-copier[data-ok]{background:var(--bleu);color:#0e1319}
+.copie pre{margin:0;padding:14px;overflow-x:auto;font-family:'Geist',ui-monospace,SFMono-Regular,Menlo,monospace;
+ font-size:13px;line-height:1.6;color:var(--m-60);white-space:pre-wrap;word-break:break-word}
+/* alternatives */
+.alt{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.alt li{font-size:14px;letter-spacing:-.02em;color:var(--m-60);padding-left:16px;position:relative}
+.alt li:before{content:"";position:absolute;left:0;top:10px;width:7px;height:1px;background:var(--bleu)}
+.alt li b{color:var(--blanc);font-weight:500}
+/* points de contrôle */
+.controle{list-style:none;margin:0;padding:0;counter-reset:c;display:flex;flex-direction:column;gap:11px}
+.controle li{counter-increment:c;display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.controle li:before{content:counter(c);width:22px;height:22px;border-radius:6px;background:var(--m-07);color:var(--bleu);
+ display:grid;place-items:center;font-size:12px;font-weight:600}
+.controle li b{color:var(--blanc);font-weight:500}
+/* tableau par quoi commencer */
+.tabwrap{overflow-x:auto;border-radius:20px;box-shadow:0 0 0 1px var(--bord)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+thead th{text-align:left;font-weight:500;font-size:12px;letter-spacing:-.22px;color:var(--m-40);padding:13px 16px;border-bottom:1px solid var(--bord)}
+td{padding:13px 16px;border-bottom:1px solid var(--bord);color:var(--m-60);letter-spacing:-.02em;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td b{color:var(--blanc);font-weight:500}
+td .quand{color:var(--bleu)}
+/* bloc de fin */
+.fin{margin-top:56px;border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);
+ padding:30px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.fin h2{margin:0;font-size:1.32rem}
+.fin p{margin:0;font-size:14.5px;color:var(--m-50);max-width:44ch;letter-spacing:-.02em}
+.btn-cta{font-family:inherit;font-size:14px;font-weight:600;background:var(--btn-bg);color:var(--btn-text);height:30px;
+ padding:0 4px 0 13px;border-radius:3px;display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;white-space:nowrap}
+.btn-cta .txt{position:relative;overflow:hidden;display:block;height:30px;line-height:30px}
+.btn-cta .txt span{display:block;transition:transform .45s var(--roll)}
+.btn-cta .txt span+span{position:absolute;left:0;top:100%}
+.btn-cta:hover .txt span,.btn-cta:focus-visible .txt span{transform:translateY(-100%)}
+.btn-cta .sq{width:22px;height:22px;background:var(--btn-text);color:var(--btn-bg);border-radius:2px;display:grid;place-items:center;transition:transform .35s var(--ease)}
+.btn-cta .sq svg{width:10px;height:10px;transform:rotate(-45deg);transition:transform .55s var(--roll)}
+.btn-cta:hover .sq,.btn-cta:focus-visible .sq{transform:scale(.85)}
+.btn-cta:hover .sq svg,.btn-cta:focus-visible .sq svg{transform:rotate(360deg)}
+.note{margin:0;font-size:13px;color:var(--m-40);letter-spacing:-.26px}
+/* autres ressources */
+.autres{margin-top:12px;display:grid;gap:8px}
+.rc{border-radius:16px;background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);box-shadow:0 0 0 1px var(--bord);
+ padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.rc:hover{transform:translateY(-3px);box-shadow:0 0 0 1px var(--m-28)}
+.rc-t{font-size:14.5px;font-weight:500;letter-spacing:-.022em}
+.rc-p{font-size:13px;color:var(--m-40);display:inline-flex;align-items:center;gap:9px;letter-spacing:-.24px}
+.rc-p svg{width:11px;height:11px}
+.pied{margin-top:54px;padding-top:20px;border-top:1px solid var(--bord);display:flex;justify-content:space-between;
+ gap:16px;flex-wrap:wrap;font-size:13px;color:var(--m-40);letter-spacing:-.24px}
+.pied b{color:var(--m-60);font-weight:500}
+/* ——— LE BLOCAGE ——— */
+#gate{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;
+ background:linear-gradient(180deg,rgba(5,5,5,0) 0%,rgba(5,5,5,.55) 34%,rgba(5,5,5,.94) 62%,#050505 100%);
+ padding:0 1.25rem 6vh}
+body.gate-on{overflow:hidden}
+body.gate-on #gate{display:flex}
+body.gate-on .page > .sous-cle{filter:blur(6px);opacity:.45;pointer-events:none;user-select:none}
+.gate-carte{width:min(100%,430px);border-radius:22px;border:1px solid var(--m-20);
+ background:linear-gradient(180deg,#141414 0%,#0c0c0c 100%);padding:26px 24px 22px;
+ box-shadow:0 30px 70px rgba(0,0,0,.6);animation:monte .55s var(--ease) both}
+@keyframes monte{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.gate-lock{width:30px;height:30px;border-radius:9px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;margin-bottom:14px}
+.gate-carte h3{margin:0 0 7px;font-size:1.18rem;font-weight:500;letter-spacing:-.028em}
+.gate-sub{margin:0 0 18px;font-size:13.5px;color:var(--m-50);line-height:1.45}
+.gate-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.gate-field{width:100%;height:42px;border-radius:11px;border:1px solid var(--m-20);background:rgba(255,255,255,.04);
+ color:var(--blanc);font-family:inherit;font-size:14.5px;padding:0 13px;transition:border-color .25s var(--ease),background-color .25s var(--ease)}
+.gate-field::placeholder{color:var(--m-40)}
+.gate-field:focus{outline:none;border-color:var(--bleu);background:rgba(42,171,238,.06)}
+.gate-hp{position:absolute;left:-9999px;opacity:0;height:0}
+.gate-submit{width:100%;height:44px;margin-top:12px;border:0;border-radius:11px;background:var(--btn-bg);color:var(--btn-text);
+ font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:transform .2s var(--ease),opacity .2s}
+.gate-submit:hover{transform:translateY(-1px)}
+.gate-submit:disabled{opacity:.5;cursor:default;transform:none}
+.gate-note{margin:12px 0 0;font-size:11.5px;color:var(--m-40);line-height:1.45;text-align:center}
+.gate-err{margin:9px 0 0;font-size:12.5px;color:#f0857d;min-height:1em}
+@media(max-width:420px){.gate-row{grid-template-columns:1fr}}
+/* fiche terrain */
+.ex{margin:14px 0 0;border-left:2px solid var(--bleu);padding:2px 0 2px 14px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+.ex b{color:var(--blanc);font-weight:500}
+.ex .t{display:block;font-size:12px;color:var(--bleu);letter-spacing:-.22px;margin-bottom:3px}
+.gestes{list-style:none;margin:8px 0 0;padding:0;counter-reset:g;display:flex;flex-direction:column;gap:8px}
+.gestes li{counter-increment:g;display:flex;gap:11px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+.gestes li:before{content:counter(g);flex:0 0 20px;height:20px;border-radius:6px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;font-size:11.5px;font-weight:600;margin-top:1px}
+.gestes li span{flex:1;min-width:0}
+.gestes li b{color:var(--blanc);font-weight:500}
+.lien{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:13.5px;color:var(--bleu);border-bottom:1px solid rgba(42,171,238,.35);padding-bottom:1px}
+.lien:hover{border-bottom-color:var(--bleu)}
+.limite{margin-top:12px;font-size:13px;color:var(--m-40);letter-spacing:-.2px}
+.limite b{color:var(--peut);font-weight:500}
+.metiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.metier{border-radius:18px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:18px 18px 16px}
+.metier .nom{font-size:12.5px;color:var(--bleu);letter-spacing:-.22px;margin-bottom:10px}
+.metier ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.metier li{font-size:13.5px;color:var(--m-60);letter-spacing:-.02em;padding-left:14px;position:relative}
+.metier li:before{content:"";position:absolute;left:0;top:10px;width:6px;height:1px;background:var(--bleu)}
+.metier li b{color:var(--blanc);font-weight:500}
+.plus{border-color:rgba(42,171,238,.35)}
+.demo{margin-top:12px;border-radius:20px;border:1px dashed var(--m-20);aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;color:var(--m-40);font-size:14px}
+.demo b{display:block;color:var(--blanc);font-weight:500;font-size:15px;margin-bottom:4px}
+/* ——— impression ——— */
+@media print{
+ @page{margin:16mm 14mm}
+ html,body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+ .page{width:100%;max-width:none;padding:0}
+ #gate,.retour,.btn-copier,.btn-cta,.autres,.fin .note,.demo{display:none !important}
+ body.gate-on{overflow:visible} .page > .sous-cle{filter:none !important;opacity:1 !important}
+ h1{font-size:20pt;color:#111}
+ h2{font-size:13pt;color:#111;margin:18pt 0 4pt;break-after:avoid}
+ h3{color:#111}
+ .kicker,.lead,.signature,.chap,p,td,li,.qui b,.copie pre{color:#333 !important}
+ .pan,.copie,.fin,.tabwrap{border:1px solid #ccc !important;box-shadow:none !important;background:#fff !important;
+  border-radius:6px;break-inside:avoid}
+ .qui div,.cond .n,.controle li:before{background:#f0f0f0 !important;color:#111 !important}
+ .verdict{border:1px solid #999 !important;background:#fff !important;color:#111 !important}
+ .copie pre{white-space:pre-wrap}
+ thead th,td{border-color:#ddd !important;color:#333 !important}
+ .fiche,.pan,tr{break-inside:avoid}
+ a[href^="http"]:after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+ .pied{border-top:1px solid #ccc;color:#666}
+ .pied:after{content:"saens-studio · makesaens.github.io"}
+}
+.prompt-lbl{margin:18px 0 8px;font-size:12px;letter-spacing:-.22px;color:var(--bleu)}
+.main{margin-top:10px;font-size:13px;color:var(--m-40);letter-spacing:-.2px}
+.main a{color:var(--m-60);border-bottom:1px solid var(--m-20)}
+.main a:hover{color:var(--blanc)}
+.lead,.chap,.fiche > p{max-width:68ch}
+.duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start;margin-top:6px}
+.duo-d{margin:18px 0 0;display:flex;flex-direction:column;gap:8px}
+.duo-d figcaption{font-size:12px;letter-spacing:-.22px;color:var(--bleu)}
+.duo-d img{width:100%;height:auto;border-radius:16px;box-shadow:0 0 0 1px var(--bord);display:block}
+.duo-d span{font-size:12px;color:var(--m-40);letter-spacing:-.2px}
+.copie pre{max-height:420px;overflow:auto}
+@media(max-width:820px){.duo{grid-template-columns:1fr}}
+.attention{display:inline-block;font-size:12px;font-weight:600;color:#0e1319;background:var(--peut);border-radius:6px;padding:2px 8px;margin-right:8px;letter-spacing:-.2px}
+/* fin : la DA du site */
+.fin mark{display:inline-block;color:#101c2e;background-color:transparent;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 5 C 60 3.5, 140 4.5, 196 4 C 197.5 14, 196.5 26, 196 36 C 140 37.2, 60 35.6, 4 36.4 C 3.2 26, 3.8 14, 4 5 Z' fill='%232aabee'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:100% 100%;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
+.fin p strong{color:var(--blanc);font-weight:500;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 60 3.6, 140 5.8, 198 4.2' fill='none' stroke='%232aabee' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:0 calc(100% + .02em);background-size:100% .22em;padding-bottom:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.fin .btn-cta{transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),transform .35s var(--ease);background:#1f1f1e;color:var(--blanc);border:1px solid rgba(255,255,255,.14)}
+.fin .btn-cta .sq{background:transparent;color:var(--blanc);border:1px solid rgba(255,255,255,.14);transition:transform .35s var(--ease),background-color .3s var(--ease),color .3s var(--ease)}
+.fin .btn-cta:hover,.fin .btn-cta:focus-visible{background:transparent;color:var(--bleu);border-color:var(--bleu);transform:scale(1.06)}
+.fin .btn-cta:hover .sq,.fin .btn-cta:focus-visible .sq{transform:scale(.85);background:var(--bleu);color:#0b1520;border-color:var(--bleu)}
+@media (prefers-reduced-motion:reduce){.fin .btn-cta:hover{transform:none}}
+details.plus-loin{margin-top:10px;border-radius:18px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%)}
+details.plus-loin summary{cursor:pointer;list-style:none;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:15px;font-weight:500;letter-spacing:-.02em}
+details.plus-loin summary::-webkit-details-marker{display:none}
+details.plus-loin summary span{font-size:12px;color:var(--bleu);font-weight:500;white-space:nowrap}
+details.plus-loin[open] summary span.o{display:none}
+details.plus-loin:not([open]) summary span.f{display:none}
+details.plus-loin .corps{padding:0 18px 18px}
+details.plus-loin .corps p{margin:0 0 10px;font-size:14px;color:var(--m-60)}
+.fl{display:grid;gap:10px}
+.fl .pan{padding:18px 20px 18px}
+.fl h3{margin:0 0 6px;font-size:1.08rem;font-weight:500;letter-spacing:-.025em}
+.fl p{margin:0;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.fl p strong{color:var(--blanc);font-weight:500}
+.cas{width:min(100vw - 2.5rem,1180px);margin:22px 0 0 50%;transform:translateX(-50%);display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cas-v{margin:0;display:flex;flex-direction:column;gap:10px}
+.cas-v figcaption{font-size:15px;font-weight:500;letter-spacing:-.02em}
+.cas-v figcaption span{font-size:12px;color:var(--bleu);margin-right:6px;letter-spacing:-.2px}
+.cas-v video{width:100%;aspect-ratio:1280/628;object-fit:cover;border-radius:16px;box-shadow:0 0 0 1px var(--bord);background:#0b0b0b;cursor:zoom-in;transition:box-shadow .35s var(--ease),transform .35s var(--ease)}
+.cas-v video:hover{box-shadow:0 0 0 1px var(--bleu);transform:translateY(-2px)}
+.cas-a{font-size:12px;color:var(--m-40);letter-spacing:-.2px}
+@media(max-width:820px){.cas{grid-template-columns:1fr;width:100%;margin-left:0;transform:none}}
+@media(hover:none){.cas-a{display:none}}
+.pop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:2rem;background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.pop.on{opacity:1;pointer-events:auto}
+.pop-c{position:relative;width:min(75vw,1200px);max-height:75vh;transform:scale(.94);transition:transform .35s var(--ease)}
+.pop.on .pop-c{transform:none}
+.pop-c video{display:block;width:100%;max-height:75vh;object-fit:contain;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 30px 80px rgba(0,0,0,.6);background:#0b0b0b}
+.pop-t{position:absolute;left:0;top:-34px;font-size:14px;font-weight:500;letter-spacing:-.02em;color:var(--blanc)}
+.pop-t span{color:var(--bleu);font-size:12px;margin-right:6px}
+.pop-x{position:absolute;right:-6px;top:-40px;width:32px;height:32px;border-radius:9px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--blanc);font:inherit;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.pop-x:hover{border-color:var(--bleu);color:var(--bleu)}
+@media(max-width:820px){.pop-c{width:92vw}}
+@media (prefers-reduced-motion:reduce){.pop,.pop-c{transition:none}}
+/* classeur (27/09) */
+h3.groupe{margin:34px 0 10px;font-size:15px;letter-spacing:-.02em}
+.petit{font-size:12.5px;color:var(--m-60)}
+.note-bas{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--m-20);font-size:13.5px;color:var(--m-60);letter-spacing:-.02em}
+.note-bas b{color:inherit;font-weight:600}
+p.avant{margin:0 0 12px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+td code,.note-bas code{font-size:12px;word-break:break-all}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <a class="retour" href="../">Saens Studio</a>
+
+  <p class="kicker">Ressource gratuite · commentaire CLASSEUR</p>
+  <h1>Le classeur</h1>
+  <p class="lead">Ton IA sait faire bien plus que parler. Ce classeur la branche sur tes outils : <strong>ta messagerie et ton agenda d'abord, puis ta banque, ta compta, tes clients</strong>. Les connecteurs qui comptent pour un patron, l'ordre pour les brancher, et <strong>les consignes à copier pour chaque geste</strong>.</p>
+  <p class="signature">Guillaume Prat · Saens Studio, Lyon · vérifié le 27/09/2026 sur le répertoire officiel de Claude et la documentation des éditeurs</p>
+
+  <h2>Avant de brancher</h2>
+  <p class="chap">Trois choses à savoir, deux minutes.</p>
+  <div class="pan">
+    <ul class="cond">
+      <li><span class="n">1</span><span><b>Ton abonnement suffit.</b> Les connecteurs du répertoire de Claude marchent sur toutes les offres, même gratuite. Ce qui demande un abonnement payant, c'est de faire tourner les tâches toutes seules, chaque matin. ChatGPT a l'équivalent, ses « plugins » : la plupart des outils ci-dessous y sont aussi, c'est indiqué dans chaque tableau. Les connecteurs personnalisés (une adresse à coller) y demandent un abonnement payant.</span></li>
+      <li><span class="n">2</span><span><b>Coupe l'entraînement sur tes données.</b> Avant de brancher ta boîte, va dans les réglages de confidentialité et désactive l'utilisation de tes conversations pour améliorer le modèle. Dans ChatGPT : Paramètres › Gestion des données › « Améliorer le modèle pour tous ». Dans Claude : les paramètres de confidentialité. Dix secondes.</span></li>
+      <li><span class="n">3</span><span><b>La règle : elle prépare, tu décides.</b> Elle crée des brouillons, elle n'envoie rien seule. Même branchée sur ta banque, aucun virement ne part sans ta validation dans l'application, avec ta double authentification.</span></li>
+    </ul>
+  </div>
+
+  <h2>Les trois à brancher d'abord, dans cet ordre</h2>
+  <p class="chap">Dans Claude : Paramètres › Connecteurs, tu choisis l'outil, tu te connectes avec ton compte. Vingt minutes pour les trois.</p>
+  <div class="tabwrap">
+    <table>
+      <thead><tr><th>Ordre</th><th>Brancher</th><th>Ce qu'elle peut faire ensuite</th><th>Temps</th></tr></thead>
+      <tbody>
+        <tr><td><b>1</b></td><td>Ta messagerie<br><span class="petit">Gmail, ou Outlook par Microsoft 365</span></td><td>Chercher un échange, résumer un fil, <b>préparer une réponse en brouillon</b>. Avec Microsoft 365 : lire et chercher dans Outlook, OneDrive, SharePoint et Teams (compte professionnel obligatoire).</td><td class="quand">5 min</td></tr>
+        <tr><td><b>2</b></td><td>Ton agenda<br><span class="petit">Google Agenda, ou Outlook</span></td><td>Savoir qui tu vois et quand, trouver un créneau libre, préparer tes rendez-vous.</td><td class="quand">5 min</td></tr>
+        <tr><td><b>3</b></td><td>Tes fichiers<br><span class="petit">Google Drive, OneDrive, Dropbox</span></td><td>Retrouver un devis, un plan, une facture ; lire un document sans que tu l'ouvres.</td><td class="quand">10 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="chap" style="margin-top:22px">Une fois les trois branchés, commence par cette question. Elle te dira elle-même à quoi elle peut te servir.</p>
+  <div class="copie"><div class="copie-tete"><span>La première question à lui poser</span><button class="btn-copier" type="button">Copier</button></div><pre>Tu as maintenant accès à ma messagerie, à mon agenda et à mes fichiers.
+Regarde mes deux dernières semaines, puis dis-moi :
+1. les cinq choses que tu pourrais faire pour moi que je ne t'ai pas encore demandées ;
+2. pour chacune, le temps qu'elle me ferait gagner par semaine, et ce que tu aurais besoin que je valide.
+N'envoie rien, ne modifie rien : tu observes et tu proposes.</pre></div>
+
+  <h2>Les connecteurs qui comptent pour un patron</h2>
+  <p class="chap">Le répertoire de Claude en compte plus de 850. Voici ceux qui servent à une entreprise, rangés par métier du bureau. Pour chacun, il te faut un compte chez l'éditeur.</p>
+
+  <h3 class="groupe">L'argent</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Qonto</b></td><td>Lit tes transactions et tes relevés ; <b>crée et envoie tes devis, tes factures</b>, tes avoirs ; gère tes clients et tes produits.</td><td>Aucun argent ne bouge sans ta validation dans l'application.</td></tr>
+    <tr><td><b>QuickBooks</b></td><td>Analyse ton résultat et ta trésorerie ; crée, envoie ou planifie devis et factures, avec confirmation avant l'envoi.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>PayPal</b></td><td>Crée et envoie des factures et leurs relances, lit tes transactions, gère les remboursements.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Stripe</b></td><td>Lit et gère tes paiements en ligne, ton solde, tes abonnements.</td><td>Plutôt si tu vends en ligne. Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Xero</b></td><td>Résultat, trésorerie, factures impayées, meilleurs clients.</td><td>Lecture seule. Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Pennylane</b></td><td>Lit ta compta : clients, factures, écritures, analyses.</td><td>Lecture seule, abonnement Pennylane Essentiel ou plus. Connecteur personnalisé : <code>https://mcp.pennylane.com/mcp</code></td></tr>
+    <tr><td><b>Finary</b></td><td>Ton patrimoine : comptes, placements, revenus et dépenses sur deux ans.</td><td>Lecture seule. Connecteur personnalisé : <code>https://public-api.finary.com/mcp</code></td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Tes clients et les entreprises</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Pappers</b></td><td>Les registres officiels des entreprises françaises : identité, dirigeants, comptes, décisions de justice. <b>À regarder avant de chiffrer un nouveau client.</b></td><td>Connecteur personnalisé : <code>https://mcp.pappers.fr</code>. Compte Pappers : 100 requêtes offertes avec une adresse pro, puis payant.</td></tr>
+    <tr><td><b>Annuaire des entreprises</b> (data.gouv)</td><td>La même vérification en version gratuite : SIREN, adresse, activité, dirigeants, à partir des données publiques.</td><td>Gratuit, sans compte. Connecteur personnalisé : <code>https://mcp.data.gouv.fr/mcp</code> (expérimental).</td></tr>
+    <tr><td><b>HubSpot</b></td><td>Cherche et met à jour tes contacts, entreprises, affaires en cours.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Pipedrive</b></td><td>Trouve tes affaires et tes contacts, crée des activités et des relances.</td><td>Dans ChatGPT : offres Business et au-dessus.</td></tr>
+    <tr><td><b>Salesforce</b></td><td>Ton pipeline, tes comptes, tes opportunités, en lecture et en écriture.</td><td>Offres Salesforce Enterprise et au-dessus. Aussi dans ChatGPT.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Rendez-vous et réunions</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Calendly</b></td><td>Crée tes types de rendez-vous, règle tes disponibilités, réserve.</td><td>Dans ChatGPT aussi (abonnement Calendly payant).</td></tr>
+    <tr><td><b>Cal.com</b></td><td>Crée, déplace, annule ou confirme des réservations ; gère tes disponibilités.</td><td>Connecteur personnalisé : <code>https://mcp.cal.com/mcp</code></td></tr>
+    <tr><td><b>Fireflies, Granola, Otter</b></td><td>Lit les transcriptions et les résumés de tes réunions et visios : ce qui a été dit, qui doit faire quoi.</td><td>Lecture seule. Aussi dans ChatGPT.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Tes messages clients</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>WhatsApp Business</b></td><td>Prépare tes modèles de messages et <b>envoie des messages</b> depuis ton compte professionnel, après ta confirmation.</td><td>Connecteur de Meta, en bêta et ouvert progressivement. Il demande un compte WhatsApp Business relié à l'API de Meta, et les messages sont facturés par Meta.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Documents, signatures, formulaires</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>DocuSign</b></td><td>Lit tes contrats, prépare une enveloppe à signer.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Yousign</b> (devenu Youtrust)</td><td>Envoie une demande de signature depuis un modèle, suit qui a signé.</td><td>Sur toutes leurs offres. Adresse sur youtrust.com/ai-connector</td></tr>
+    <tr><td><b>Dropbox</b></td><td>Cherche, range, partage tes fichiers, crée des demandes de fichiers.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Tally</b></td><td>Crée tes formulaires (contact, demande de devis), avec leurs conditions, et lit les réponses.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Typeform</b></td><td>Crée et modifie tes formulaires, analyse les réponses.</td><td>Connecteur personnalisé : <code>https://api.typeform.com/mcp</code> Aussi dans ChatGPT.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Créer</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Canva</b></td><td>Crée et remplit tes visuels à partir de tes modèles, les exporte.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Gamma</b></td><td>Fait une présentation ou un document, exporte en <b>PowerPoint</b> ou en PDF.</td><td>Aussi dans ChatGPT.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">S'organiser</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Notion</b></td><td>Cherche, crée et met à jour tes pages et tes bases.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Trello, Asana, monday.com, ClickUp</b></td><td>Crée et met à jour tes tâches, tes chantiers, tes projets.</td><td>Asana, monday.com et ClickUp aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Airtable</b></td><td>Lit et remplit tes tableaux.</td><td>Aussi dans ChatGPT.</td></tr>
+    <tr><td><b>Slack</b></td><td>Lit tes canaux, envoie des messages, crée des notes partagées pour l'équipe.</td><td>Aussi dans ChatGPT.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Déplacements</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Booking.com, Expedia</b></td><td>Cherche un hôtel ou un vol selon ton budget et tes dates, avec les prix du moment.</td><td>Sans connexion. Elle cherche, tu réserves. Aussi dans ChatGPT.</td></tr>
+  </tbody></table></div>
+
+  <h3 class="groupe">Tout le reste</h3>
+  <div class="tabwrap"><table><thead><tr><th>Outil</th><th>Ce qu'elle fait pour toi</th><th>À savoir</th></tr></thead><tbody>
+    <tr><td><b>Zapier, Make</b></td><td>La passerelle vers des milliers d'autres applications : si ton outil n'a pas de connecteur, il est sans doute là.</td><td>Compte Zapier ou Make.</td></tr>
+    <tr><td><b>Claude dans Chrome</b></td><td>Pour les sites sans connecteur : elle lit la page, clique et tape à ta place, sous tes yeux.</td><td>Abonnements payants, encore en bêta.</td></tr>
+  </tbody></table></div>
+
+  <h2>Quand ton outil n'est pas dans la liste</h2>
+  <p class="chap">Trois portes, de la plus simple à la plus technique.</p>
+  <div class="pan">
+    <ul class="cond">
+      <li><span class="n">1</span><span><b>Demande-lui.</b> « Existe-t-il un connecteur pour [mon logiciel] ? Sinon, comment je peux te brancher dessus ? » Elle cherche, et elle t'explique.</span></li>
+      <li><span class="n">2</span><span><b>Le connecteur personnalisé.</b> Beaucoup d'éditeurs donnent une adresse (c'est le cas de Pappers et de Pennylane). Paramètres › Connecteurs › Ajouter un connecteur personnalisé, tu colles l'adresse, tu te connectes. L'offre gratuite en autorise un seul.</span></li>
+      <li><span class="n">3</span><span><b>L'API.</b> La porte que ton logiciel ouvre aux programmes. Axonaut, Sellsy ou Revolut Business en ont une, sans connecteur tout fait. Il faut quelqu'un pour la brancher : c'est là que ça devient mon métier.</span></li>
+    </ul>
+    <p class="note-bas">Les mots, en une ligne : un <b>connecteur</b> permet à ton IA d'accéder à une application et d'y agir. Le <b>MCP</b> est la norme qui les fait tous marcher pareil, comme une prise USB-C pour les IA. Une <b>API</b> est la porte d'un logiciel pour les programmes. Une <b>CLI</b>, ce sont des commandes tapées dans un terminal, pour les plus techniques.</p>
+  </div>
+
+  <h2>Les deux gestes du matin</h2>
+  <p class="chap">Les consignes à copier. Tu remplaces ce qui est entre crochets.</p>
+  <div class="copie"><div class="copie-tete"><span>1 · Le brief avant un rendez-vous client</span><button class="btn-copier" type="button">Copier</button></div><pre>J'ai rendez-vous avec [NOM DU CLIENT ou de l'entreprise] dans quelques minutes.
+Va lire nos derniers échanges dans ma messagerie, le devis ou les documents que je lui ai envoyés, et ce qui est dans mon agenda à son sujet.
+Rends-moi, en dix lignes maximum :
+1. où on en est (dernier échange, dernière date) ;
+2. ce que j'ai promis et pas encore fait ;
+3. ce qu'il attend de moi ;
+4. la question à lui poser en premier.
+Si une information manque, écris « non trouvé » au lieu de supposer.</pre></div>
+  <div class="copie"><div class="copie-tete"><span>2 · Le tri du matin</span><button class="btn-copier" type="button">Copier</button></div><pre>Lis les mails arrivés depuis hier soir.
+1. Range-les en trois piles : attend une réponse de moi / pour info / à ignorer.
+2. Pour chaque mail qui attend une réponse, prépare un brouillon dans ma messagerie, dans mon ton, court.
+3. Signale-moi en tête ceux qui parlent d'argent, d'un délai ou d'un problème sur un chantier.
+N'envoie rien. Continue jusqu'à ce que tous les mails de la nuit soient traités.</pre></div>
+
+  <h2>Ce qu'elle ne fait jamais seule</h2>
+  <p class="chap"><span class="attention">Attention</span>La ligne à ne pas franchir, même quand tout marche bien.</p>
+  <div class="pan">
+    <ol class="controle">
+      <li><span><b>Envoyer un mail à un client.</b> Elle prépare le brouillon ; c'est toi qui l'envoies.</span></li>
+      <li><span><b>Promettre un prix ou un délai.</b> Aucun chiffre ne part sans que tu l'aies relu.</span></li>
+      <li><span><b>Payer, virer, rembourser.</b> Même quand l'outil le permet, la validation reste à toi.</span></li>
+      <li><span><b>Signer.</b> Elle prépare le document, tu signes.</span></li>
+    </ol>
+  </div>
+
+  <div class="fin">
+    <h2>Tu veux que ça tourne chez toi <mark>sans y passer tes soirées</mark> ?</h2>
+    <p>Brancher, c'est vingt minutes. Faire tourner une chaîne qui lit tes mails, prépare tes devis et relance tes factures <strong>sans rien oublier</strong>, c'est ce que je construis.</p>
+    <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener" class="btn-cta"><span class="txt"><span>Écris-moi</span><span aria-hidden="true">Écris-moi</span></span><span class="sq"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <p class="note">un message sur LinkedIn suffit · ou <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">prends 30 minutes avec moi</a></p>
+  </div>
+
+  <div class="sous-cle">
+  <h2>Pour aller plus loin : toutes les consignes</h2>
+  <p class="chap">Les gestes qui font gagner le plus de temps, un par un, avec leurs garde-fous. Et comment les faire tourner tout seuls.</p>
+  <details class="plus-loin"><summary>1 · La relance de facture, vérifiée avant de partir<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : ta messagerie, et ta banque ou ta compta (Qonto, QuickBooks, Pennylane…).</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Liste mes factures clients en retard de paiement.
+Pour chacune :
+1. vérifie dans mes relevés (ou dans les mails de ma banque) que le virement n&#x27;est pas déjà arrivé ;
+2. regarde dans ma messagerie si je l&#x27;ai déjà relancée, et quand.
+Rends-moi un tableau : client, montant, jours de retard, déjà payée ou non, dernière relance.
+
+Pour celles qui restent à relancer, prépare une séquence qui monte d&#x27;un cran à chaque envoi :
+- relance 1 : un rappel cordial, « elle a pu passer entre deux mails » ;
+- relance 2 : ferme, avec une date précise ;
+- relance 3 : le dernier avis avant mise en demeure, en citant la facture et les conditions de paiement.
+Crée seulement la première relance, en brouillon, pour chaque client. N&#x27;envoie rien.
+Si un virement ne correspond à aucune facture, signale-le au lieu de supposer.</pre></div></div></details>
+  <details class="plus-loin"><summary>2 · Les justificatifs du comptable<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : ta messagerie, et ta banque ou ta compta.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Liste les dépenses du mois de [MOIS] qui n&#x27;ont pas de justificatif dans ma compta (ou dans mes relevés).
+Pour chacune, cherche dans ma messagerie la facture ou le reçu correspondant (même montant, même date à quelques jours près, même fournisseur).
+Rends-moi :
+1. les justificatifs trouvés, avec le lien vers le mail ;
+2. ceux que tu n&#x27;as pas trouvés, pour que je les demande au fournisseur.
+Ne transfère rien et ne modifie rien sans me demander.</pre></div></div></details>
+  <details class="plus-loin"><summary>3 · Le devis, depuis la demande du client<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : ta messagerie, et Qonto ou QuickBooks pour créer le devis.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Lis la demande de devis de [NOM DU CLIENT] dans ma messagerie, et tout notre fil d&#x27;échanges.
+1. Résume son besoin avec ses mots à lui : ce qu&#x27;il veut, où, quand, pour quel budget s&#x27;il l&#x27;a dit.
+2. Liste ce que je lui ai déjà promis au téléphone ou par mail (délais, options, remises).
+3. Liste les questions qui manquent pour chiffrer juste.
+4. Prépare le devis en brouillon dans [Qonto / QuickBooks], à partir de mes produits et de mes prix habituels, avec les exclusions écrites noir sur blanc.
+N&#x27;envoie pas le devis. Si un prix n&#x27;existe pas dans mes produits, laisse la ligne vide et signale-la.</pre></div></div></details>
+  <details class="plus-loin"><summary>4 · Vérifier un nouveau client avant de chiffrer<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : Pappers, ou l&#x27;Annuaire des entreprises de data.gouv (gratuit).</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Un nouveau client me demande un devis : [NOM DE L&#x27;ENTREPRISE, ville].
+Va chercher dans les registres officiels :
+1. son SIREN, son adresse, son activité, sa date de création ;
+2. ses dirigeants ;
+3. ses derniers comptes publiés, s&#x27;il y en a (chiffre d&#x27;affaires, résultat) ;
+4. toute procédure collective ou décision de justice récente.
+Termine par une ligne : « rien à signaler » ou « à regarder de plus près », avec la raison.
+Donne la source et la date de chaque information. Écris « non trouvé » quand il n&#x27;y a rien.</pre></div></div></details>
+  <details class="plus-loin"><summary>5 · Les devis qui dorment<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : ta messagerie.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Cherche dans mes mails envoyés les devis que j&#x27;ai transmis ces deux derniers mois.
+Pour chacun : le client, la date d&#x27;envoi, le montant si tu le trouves, et s&#x27;il y a eu une réponse depuis.
+Mets en tête ceux qui n&#x27;ont eu aucune réponse depuis plus de dix jours.
+Pour ceux-là, prépare une relance courte en brouillon : une question simple, pas une pression.
+N&#x27;envoie rien.</pre></div></div></details>
+  <details class="plus-loin"><summary>6 · La réunion qui devient des tâches<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : Fireflies, Granola ou Otter pour la réunion, et Trello, Asana, monday.com ou Notion pour les tâches.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Lis la transcription de ma réunion de [DATE] avec [QUI].
+1. Résume les décisions prises, en cinq lignes maximum.
+2. Liste chaque action : qui la fait, pour quand.
+3. Crée une tâche par action dans [Trello / Asana / Notion], avec la personne et la date.
+4. Prépare en brouillon le mail de compte rendu pour les participants.
+Si une action n&#x27;a ni responsable ni date, ne l&#x27;invente pas : mets-la dans une liste « à préciser ».</pre></div></div></details>
+  <details class="plus-loin"><summary>7 · Le point du lundi<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : ta messagerie, ton agenda, et ton outil de tâches si tu en as un.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Fais-moi le point de la semaine, en une page :
+1. mes rendez-vous de la semaine, et ce qu&#x27;il faut préparer pour chacun ;
+2. les mails qui attendent une réponse de moi depuis plus de trois jours ;
+3. les devis et les factures en attente ;
+4. les trois choses les plus importantes à faire cette semaine, selon toi, avec la raison.
+Court et concret. N&#x27;envoie rien.</pre></div></div></details>
+  <details class="plus-loin"><summary>8 · L&#x27;annonce qui trouve un compagnon<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Rien à brancher : une consigne suffit.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Je dois recruter un [POSTE] dans mon entreprise de [MÉTIER], [NOMBRE] salariés, à [VILLE].
+Voici ce qu&#x27;il fera vraiment pendant ses trois premiers mois : [TES 5 À 8 TÂCHES].
+Rends-moi :
+1. l&#x27;intitulé que le marché utilise pour ce poste ;
+2. une annonce de 200 mots, concrète, sans « perle rare », qui dit le salaire ou la fourchette ;
+3. six critères pour trier un CV en trente secondes ;
+4. huit questions d&#x27;entretien, et ce qu&#x27;est une bonne réponse pour chacune.
+Signale-moi toute tâche de ma liste qui relève en réalité de deux postes différents.</pre></div></div></details>
+  <details class="plus-loin"><summary>9 · Le visuel ou la présentation<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : Canva ou Gamma.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Prépare [un visuel pour mes réseaux / une présentation de 8 pages] sur [SUJET : un chantier terminé, une offre, une réunion].
+Utilise mes modèles et ma charte dans [Canva / Gamma].
+Le message principal : [UNE PHRASE].
+Montre-moi le résultat avant de l&#x27;exporter ; exporte ensuite en [PDF / PowerPoint].</pre></div></div></details>
+  <details class="plus-loin"><summary>10 · La veille de ton métier<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Il te faut : ta messagerie, où arrivent tes newsletters.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Lis les newsletters reçues ces dernières 24 heures dans ma messagerie (de [LISTE DES EXPÉDITEURS]).
+Pour chaque article, une seule question : est-ce que ça change quelque chose pour une entreprise comme la mienne ([MÉTIER], [TAILLE]) dans le mois qui vient ?
+Garde-en trois au maximum. Pour chacun : deux phrases, ce que ça change pour moi, et le lien.
+Écarte le reste sans le détailler. Si c&#x27;est un contenu sponsorisé, dis-le.</pre></div></div></details>
+  <details class="plus-loin"><summary>11 · Les faire tourner toutes seules<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Dans Claude : Cowork, menu « Planifié » ou la commande /schedule, sur les abonnements payants. Elles tournent même ordinateur fermé, sauf si elles ont besoin de fichiers de ton ordinateur. ChatGPT a aussi ses tâches planifiées, avec un nombre limité selon l&#x27;abonnement.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>Crée une tâche planifiée, chaque jour ouvré à 8 h :
+« Lis les mails arrivés depuis hier soir, range-les en trois piles, prépare les réponses en brouillon, et envoie-moi le résumé. N&#x27;envoie jamais de mail à un client. »
+Fais-la tourner une première fois maintenant, pour que je vérifie le résultat avant de la laisser seule.</pre></div></div></details>
+  <details class="plus-loin"><summary>12 · Transformer un geste en compétence<span class="o">Voir la consigne ↓</span><span class="f">Replier ↑</span></summary><div class="corps"><p class="avant">Une compétence, c&#x27;est une méthode que ton IA applique toute seule dès que la demande revient. La meilleure façon d&#x27;en créer une : faire la tâche une fois avec elle, puis lui demander d&#x27;en faire une compétence. Anthropic publie aussi des plugins officiels prêts à installer (Productivité, Ventes, Finance, Juridique, Service client, Marketing) sur claude.com/plugins, et ses compétences sur github.com/anthropics/skills. N&#x27;installe rien que tu n&#x27;as pas lu.</p><div class="copie"><div class="copie-tete"><span>À coller dans Claude ou ChatGPT</span><button class="btn-copier" type="button">Copier</button></div><pre>On vient de faire [LA TÂCHE] ensemble, et le résultat me va.
+Fais-en une compétence que tu appliqueras toute seule chaque fois que je te demanderai quelque chose de semblable.
+Avant de l&#x27;écrire, pose-moi tes questions une par une : à quoi sert ce document, qui le lit, ce qui doit toujours y être, ce qui ne doit jamais y être.
+Puis écris la compétence : un nom court, une description qui dit ce qu&#x27;elle fait ET quand l&#x27;utiliser, et les étapes dans l&#x27;ordre.</pre></div></div></details>
+  </div>
+
+  <footer class="pied"><span><b>Saens Studio</b> · Le travail qui se répète n'a pas besoin de vous.</span><span>Sources : répertoire des connecteurs de Claude, centre d'aide Anthropic, documentation Pappers et Pennylane, vérifiés le 27/09/2026 · <a href="https://saens-studio.fr/confidentialite.html" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">Confidentialité</a></span></footer>
+</main>
+
+
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-titre">
+  <div class="gate-carte">
+    <div class="gate-lock" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+    <h3 id="gate-titre">Les consignes détaillées sont réservées</h3>
+    <p class="gate-sub">Les douze consignes : la relance de facture vérifiée, les justificatifs du comptable, le devis depuis la demande du client, le client vérifié avant de chiffrer, les tâches qui tournent seules, et les autres. Dis-moi qui tu es et je les débloque.</p>
+    <form id="gate-form" novalidate>
+      <div class="gate-row">
+        <input class="gate-field" id="gate-prenom" name="prenom" type="text" placeholder="Prénom" autocomplete="given-name" required>
+        <input class="gate-field" name="nom" type="text" placeholder="Nom" autocomplete="family-name" required>
+      </div>
+      <div class="gate-row">
+        <input class="gate-field" id="gate-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+        <input class="gate-field" id="gate-tel" name="telephone" type="tel" placeholder="Téléphone" autocomplete="tel" required>
+      </div>
+      <input class="gate-hp" name="societe_bis" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="gate-submit" type="submit">Débloquer la suite →</button>
+      <p class="gate-err" id="gate-err" role="alert"></p>
+      <p class="gate-note">Tes coordonnées servent uniquement à te recontacter au sujet de cette ressource. Elles ne sont ni vendues ni partagées, et tu peux demander leur suppression à tout moment. <a href="https://saens-studio.fr/confidentialite.html" target="_blank" rel="noopener" style="text-decoration:underline">Confidentialité</a></p>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ---- le suivi (anonyme) ----
+   Un numéro de visiteur tiré au hasard, jamais un nom. Rien ne part tant que ENDPOINT est vide. */
+var SAENS=(function(){
+  var endpoint='https://script.google.com/macros/s/AKfycbz9aLIqCLqCeTILABonxJ11dbmS-ogNq2FSSI8uuiwhgKRG8zzpk2yiGiEJqBKKIKbF/exec';   /* récepteur make.saens, branché le 24/09 */
+  var ressource='classeur', vid='?';
+  try{ vid=localStorage.getItem('saens_vid'); var n=+localStorage.getItem('saens_vid_t')||0; if(!vid||Date.now()-n>34128e6){ vid=Math.random().toString(36).slice(2,10); localStorage.setItem('saens_vid',vid); localStorage.setItem('saens_vid_t',Date.now()); } }catch(e){ vid='?'; }   /* renouvelé au bout de 13 mois au plus (CNIL, mesure d'audience exemptée) */
+  var src=(new URLSearchParams(location.search).get('src')||'direct').slice(0,30);
+  var app=/Mobi|Android|iPhone/i.test(navigator.userAgent)?'mobile':'ordinateur';
+  var ref=(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0];
+  function evt(nom,detail){
+    if(!endpoint) return;
+    var d=new URLSearchParams({type:'evt',ressource:ressource,evt:nom,detail:detail||'',visiteur:vid,src:src,appareil:app,ref:ref});
+    try{ if(!(navigator.sendBeacon&&navigator.sendBeacon(endpoint,d))) fetch(endpoint,{method:'POST',mode:'no-cors',body:d,keepalive:true}); }catch(e){}
+  }
+  return {endpoint:endpoint,evt:evt,vid:vid,src:src,app:app};
+})();
+SAENS.evt('visite');
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a,button'); if(!a) return;
+  if(a.classList.contains('btn-copier')){ var d=a.closest('details'); SAENS.evt('prompt_copie', d? d.querySelector('summary').firstChild.textContent.trim() : 'fiche complète'); }
+  else if(a.classList.contains('btn-cta')) SAENS.evt('clic_ecrire');
+  else if(a.href && a.href.indexOf('cal.com')>-1) SAENS.evt('clic_rdv');
+  else if(a.classList.contains('lien')) SAENS.evt('clic_source', a.textContent.replace('→','').trim());
+});
+document.querySelectorAll('details.plus-loin').forEach(function(d){
+  d.addEventListener('toggle',function(){ if(d.open) SAENS.evt('prompt_ouvert', d.querySelector('summary').firstChild.textContent.trim()); });
+});
+var t0=Date.now(), lu=0, parti=false;
+window.addEventListener('scroll',function(){ var h=document.documentElement, v=Math.round(100*(h.scrollTop+innerHeight)/h.scrollHeight); if(v>lu) lu=v; },{passive:true});
+function depart(){ if(parti) return; parti=true; SAENS.evt('depart', Math.round((Date.now()-t0)/1000)+' s · '+Math.min(lu,100)+' % lu'); }
+window.addEventListener('pagehide',depart);
+document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') depart(); });
+</script>
+
+<script>
+/* ---- boutons Copier ---- */
+document.querySelectorAll('.btn-copier').forEach(function(b){
+  b.addEventListener('click',function(){
+    var pre=b.closest('.copie').querySelector('pre'), txt=pre?pre.innerText:'';
+    var fini=function(){b.textContent='Copié';b.setAttribute('data-ok','1');
+      setTimeout(function(){b.textContent='Copier';b.removeAttribute('data-ok');},1800);};
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(fini,function(){secours(txt,fini);});}
+    else{secours(txt,fini);}
+  });
+});
+function secours(txt,fini){var z=document.createElement('textarea');z.value=txt;z.setAttribute('readonly','');
+  z.style.cssText='position:fixed;opacity:0';document.body.appendChild(z);z.select();
+  try{document.execCommand('copy');fini();}catch(e){}document.body.removeChild(z);}
+
+/* ---- le verrou ----
+   Il ne s'allume QUE lorsqu'une adresse de réception est branchée : sans elle, on ne demande
+   pas des coordonnées qu'on perdrait. Brancher = remplir ENDPOINT (formulaire Tally, Formspree,
+   Google Apps Script, ou le point d'entrée du cockpit). */
+(function(){
+  var ENDPOINT=SAENS.endpoint;
+  if(!ENDPOINT) return;
+  var CLE='saens_lead_classeur';
+  var gate=document.getElementById('gate'), form=document.getElementById('gate-form'),
+      err=document.getElementById('gate-err'), cle=document.querySelector('.sous-cle');
+  if(!gate||!form||!cle) return;
+  try{ if(localStorage.getItem(CLE)==='1') return; }catch(e){}
+  var declenche=false;
+  function ouvrir(){ if(declenche) return; declenche=true; SAENS.evt('verrou_vu'); document.body.classList.add('gate-on');
+    setTimeout(function(){ try{document.getElementById('gate-prenom').focus();}catch(e){} },420); }
+  var s=document.createElement('div'); s.setAttribute('aria-hidden','true'); s.style.cssText='width:1px;height:1px';
+  var ch=cle.querySelector('.chap'); cle.insertBefore(s, ch ? ch.nextSibling : cle.firstChild);
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){ouvrir();io.disconnect();}});},{rootMargin:'0px 0px -140px 0px'});
+    io.observe(s);
+  } else { ouvrir(); }
+  cle.addEventListener('click',function(e){ if(e.target.closest('summary')&&!document.body.classList.contains('gate-on')){ try{ if(localStorage.getItem(CLE)==='1') return; }catch(x){} e.preventDefault(); declenche=false; ouvrir(); } },true);
+  function debloquer(garder){ if(garder){ try{localStorage.setItem(CLE,'1');}catch(e){} } document.body.classList.remove('gate-on'); }
+  var commence=false;
+  form.addEventListener('focusin',function(){ if(!commence){ commence=true; SAENS.evt('formulaire_commence'); } });
+  form.addEventListener('focusout',function(e){ if(e.target.name && e.target.value) SAENS.evt('champ_rempli', e.target.name); });
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault(); err.textContent='';
+    var d=new FormData(form);
+    if(d.get('societe_bis')){ debloquer(false); return; }
+    var prenom=(d.get('prenom')||'').trim(), nom=(d.get('nom')||'').trim(),
+        email=(d.get('email')||'').trim(), tel=(d.get('telephone')||'').replace(/[^0-9+]/g,'');
+    if(prenom.length<2||nom.length<2){ err.textContent='Votre prénom et votre nom, s’il vous plaît.'; return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ err.textContent='Cet email n’a pas l’air valide.'; return; }
+    if(tel.length<10){ err.textContent='Ce numéro n’a pas l’air complet.'; return; }
+    d.append('ressource','classeur'); d.append('visiteur',SAENS.vid); d.append('src',SAENS.src); d.append('appareil',SAENS.app); SAENS.evt('debloque'); d.append('page',location.href); d.append('quand',new Date().toISOString());
+    var btn=form.querySelector('.gate-submit'); btn.disabled=true; btn.textContent='Un instant…';
+    var fait=false, fin=function(){ if(!fait){ fait=true; debloquer(true); } };
+    try{ fetch(ENDPOINT,{method:'POST',mode:'no-cors',keepalive:true,body:new URLSearchParams(d)}).then(fin,fin); }catch(e){ fin(); }
+    setTimeout(fin,1200);   /* on n'attend jamais Google plus d'une seconde : l'envoi continue en arrière-plan */
+  });
+})();
+</script>
+<script>
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('.cas-v video'));
+  /* la fenêtre : une seule, partagée par les deux vidéos */
+  var pop=document.createElement('div'); pop.className='pop'; pop.setAttribute('role','dialog'); pop.setAttribute('aria-modal','true'); pop.setAttribute('aria-label','Vidéo agrandie');
+  pop.innerHTML='<div class="pop-c"><div class="pop-t"></div><button class="pop-x" type="button" aria-label="Fermer">×</button><video muted loop playsinline controls></video></div>';
+  document.body.appendChild(pop);
+  var pv=pop.querySelector('video'), pt=pop.querySelector('.pop-t'), px=pop.querySelector('.pop-x'), avant=null;
+  function ouvrePop(v){
+    vids.forEach(function(x){ x.pause(); });
+    avant=document.activeElement;
+    pv.src=v.getAttribute('src'); pv.poster=v.getAttribute('poster')||'';
+    try{ pv.currentTime=v.currentTime||0; }catch(e){}
+    pt.innerHTML=v.closest('.cas-v').querySelector('figcaption').innerHTML;
+    pop.classList.add('on'); document.body.style.overflow='hidden';
+    var p=pv.play(); if(p&&p.catch) p.catch(function(){});
+    setTimeout(function(){ px.focus(); },50);
+  }
+  function fermePop(){ pop.classList.remove('on'); pv.pause(); document.body.style.overflow=''; if(avant&&avant.focus) try{ avant.focus(); }catch(e){} }
+  pop.addEventListener('click',function(e){ if(e.target===pop) fermePop(); });
+  px.addEventListener('click',fermePop);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&pop.classList.contains('on')) fermePop(); });
+  var survol=window.matchMedia('(hover:hover)').matches;
+  vids.forEach(function(v){
+    var nom=v.getAttribute('src').split('/').pop().replace('.mp4','');
+    var vu=false; function lance(){ var p=v.play(); if(p&&p.catch) p.catch(function(){}); if(!vu){ vu=true; if(window.SAENS) SAENS.evt('video_lancee',nom); } }
+    if(survol){ v.addEventListener('mouseenter',lance); v.addEventListener('mouseleave',function(){ v.pause(); }); }
+    else if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting&&e.intersectionRatio>.6) lance(); else v.pause(); }); },{threshold:[0,.6]}).observe(v);
+    }
+    v.addEventListener('click',function(){ ouvrePop(v); if(window.SAENS) SAENS.evt('video_agrandie',nom); });
+  });
+})();
+</script>
+
+</body>
+</html>
