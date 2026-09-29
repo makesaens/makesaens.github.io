@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La facture électronique, sans le jargon · Saens Studio</title>
+<meta name="description" content="Ce qui change avec la facture électronique, à quelle date et pour ton cas, les cinq choses à vérifier cette semaine, choisir sa plateforme sans payer pour rien, et ce qu'on peut automatiser.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<style>@font-face{font-family:'Plus Jakarta Sans';src:url('../fonts/plus-jakarta-var-latin.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+@font-face{font-family:'Geist';src:url('../fonts/geist-var-latin.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+:root{--nuit:#050505;--blanc:#f4f4f2;--bleu:#2aabee;
+ --m-60:rgba(255,255,255,.62);--m-50:rgba(255,255,255,.52);--m-40:rgba(255,255,255,.42);
+ --m-28:rgba(255,255,255,.28);--m-20:rgba(255,255,255,.16);--m-07:rgba(255,255,255,.07);
+ --bord:rgba(255,255,255,.08);--pan-a:rgba(255,255,255,.05);--pan-b:rgba(255,255,255,.015);
+ --btn-bg:#f2f2f0;--btn-text:#161615;--oui:#7fd18c;--non:#f0857d;--peut:#f0c661;
+ --ease:cubic-bezier(.22,1,.36,1);--roll:cubic-bezier(.65,0,.15,1)}
+*,*:before,*:after{box-sizing:border-box}
+html{background:var(--nuit)}
+body{margin:0;background:var(--nuit);color:var(--blanc);font-family:'Plus Jakarta Sans','Geist',system-ui,sans-serif;
+ font-size:16px;line-height:1.55;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--bleu);color:#0e1319}
+mark{color:var(--bleu);background:transparent}
+.page{width:min(100% - 2.5rem,820px);margin:0 auto;padding:44px 0 64px}
+/* tête */
+.retour{font-size:13px;color:var(--m-40);display:inline-flex;align-items:center;gap:8px;transition:color .3s var(--ease)}
+.retour:hover{color:var(--blanc)}
+.retour:before{content:"";width:4px;height:4px;border-radius:1px;background:currentColor}
+.kicker{margin:30px 0 0;font-size:13px;letter-spacing:-.26px;color:var(--bleu)}
+h1{margin:8px 0 12px;font-size:clamp(1.9rem,5.4vw,2.9rem);font-weight:500;line-height:1.06;letter-spacing:-.035em}
+.lead{margin:0;font-size:clamp(1rem,2vw,1.1rem);line-height:1.45;letter-spacing:-.022em;color:var(--m-50);max-width:56ch}
+.lead strong{color:var(--blanc);font-weight:500}
+.signature{margin-top:18px;font-size:13px;color:var(--m-40)}
+h2{margin:52px 0 6px;font-size:1.32rem;font-weight:500;letter-spacing:-.028em;line-height:1.2}
+h2 + .chap{margin:0 0 20px;font-size:14px;color:var(--m-50);letter-spacing:-.02em;max-width:60ch}
+/* panneau générique */
+.pan{border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:22px 22px 24px}
+.pan + .pan{margin-top:12px}
+/* conditions préalables */
+.cond{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.cond li{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.cond li b{color:var(--blanc);font-weight:500}
+.cond .n{width:22px;height:22px;border-radius:6px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;font-size:12px;font-weight:600}
+/* fiche outil */
+.fiche{margin-top:12px}
+.fiche-tete{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.fiche h3{margin:0;font-size:1.22rem;font-weight:500;letter-spacing:-.028em}
+.verdict{font-size:12px;font-weight:600;letter-spacing:-.2px;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.v-oui{color:var(--oui);background:rgba(127,209,140,.12)}
+.v-non{color:var(--non);background:rgba(240,133,125,.12)}
+.v-peut{color:var(--peut);background:rgba(240,198,97,.12)}
+.fiche p{margin:12px 0 0;font-size:14.5px;line-height:1.5;letter-spacing:-.02em;color:var(--m-60)}
+.fiche p strong{color:var(--blanc);font-weight:500}
+.lbl{margin:20px 0 8px;font-size:12px;letter-spacing:-.22px;color:var(--m-40);text-transform:none}
+/* pour qui */
+.qui{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:8px;margin-top:8px}
+.qui div{border-radius:14px;background:var(--m-07);padding:10px 12px}
+.qui span{display:block;font-size:12px;color:var(--m-40);letter-spacing:-.22px;margin-bottom:2px}
+.qui b{font-size:13.5px;font-weight:500;letter-spacing:-.02em}
+.qui b.o{color:var(--oui)}
+.qui b.n{color:var(--non)}
+.qui b.p{color:var(--peut)}
+/* bloc à copier */
+.copie{margin-top:8px;border-radius:14px;background:rgba(255,255,255,.035);box-shadow:0 0 0 1px var(--bord);overflow:hidden}
+.copie-tete{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border-bottom:1px solid var(--bord)}
+.copie-tete span{font-size:12px;color:var(--m-40);letter-spacing:-.22px}
+.btn-copier{font-family:inherit;font-size:12px;font-weight:600;letter-spacing:-.2px;background:var(--m-07);color:var(--blanc);
+ border:0;border-radius:8px;height:26px;padding:0 11px;cursor:pointer;transition:background-color .25s var(--ease),color .25s var(--ease)}
+.btn-copier:hover{background:rgba(255,255,255,.14)}
+.btn-copier[data-ok]{background:var(--bleu);color:#0e1319}
+.copie pre{margin:0;padding:14px;overflow-x:auto;font-family:'Geist',ui-monospace,SFMono-Regular,Menlo,monospace;
+ font-size:13px;line-height:1.6;color:var(--m-60);white-space:pre-wrap;word-break:break-word}
+/* alternatives */
+.alt{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.alt li{font-size:14px;letter-spacing:-.02em;color:var(--m-60);padding-left:16px;position:relative}
+.alt li:before{content:"";position:absolute;left:0;top:10px;width:7px;height:1px;background:var(--bleu)}
+.alt li b{color:var(--blanc);font-weight:500}
+/* points de contrôle */
+.controle{list-style:none;margin:0;padding:0;counter-reset:c;display:flex;flex-direction:column;gap:11px}
+.controle li{counter-increment:c;display:grid;grid-template-columns:22px minmax(0,1fr);gap:12px;align-items:start;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.controle li:before{content:counter(c);width:22px;height:22px;border-radius:6px;background:var(--m-07);color:var(--bleu);
+ display:grid;place-items:center;font-size:12px;font-weight:600}
+.controle li b{color:var(--blanc);font-weight:500}
+/* tableau par quoi commencer */
+.tabwrap{overflow-x:auto;border-radius:20px;box-shadow:0 0 0 1px var(--bord)}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+thead th{text-align:left;font-weight:500;font-size:12px;letter-spacing:-.22px;color:var(--m-40);padding:13px 16px;border-bottom:1px solid var(--bord)}
+td{padding:13px 16px;border-bottom:1px solid var(--bord);color:var(--m-60);letter-spacing:-.02em;vertical-align:top}
+tbody tr:last-child td{border-bottom:0}
+td b{color:var(--blanc);font-weight:500}
+td .quand{color:var(--bleu)}
+/* bloc de fin */
+.fin{margin-top:56px;border-radius:24px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);
+ padding:30px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.fin h2{margin:0;font-size:1.32rem}
+.fin p{margin:0;font-size:14.5px;color:var(--m-50);max-width:44ch;letter-spacing:-.02em}
+.btn-cta{font-family:inherit;font-size:14px;font-weight:600;background:var(--btn-bg);color:var(--btn-text);height:30px;
+ padding:0 4px 0 13px;border-radius:3px;display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;white-space:nowrap}
+.btn-cta .txt{position:relative;overflow:hidden;display:block;height:30px;line-height:30px}
+.btn-cta .txt span{display:block;transition:transform .45s var(--roll)}
+.btn-cta .txt span+span{position:absolute;left:0;top:100%}
+.btn-cta:hover .txt span,.btn-cta:focus-visible .txt span{transform:translateY(-100%)}
+.btn-cta .sq{width:22px;height:22px;background:var(--btn-text);color:var(--btn-bg);border-radius:2px;display:grid;place-items:center;transition:transform .35s var(--ease)}
+.btn-cta .sq svg{width:10px;height:10px;transform:rotate(-45deg);transition:transform .55s var(--roll)}
+.btn-cta:hover .sq,.btn-cta:focus-visible .sq{transform:scale(.85)}
+.btn-cta:hover .sq svg,.btn-cta:focus-visible .sq svg{transform:rotate(360deg)}
+.note{margin:0;font-size:13px;color:var(--m-40);letter-spacing:-.26px}
+/* autres ressources */
+.autres{margin-top:12px;display:grid;gap:8px}
+.rc{border-radius:16px;background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);box-shadow:0 0 0 1px var(--bord);
+ padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px;transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.rc:hover{transform:translateY(-3px);box-shadow:0 0 0 1px var(--m-28)}
+.rc-t{font-size:14.5px;font-weight:500;letter-spacing:-.022em}
+.rc-p{font-size:13px;color:var(--m-40);display:inline-flex;align-items:center;gap:9px;letter-spacing:-.24px}
+.rc-p svg{width:11px;height:11px}
+.pied{margin-top:54px;padding-top:20px;border-top:1px solid var(--bord);display:flex;justify-content:space-between;
+ gap:16px;flex-wrap:wrap;font-size:13px;color:var(--m-40);letter-spacing:-.24px}
+.pied b{color:var(--m-60);font-weight:500}
+/* ——— LE BLOCAGE ——— */
+#gate{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;
+ background:linear-gradient(180deg,rgba(5,5,5,0) 0%,rgba(5,5,5,.55) 34%,rgba(5,5,5,.94) 62%,#050505 100%);
+ padding:0 1.25rem 6vh}
+body.gate-on{overflow:hidden}
+body.gate-on #gate{display:flex}
+body.gate-on .page > .sous-cle{filter:blur(6px);opacity:.45;pointer-events:none;user-select:none}
+.gate-carte{width:min(100%,430px);border-radius:22px;border:1px solid var(--m-20);
+ background:linear-gradient(180deg,#141414 0%,#0c0c0c 100%);padding:26px 24px 22px;
+ box-shadow:0 30px 70px rgba(0,0,0,.6);animation:monte .55s var(--ease) both}
+@keyframes monte{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.gate-lock{width:30px;height:30px;border-radius:9px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;margin-bottom:14px}
+.gate-carte h3{margin:0 0 7px;font-size:1.18rem;font-weight:500;letter-spacing:-.028em}
+.gate-sub{margin:0 0 18px;font-size:13.5px;color:var(--m-50);line-height:1.45}
+.gate-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:9px}
+.gate-field{width:100%;height:42px;border-radius:11px;border:1px solid var(--m-20);background:rgba(255,255,255,.04);
+ color:var(--blanc);font-family:inherit;font-size:14.5px;padding:0 13px;transition:border-color .25s var(--ease),background-color .25s var(--ease)}
+.gate-field::placeholder{color:var(--m-40)}
+.gate-field:focus{outline:none;border-color:var(--bleu);background:rgba(42,171,238,.06)}
+.gate-hp{position:absolute;left:-9999px;opacity:0;height:0}
+.gate-submit{width:100%;height:44px;margin-top:12px;border:0;border-radius:11px;background:var(--btn-bg);color:var(--btn-text);
+ font-family:inherit;font-size:14.5px;font-weight:600;cursor:pointer;transition:transform .2s var(--ease),opacity .2s}
+.gate-submit:hover{transform:translateY(-1px)}
+.gate-submit:disabled{opacity:.5;cursor:default;transform:none}
+.gate-note{margin:12px 0 0;font-size:11.5px;color:var(--m-40);line-height:1.45;text-align:center}
+.gate-err{margin:9px 0 0;font-size:12.5px;color:#f0857d;min-height:1em}
+@media(max-width:420px){.gate-row{grid-template-columns:1fr}}
+/* fiche terrain */
+.ex{margin:14px 0 0;border-left:2px solid var(--bleu);padding:2px 0 2px 14px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+.ex b{color:var(--blanc);font-weight:500}
+.ex .t{display:block;font-size:12px;color:var(--bleu);letter-spacing:-.22px;margin-bottom:3px}
+.gestes{list-style:none;margin:8px 0 0;padding:0;counter-reset:g;display:flex;flex-direction:column;gap:8px}
+.gestes li{counter-increment:g;display:flex;gap:11px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+.gestes li:before{content:counter(g);flex:0 0 20px;height:20px;border-radius:6px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;font-size:11.5px;font-weight:600;margin-top:1px}
+.gestes li span{flex:1;min-width:0}
+.gestes li b{color:var(--blanc);font-weight:500}
+.lien{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:13.5px;color:var(--bleu);border-bottom:1px solid rgba(42,171,238,.35);padding-bottom:1px}
+.lien:hover{border-bottom-color:var(--bleu)}
+.limite{margin-top:12px;font-size:13px;color:var(--m-40);letter-spacing:-.2px}
+.limite b{color:var(--peut);font-weight:500}
+.metiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.metier{border-radius:18px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:18px 18px 16px}
+.metier .nom{font-size:12.5px;color:var(--bleu);letter-spacing:-.22px;margin-bottom:10px}
+.metier ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.metier li{font-size:13.5px;color:var(--m-60);letter-spacing:-.02em;padding-left:14px;position:relative}
+.metier li:before{content:"";position:absolute;left:0;top:10px;width:6px;height:1px;background:var(--bleu)}
+.metier li b{color:var(--blanc);font-weight:500}
+.plus{border-color:rgba(42,171,238,.35)}
+.demo{margin-top:12px;border-radius:20px;border:1px dashed var(--m-20);aspect-ratio:16/9;display:grid;place-items:center;text-align:center;padding:20px;color:var(--m-40);font-size:14px}
+.demo b{display:block;color:var(--blanc);font-weight:500;font-size:15px;margin-bottom:4px}
+/* ——— impression ——— */
+@media print{
+ @page{margin:16mm 14mm}
+ html,body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+ .page{width:100%;max-width:none;padding:0}
+ #gate,.retour,.btn-copier,.btn-cta,.autres,.fin .note,.demo{display:none !important}
+ body.gate-on{overflow:visible} .page > .sous-cle{filter:none !important;opacity:1 !important}
+ h1{font-size:20pt;color:#111}
+ h2{font-size:13pt;color:#111;margin:18pt 0 4pt;break-after:avoid}
+ h3{color:#111}
+ .kicker,.lead,.signature,.chap,p,td,li,.qui b,.copie pre{color:#333 !important}
+ .pan,.copie,.fin,.tabwrap{border:1px solid #ccc !important;box-shadow:none !important;background:#fff !important;
+  border-radius:6px;break-inside:avoid}
+ .qui div,.cond .n,.controle li:before{background:#f0f0f0 !important;color:#111 !important}
+ .verdict{border:1px solid #999 !important;background:#fff !important;color:#111 !important}
+ .copie pre{white-space:pre-wrap}
+ thead th,td{border-color:#ddd !important;color:#333 !important}
+ .fiche,.pan,tr{break-inside:avoid}
+ a[href^="http"]:after{content:" (" attr(href) ")";font-size:8.5pt;color:#666;word-break:break-all}
+ .pied{border-top:1px solid #ccc;color:#666}
+ .pied:after{content:"saens-studio · makesaens.github.io"}
+}
+.prompt-lbl{margin:18px 0 8px;font-size:12px;letter-spacing:-.22px;color:var(--bleu)}
+.main{margin-top:10px;font-size:13px;color:var(--m-40);letter-spacing:-.2px}
+.main a{color:var(--m-60);border-bottom:1px solid var(--m-20)}
+.main a:hover{color:var(--blanc)}
+.lead,.chap,.fiche > p{max-width:68ch}
+.duo{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start;margin-top:6px}
+.duo-d{margin:18px 0 0;display:flex;flex-direction:column;gap:8px}
+.duo-d figcaption{font-size:12px;letter-spacing:-.22px;color:var(--bleu)}
+.duo-d img{width:100%;height:auto;border-radius:16px;box-shadow:0 0 0 1px var(--bord);display:block}
+.duo-d span{font-size:12px;color:var(--m-40);letter-spacing:-.2px}
+.copie pre{max-height:420px;overflow:auto}
+@media(max-width:820px){.duo{grid-template-columns:1fr}}
+.attention{display:inline-block;font-size:12px;font-weight:600;color:#0e1319;background:var(--peut);border-radius:6px;padding:2px 8px;margin-right:8px;letter-spacing:-.2px}
+/* fin : la DA du site */
+.fin mark{display:inline-block;color:#101c2e;background-color:transparent;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' preserveAspectRatio='none'%3E%3Cpath d='M4 5 C 60 3.5, 140 4.5, 196 4 C 197.5 14, 196.5 26, 196 36 C 140 37.2, 60 35.6, 4 36.4 C 3.2 26, 3.8 14, 4 5 Z' fill='%232aabee'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:100% 100%;line-height:1.1;padding:.06em .26em .1em;margin:0 -.1em;rotate:-.5deg;transform-origin:50% 60%;font-weight:inherit}
+.fin p strong{color:var(--blanc);font-weight:500;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5 C 60 3.6, 140 5.8, 198 4.2' fill='none' stroke='%232aabee' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:0 calc(100% + .02em);background-size:100% .22em;padding-bottom:.14em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.fin .btn-cta{transition:background-color .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),transform .35s var(--ease);background:#1f1f1e;color:var(--blanc);border:1px solid rgba(255,255,255,.14)}
+.fin .btn-cta .sq{background:transparent;color:var(--blanc);border:1px solid rgba(255,255,255,.14);transition:transform .35s var(--ease),background-color .3s var(--ease),color .3s var(--ease)}
+.fin .btn-cta:hover,.fin .btn-cta:focus-visible{background:transparent;color:var(--bleu);border-color:var(--bleu);transform:scale(1.06)}
+.fin .btn-cta:hover .sq,.fin .btn-cta:focus-visible .sq{transform:scale(.85);background:var(--bleu);color:#0b1520;border-color:var(--bleu)}
+@media (prefers-reduced-motion:reduce){.fin .btn-cta:hover{transform:none}}
+details.plus-loin{margin-top:10px;border-radius:18px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%)}
+details.plus-loin summary{cursor:pointer;list-style:none;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:15px;font-weight:500;letter-spacing:-.02em}
+details.plus-loin summary::-webkit-details-marker{display:none}
+details.plus-loin summary span{font-size:12px;color:var(--bleu);font-weight:500;white-space:nowrap}
+details.plus-loin[open] summary span.o{display:none}
+details.plus-loin:not([open]) summary span.f{display:none}
+details.plus-loin .corps{padding:0 18px 18px}
+details.plus-loin .corps p{margin:0 0 10px;font-size:14px;color:var(--m-60)}
+.fl{display:grid;gap:10px}
+.fl .pan{padding:18px 20px 18px}
+.fl h3{margin:0 0 6px;font-size:1.08rem;font-weight:500;letter-spacing:-.025em}
+.fl p{margin:0;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.fl p strong{color:var(--blanc);font-weight:500}
+.cas{width:min(100vw - 2.5rem,1180px);margin:22px 0 0 50%;transform:translateX(-50%);display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cas-v{margin:0;display:flex;flex-direction:column;gap:10px}
+.cas-v figcaption{font-size:15px;font-weight:500;letter-spacing:-.02em}
+.cas-v figcaption span{font-size:12px;color:var(--bleu);margin-right:6px;letter-spacing:-.2px}
+.cas-v video{width:100%;aspect-ratio:1280/628;object-fit:cover;border-radius:16px;box-shadow:0 0 0 1px var(--bord);background:#0b0b0b;cursor:zoom-in;transition:box-shadow .35s var(--ease),transform .35s var(--ease)}
+.cas-v video:hover{box-shadow:0 0 0 1px var(--bleu);transform:translateY(-2px)}
+.cas-a{font-size:12px;color:var(--m-40);letter-spacing:-.2px}
+@media(max-width:820px){.cas{grid-template-columns:1fr;width:100%;margin-left:0;transform:none}}
+@media(hover:none){.cas-a{display:none}}
+.pop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:2rem;background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.pop.on{opacity:1;pointer-events:auto}
+.pop-c{position:relative;width:min(75vw,1200px);max-height:75vh;transform:scale(.94);transition:transform .35s var(--ease)}
+.pop.on .pop-c{transform:none}
+.pop-c video{display:block;width:100%;max-height:75vh;object-fit:contain;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 30px 80px rgba(0,0,0,.6);background:#0b0b0b}
+.pop-t{position:absolute;left:0;top:-34px;font-size:14px;font-weight:500;letter-spacing:-.02em;color:var(--blanc)}
+.pop-t span{color:var(--bleu);font-size:12px;margin-right:6px}
+.pop-x{position:absolute;right:-6px;top:-40px;width:32px;height:32px;border-radius:9px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:var(--blanc);font:inherit;font-size:18px;line-height:1;cursor:pointer;display:grid;place-items:center}
+.pop-x:hover{border-color:var(--bleu);color:var(--bleu)}
+@media(max-width:820px){.pop-c{width:92vw}}
+@media (prefers-reduced-motion:reduce){.pop,.pop-c{transition:none}}
+/* classeur (27/09) */
+h3.groupe{margin:34px 0 10px;font-size:15px;letter-spacing:-.02em}
+.petit{font-size:12.5px;color:var(--m-60)}
+.note-bas{margin:18px 0 0;padding-top:14px;border-top:1px solid var(--m-20);font-size:13.5px;color:var(--m-60);letter-spacing:-.02em}
+.note-bas b{color:inherit;font-weight:600}
+p.avant{margin:0 0 12px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+td code,.note-bas code{font-size:12px;word-break:break-all}
+
+.essentiels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin-top:6px}
+.essentiels .pan{margin:0}
+details.plus-loin .corps table{min-width:0}
+@media(max-width:520px){details.plus-loin .corps td,details.plus-loin .corps th{font-size:13px;padding-left:10px;padding-right:10px}}
+.essentiels .pan h3{margin:0 0 8px;font-size:16px}
+.essentiels .pan p{margin:0 0 8px;font-size:14.5px;letter-spacing:-.02em}
+.essentiels .pan p.petit{margin:0}
+.pan.comment{border-color:var(--bleu)}
+ol.etapes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+ol.etapes .n{width:24px;height:24px;border-radius:6px;background:var(--m-07);color:var(--bleu);display:grid;place-items:center;font-size:12.5px;font-weight:600}
+ol.etapes li b{color:var(--blanc);font-weight:500}
+ol.etapes li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;font-size:15.5px;letter-spacing:-.02em}
+.pan.chrome{margin-top:18px;border-color:var(--bleu)}
+.pan.chrome h3{margin:0 0 8px;font-size:17px}
+.pan.chrome p{margin:0 0 8px;font-size:15px;letter-spacing:-.02em}
+details.plus-loin .corps .tabwrap{margin-top:4px}
+</style>
+<style>
+/* facture (29/09) : la facture d'exemple, le compte à rebours, le sélecteur, la liste à cocher */
+.exemple{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1fr);gap:18px;align-items:start}
+@media(max-width:680px){.exemple{grid-template-columns:1fr}}
+.exemple figure{margin:0}
+.exemple img{width:100%;height:auto;border-radius:14px;box-shadow:0 0 0 1px var(--bord);display:block;background:#fff}
+.exemple figcaption{font-size:12px;color:var(--m-40);margin-top:8px;letter-spacing:-.2px}
+.donnees{border-radius:18px;border:1px solid var(--bord);background:linear-gradient(180deg,var(--pan-a) 0%,var(--pan-b) 100%);padding:18px}
+.donnees .t{font-size:12px;color:var(--bleu);letter-spacing:-.22px;margin-bottom:10px}
+.donnees dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 14px;font-family:'Geist',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+.donnees dt{color:var(--m-40)}
+.donnees dd{margin:0;color:var(--blanc);word-break:break-word}
+.donnees dd.neuf:after{content:"nouveau";margin-left:8px;font-size:10.5px;color:#0e1319;background:var(--peut);border-radius:5px;padding:1px 6px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600}
+.telecharge{display:inline-flex;align-items:center;gap:9px;margin-top:14px;font-size:14px;font-weight:500;color:#0e1319;background:var(--bleu);border-radius:11px;padding:10px 16px}
+.telecharge:hover{transform:translateY(-1px)}
+.rebours{margin-top:12px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+.rebours b{color:var(--bleu);font-weight:600;font-size:1.25em;font-variant-numeric:tabular-nums}
+.annotee{position:relative;display:block}
+.cadre{position:absolute;border:2px solid var(--bleu);border-radius:5px;background:rgba(42,171,238,.10);pointer-events:none}
+.cadre i,.legende i{font-style:normal;font-weight:700;font-size:11px;width:20px;height:20px;border-radius:6px;background:var(--bleu);color:#0e1319;display:grid;place-items:center}
+.cadre i{position:absolute;left:-26px;top:50%;transform:translateY(-50%)}
+.cadre.coin i{left:-10px;top:-10px;transform:none}
+.legende{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.legende li{display:flex;gap:12px;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.legende li i{flex:0 0 22px;height:22px;margin-top:1px}
+.legende li span{flex:1;min-width:0}
+.legende li b{color:var(--blanc);font-weight:500}
+.cas-cta{margin:14px 0 0;font-size:14.5px;color:var(--m-60);letter-spacing:-.02em}
+.cas-cta a{color:var(--bleu);border-bottom:1px solid rgba(42,171,238,.35)}
+.coche li{cursor:pointer}
+.coche li.fait > span{opacity:.5;text-decoration:line-through;text-decoration-color:var(--m-40)}
+.coche li:before{transition:background .15s}
+.coche li.fait:before{content:"✓" !important;background:var(--bleu) !important;color:#0e1319 !important}
+.coche-note{margin:10px 0 0;font-size:12px;color:var(--m-40)}
+@media(max-width:560px){
+.pile table{min-width:0}
+.pile thead{display:none}
+.pile tr{display:block;padding:12px 16px;border-bottom:1px solid var(--bord)}
+.pile tr:last-child{border-bottom:0}
+.pile td{display:block;padding:3px 0;border:0}
+.pile td:first-child{font-size:15px;margin-bottom:2px}
+.pile td[data-l]:before{content:attr(data-l) " · ";color:var(--m-40);font-size:12px}
+}
+@media print{.telecharge{display:none !important}}
+.boutons{display:flex;gap:6px}
+a.btn-dl{text-decoration:none;display:inline-flex;align-items:center}
+.phrases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:10px}
+.phrases .copie{margin-top:0}
+pre.long{max-height:420px;overflow:auto}
+.encart{margin-top:12px;border-left:2px solid var(--bleu);padding:4px 0 4px 14px;font-size:14px;color:var(--m-60);letter-spacing:-.02em}
+.encart b{color:var(--blanc);font-weight:500}
+.rebours-inline{display:block;margin-top:8px}
+.rebours-inline b{color:var(--bleu);font-weight:600;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <a class="retour" href="../">Saens Studio</a>
+
+  <p class="kicker">Ressource gratuite · en accès libre</p>
+  <h1>La facture électronique, sans le jargon</h1>
+  <p class="lead">Ce qui change vraiment, ce que tu dois faire <strong>selon ton cas</strong>, et <strong>un agent prêt à installer</strong> pour que ta facturation tourne toute seule.</p>
+  <p class="signature">Guillaume Prat · Saens Studio, Lyon · vérifié le 29/09/2026 sur impots.gouv.fr, service-public.gouv.fr et economie.gouv.fr</p>
+
+  <h2>Ce qui change</h2>
+  <p class="chap">La loi change peu ta facture : quelques mentions en plus, et surtout son chemin.</p>
+  <div class="pan">
+    <ul class="cond">
+      <li><span class="n">1</span><span><b>La forme.</b> Un fichier qui contient ses données (ton SIREN, celui du client, les montants, la TVA, l'échéance), le plus souvent un PDF. Le logiciel de ton client la lit sans rien retaper. Un PDF fait sur Word ne compte plus comme facture électronique.</span></li>
+      <li><span class="n">2</span><span><b>Le chemin.</b> Fini le mail : elle passe par une <b>plateforme agréée par l'État</b>, souvent celle de ta banque ou de ton logiciel de facture.</span></li>
+      <li><span class="n">3</span><span><b>Les dates.</b> <b>Recevoir</b> : obligatoire depuis le 1er septembre 2026, pour toutes les entreprises, micro comprises. <b>Envoyer</b> à tes clients pros : le 1er septembre 2027 pour les artisans, les TPE et les PME. Aucune sanction en 2026, mais ce n'est pas un report. Ensuite, jusqu'à 50&nbsp;€ d'amende par facture hors format, plafonnés à 15&nbsp;000&nbsp;€ par an.</span></li>
+    </ul>
+    <p class="note-bas">Ton devis, lui, ne bouge pas. Il reste un devis classique. <span class="rebours-inline">Il reste <b id="jours">337</b> jours avant le 1er septembre 2027.</span></p>
+  </div>
+
+  <h2>Une vraie facture électronique, annotée</h2>
+  <p class="chap">Elle est fictive, mais conforme. Ouvre-la : elle ressemble à une facture d'aujourd'hui. Voici ce qui change.</p>
+  <div class="exemple">
+    <figure><a class="annotee" href="facture-exemple.pdf" target="_blank" rel="noopener" data-evt="exemple_image"><img src="facture-exemple.webp" width="1100" height="1555" loading="lazy" alt="Facture d'exemple fictive d'un plombier à une SCI, 1 320 € TTC, avec quatre nouveautés encadrées."><span class="cadre" style="left:9.80%;top:27.47%;width:16.63%;height:2.63%"><i>1</i></span><span class="cadre coin" style="left:50.81%;top:19.13%;width:41.66%;height:12.38%"><i>2</i></span><span class="cadre" style="left:9.67%;top:33.23%;width:33.63%;height:2.67%"><i>3</i></span><span class="cadre" style="left:7.49%;top:92.07%;width:84.98%;height:3.59%"><i>4</i></span></a><figcaption>Ce que ton client voit : un PDF, comme aujourd'hui.</figcaption></figure>
+    <div>
+      <ol class="legende">
+        <li><i>1</i><span><b>Le SIREN de ton client.</b> Nouveau et obligatoire : c'est lui qui permet de trouver la plateforme de ton client.</span></li>
+        <li><i>2</i><span><b>L'adresse de livraison</b>, ici le chantier, quand elle diffère de l'adresse du client.</span></li>
+        <li><i>3</i><span><b>La nature de ce que tu factures</b> : des biens, des services, ou les deux.</span></li>
+        <li><i>4</i><span><b>Les données attachées.</b> Un fichier lisible par une machine est glissé dans le PDF : le logiciel de ton client lit tout, sans rien retaper.</span></li>
+      </ol>
+      <p class="note-bas" style="margin-top:14px">Une dernière mention, « Option pour le paiement de la taxe d'après les débits », n'apparaît que si tu as choisi cette option : ce n'est pas le cas ici. <b>Tout le reste ne bouge pas</b> : ton nom, tes lignes, tes prix, tes mentions habituelles. Pour les artisans et les TPE, ces mentions deviennent obligatoires le 1er septembre 2027.</p>
+      <a class="telecharge" href="facture-exemple.pdf" download="facture-electronique-exemple.pdf" data-evt="exemple_pdf">Télécharger la facture d'exemple ↓</a>
+      <details class="plus-loin" style="margin-top:14px"><summary>Voir ses données, comme les lit la machine<span class="o">Voir ↓</span><span class="f">Replier ↑</span></summary><div class="corps">
+        <div class="donnees"><dl>
+          <dt>Numéro</dt><dd>F-2026-0412</dd><dt>Vendeur</dt><dd>SIREN 915881395</dd><dt>Client</dt><dd>SIREN 998698799</dd><dt>Nature</dt><dd>S1 · services</dd><dt>Livraison</dt><dd>69100 Villeurbanne</dd><dt>Total HT</dt><dd>1100.00</dd><dt>TVA</dt><dd>20 % · 220.00</dd><dt>Total TTC</dt><dd>1320.00</dd><dt>Échéance</dt><dd>2026-10-29</dd><dt>Paiement</dt><dd>virement · IBAN</dd>
+        </dl></div>
+        <p class="avant" style="margin-top:12px">Dans Adobe Acrobat Reader, clique sur le <b>trombone</b> : le fichier <code>factur-x.xml</code> est là. Contrôlée avec Mustang, un validateur libre : données conformes à la norme européenne EN 16931, PDF au format d'archivage PDF/A-3. Entreprises, SIREN et IBAN fictifs.</p>
+      </div></details>
+    </div>
+  </div>
+
+
+  <h2>Ton cas</h2>
+  <p class="chap">Ce qui décide, ce n'est pas ton métier : c'est à qui tu vends.</p>
+  <div class="tabwrap pile">
+    <table>
+      <thead><tr><th>Tu es</th><th>Recevoir</th><th>Envoyer</th></tr></thead>
+      <tbody>
+        <tr><td><b>Micro-entrepreneur</b>, même sans TVA</td><td class="quand" data-l="Recevoir">Oui, déjà</td><td data-l="Envoyer">Oui, en septembre 2027, pour tes clients pros. Ta mention « TVA non applicable, article 293 B du CGI » reste.</td></tr>
+        <tr><td><b>Artisan ou TPE qui travaille pour des pros</b></td><td class="quand" data-l="Recevoir">Oui, déjà</td><td data-l="Envoyer">Oui, en septembre 2027. C'est toi que la réforme vise le plus.</td></tr>
+        <tr><td><b>Artisan qui travaille pour des particuliers</b></td><td class="quand" data-l="Recevoir">Oui, déjà : les factures de tes fournisseurs</td><td data-l="Envoyer">Pas de facture électronique pour un particulier. À partir de septembre 2027, ta plateforme transmet aux impôts ton chiffre d'affaires de chaque jour ; ton logiciel s'en charge s'il est raccordé.</td></tr>
+        <tr><td><b>Client public</b> (mairie, État, hôpital)</td><td colspan="2">Tu continues sur Chorus Pro. À partir de septembre 2027, tu pourras aussi passer par ta plateforme. Les factures de marchés publics de travaux restent sur Chorus Pro.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="cas-cta">Ton cas est plus compliqué, ou tu veux qu'on le regarde ensemble ? <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener" data-evt="clic_cas">Écris-moi →</a></p>
+
+  <h2>Cette semaine : quatre vérifications</h2>
+  <p class="chap">Une demi-heure, et tu n'es plus pris de court. Clique sur une ligne pour la cocher.</p>
+  <div class="pan">
+    <ol class="controle coche" id="coche">
+      <li><span><b>Regarde si tu es déjà inscrit.</b> Sur l'annuaire officiel, recopie le code, tape ton SIREN : « Plateforme agréée rattachée : Oui » et une adresse active « Oui », tu es prêt. <a class="lien" style="margin-top:4px" href="https://facturation.chorus-pro.gouv.fr/annuaire/" target="_blank" rel="noopener" data-evt="clic_annuaire">ouvrir l'annuaire officiel →</a></span></li>
+      <li><span><b>Sinon, choisis ta plateforme, en commençant par ta banque.</b> <b>Qonto</b> et <b>Shine</b> sont elles-mêmes agréées ; le <b>Crédit Agricole</b> passe par sa filiale Kolecto, la <b>Banque Populaire</b> par iPaidThat (gratuit jusqu'à 20 factures par mois). Outils gratuits aussi : Indy, Tiime, Abby, Dougs, Pennylane pour les micro, et celui de ta chambre de métiers. Dans le bâtiment : Obat, Batappli, EBP Bâtiment, Sage Batigest, Evoliz. <a href="https://www.impots.gouv.fr/je-consulte-la-liste-des-plateformes-agreees" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">La liste officielle</a> fait foi.</span></li>
+      <li><span><b>Récupère le SIREN de chacun de tes clients pros.</b> Il devient obligatoire sur ta facture. Il se trouve gratuitement sur <a href="https://annuaire-entreprises.data.gouv.fr" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">l'Annuaire des entreprises</a>. Sinon, une fois l'agent installé (plus bas), dis-lui « Complète mes clients » : il les récupère tous.</span></li>
+      <li><span><b>Méfie-toi des démarcheurs.</b> Les impôts ne te demandent jamais de payer ni de donner tes codes par mail, SMS ou téléphone. En cas de doute : ton espace sur impots.gouv.fr, ou la ligne officielle, 0806 807 807.</span></li>
+    </ol>
+  </div>
+  <h3 class="groupe">Vérifie que ta facturation est déjà dans le bon système</h3>
+  <p class="avant">Une fois ton IA branchée sur ta messagerie et ta banque ou ton logiciel (étapes 1 et 2 plus bas), donne-lui cette consigne : elle passe tes dernières factures en revue.</p>
+  <div class="copie"><div class="copie-tete"><span>La vérification de tes factures</span><button class="btn-copier" type="button">Copier</button></div><pre>Regarde les cinq dernières factures que j'ai envoyées à des clients professionnels (dans ma banque ou mon logiciel de facture, et dans ma messagerie).
+Pour chacune, dis-moi :
+1. comment elle est partie : par une plateforme agréée, ou en simple PDF par mail ;
+2. si elle porte déjà les nouvelles mentions : le SIREN du client, l'adresse de livraison si elle diffère, la nature de l'opération (biens, services ou les deux) ;
+3. ce qui manque pour qu'elle soit conforme au 1er septembre 2027.
+Termine par la liste de ce que je dois changer, du plus simple au plus long. Si tu ne peux pas savoir quelque chose, dis-le au lieu de supposer.</pre></div>
+
+  <h2>L'agent facturation : ta facturation qui tourne toute seule</h2>
+  <p class="chap">Un agent, c'est ton IA branchée sur tes outils, avec une consigne qu'elle garde et applique toute seule. Tu l'installes une fois, en trois étapes. Ensuite, une phrase suffit.</p>
+
+  <h3 class="groupe">1 · Branche ta messagerie</h3>
+  <div class="pan comment">
+    <p class="avant">Dans Claude : <b>Paramètres › Connecteurs</b> › <b>Gmail</b>, ou <b>Microsoft 365</b> si tu es sur Outlook (compte professionnel) › <b>Se connecter</b>. Branche aussi <b>Google Drive</b> ou <b>OneDrive</b>, pour le rangement. Tu es sur ChatGPT ? Il a l'équivalent dans ses réglages.</p>
+  </div>
+
+  <h3 class="groupe">2 · Branche ta banque ou ton logiciel de facture</h3>
+  <div class="pan">
+    <ul class="alt">
+      <li><b>Qonto</b> : connecteur officiel, dans la même liste. Ton IA crée tes clients, tes devis et tes factures, et peut envoyer une facture électronique. Aucun virement ne part sans toi.</li>
+      <li><b>Pennylane</b> : connecteur personnalisé <code>https://mcp.pennylane.com/mcp</code>, en lecture seule (offre Essentiel ou plus). Ton IA lit, prépare, et tu saisis.</li>
+      <li><b>Autre banque ou logiciel</b> : s'il a une API (Sellsy, Axonaut, Evoliz en ont une), on la branche une fois, c'est technique. Sinon, ton IA prépare tout dans ta messagerie et ton Drive, et tu recopies dans ton outil.</li>
+    </ul>
+  </div>
+  <div class="encart"><b>Ton outil n'est pas dans la liste des connecteurs ?</b> Donne cette consigne à ton IA : elle cherche pour toi comment le brancher.</div>
+  <div class="copie"><div class="copie-tete"><span>Trouver comment brancher ton outil</span><button class="btn-copier" type="button">Copier</button></div><pre>Je veux te brancher sur [nom de ma banque ou de mon logiciel de facture].
+Cherche s'il existe : un connecteur officiel dans ta liste, un connecteur personnalisé (une adresse à coller), ou une API.
+Explique-moi pas à pas comment le brancher, ce que tu pourras y faire (lire, créer, envoyer), et ce que ça coûte.
+S'il n'existe rien, propose-moi la meilleure solution de repli pour que tu puisses quand même préparer mes devis et mes factures.
+Donne tes sources, et dis-moi quand tu n'es pas sûr.</pre></div>
+
+  <h3 class="groupe">3 · Installe l'agent</h3>
+  <p class="avant">Colle la consigne d'installation, puis le texte de l'agent, dans la même conversation. Ton IA te pose ses questions, crée la compétence et fait un essai à blanc. Sur ChatGPT, colle l'agent dans les instructions d'un projet.</p>
+<div class="copie"><div class="copie-tete"><span>La consigne d'installation, à coller avec l'agent</span><button class="btn-copier" type="button">Copier</button></div><pre>Voici mon agent de facturation, juste en dessous. Crée une compétence à partir de ce texte.
+Avant, vérifie que tu as bien accès à ma messagerie, à ma banque ou mon logiciel de facture, et à mon Drive, et dis-moi ce qui manque.
+Puis pose-moi une par une les questions nécessaires pour remplacer ce qui est entre crochets par mes vrais outils.
+Termine par un essai à blanc : prends mon dernier devis accepté et montre-moi la facture que tu préparerais, sans rien créer ni envoyer.</pre></div>
+  <div class="copie"><div class="copie-tete"><span>L'agent facturation</span><span class="boutons"><a class="btn-copier btn-dl" href="agent-facturation.md" download="agent-facturation.md" data-evt="agent_telecharge">Télécharger</a><button class="btn-copier" type="button">Copier</button></span></div><pre class="long">---
+name: agent-facturation
+description: Mon agent de facturation : nouveaux clients, devis, factures, paiements, relances et envoi au comptable. À utiliser dès que je parle d'un nouveau client, d'un devis, d'une facture, d'un paiement, d'une relance ou de mon comptable.
+---
+# Mon agent de facturation
+
+## Mes outils
+- Messagerie : [Gmail ou Outlook]. C'est là qu'arrivent les demandes, les devis acceptés et les factures de mes fournisseurs.
+- Banque ou logiciel de facture : [Qonto, Pennylane ou autre]. C'est là que vivent mes clients, mes devis, mes factures et mes paiements.
+- Stockage : [Google Drive ou OneDrive], dossier « Factures ».
+- Données officielles d'une entreprise : l'Annuaire des entreprises (annuaire-entreprises.data.gouv.fr).
+
+## Ce que je te dis, et ce que tu fais
+
+### « Nouveau client : … »
+1. Si c'est une entreprise, retrouve son SIREN et son adresse sur l'Annuaire des entreprises. Si c'est un particulier, demande-moi son adresse.
+2. Crée sa fiche dans ma banque ou mon logiciel de facture.
+3. Prépare le devis en brouillon à partir de mes trois devis les plus proches : mes prix, ma présentation, mes mentions habituelles. Note l'adresse du chantier si elle diffère, et s'il s'agit de biens, de services ou des deux.
+4. Montre-moi le devis avant tout envoi.
+
+### « Le devis … est accepté »
+1. Crée la facture à partir du devis, sans rien retaper : SIREN du client, nature de l'opération, adresse de livraison si elle diffère, acomptes déjà facturés déduits.
+2. Montre-moi la facture et dis-moi ce que tu n'as pas pu remplir.
+3. Quand je réponds « envoie » : envoie-la en facture électronique si mon client peut la recevoir, sinon en PDF par mail, avec un message court dans mon ton.
+
+### « Complète mes clients »
+1. Liste mes clients professionnels dans ma banque ou mon logiciel de facture.
+2. Pour chacun sans SIREN ou sans adresse, retrouve-les sur l'Annuaire des entreprises.
+3. Montre-moi le tableau (client, SIREN trouvé, adresse, sûr ou à vérifier), puis complète les fiches quand je dis « vas-y ».
+
+### « Le point du mois »
+1. Liste les factures de mes fournisseurs reçues le mois dernier (dans ma banque et dans ma messagerie) et les factures que j'ai émises.
+2. Range chaque fichier dans « Factures / [année-mois] / reçues » ou « émises », nommé « date · fournisseur ou client · montant ».
+3. Rapproche chaque facture des mouvements de mon compte et signale celles qui ne sont pas payées.
+4. Prépare en brouillon le mail à mon comptable, avec le lien du dossier et la liste.
+
+### « Qui me doit de l'argent ? » (et chaque lundi matin)
+1. Pour chaque virement reçu depuis la dernière fois, retrouve sa facture et marque-la payée.
+2. Liste les factures en retard : client, montant, nombre de jours.
+3. Prépare une relance en brouillon pour chacune, polie et courte ; plus ferme au-delà de 30 jours.
+
+## Mes règles
+- N'envoie aucune facture et aucun mail sans mon accord : une facture électronique envoyée ne s'annule pas.
+- Ne choisis jamais seule le taux de TVA ou le régime (autoliquidation, exonération, TVA sur les débits) : demande-moi.
+- Ne paie rien. Ne refuse et ne conteste aucune facture de fournisseur : signale-la-moi.
+- Écris « non trouvé » quand une information manque ; ne suppose rien.
+- À la fin de chaque tâche, dis-moi en trois lignes ce que tu as fait et ce qui attend ma validation.</pre></div>
+
+  <h3 class="groupe">Ensuite, une phrase suffit</h3>
+  <div class="phrases">
+    <div class="copie"><div class="copie-tete"><span>Un client te demande un devis</span><button class="btn-copier" type="button">Copier</button></div><pre>Nouveau client : [nom], pour [les travaux ou la prestation]. Prépare le devis.</pre></div>
+    <div class="copie"><div class="copie-tete"><span>Le client a dit oui</span><button class="btn-copier" type="button">Copier</button></div><pre>Le devis [numéro] est accepté : fais la facture.</pre></div>
+    <div class="copie"><div class="copie-tete"><span>Chaque début de mois</span><button class="btn-copier" type="button">Copier</button></div><pre>Le point du mois pour mon comptable.</pre></div>
+    <div class="copie"><div class="copie-tete"><span>Pour préparer 2027</span><button class="btn-copier" type="button">Copier</button></div><pre>Complète mes clients.</pre></div>
+    <div class="copie"><div class="copie-tete"><span>Chaque lundi</span><button class="btn-copier" type="button">Copier</button></div><pre>Qui me doit de l'argent ? Prépare les relances.</pre></div>
+  </div>
+  <p class="note-bas">Pour que le point du lundi parte tout seul : dans Claude, programme-le en tâche planifiée (abonnements payants). L'agent prépare, tu valides : une facture électronique envoyée ne s'annule pas, et le taux de TVA engage ta responsabilité.</p>
+
+  <h2>Les cas particuliers</h2>
+  <p class="chap">Ouvre seulement ce qui te concerne.</p>
+  <details class="plus-loin" data-sec="batiment"><summary>Le bâtiment : sous-traitance, situations, acomptes, retenue<span class="o">Voir ↓</span><span class="f">Replier ↑</span></summary><div class="corps">
+    <ul class="alt">
+      <li><b>Sous-traitance.</b> Tu factures comme aujourd'hui, en autoliquidation, avec la mention « Autoliquidation de TVA ». Ton logiciel ajoute le bon code. Pas de statut « encaissée » à déclarer.</li>
+      <li><b>Factures de situation.</b> Elles partent comme des factures normales, qui font référence aux précédentes.</li>
+      <li><b>Acomptes.</b> Une facture d'acompte, puis la facture finale qui la déduit.</li>
+      <li><b>Retenue de garantie.</b> La facture porte le montant total, la retenue y figure en note. La TVA, tu la déclares quand tu encaisses : sur la retenue, le jour où on te la paie (sauf option pour les débits). Si elle n'est jamais payée, tu fais un avoir.</li>
+      <li><b>Marchés publics de travaux.</b> Ils restent sur Chorus Pro.</li>
+    </ul>
+  </div></details>
+  <details class="plus-loin" data-sec="statuts"><summary>La vie d'une facture : déposée, rejetée, refusée, encaissée<span class="o">Voir ↓</span><span class="f">Replier ↑</span></summary><div class="corps">
+    <ul class="alt">
+      <li><b>Déposée</b> : partie, contrôlée par ta plateforme.</li>
+      <li><b>Rejetée</b> : une erreur technique, elle n'est pas partie. Tu corriges et tu renvoies.</li>
+      <li><b>Refusée</b> : ton client la refuse, avec un motif (erreur de destinataire, facture non conforme, contrat non respecté). Pas pour un simple désaccord : pour ça, il y a « en litige ».</li>
+      <li><b>Encaissée</b> : c'est toi qui la déclares quand tu es payé, pour tes prestations de services (sauf option pour la TVA sur les débits). Ton logiciel peut le faire en voyant le virement.</li>
+    </ul>
+  </div></details>
+  <details class="plus-loin" data-sec="sanctions"><summary>Les sanctions, en détail<span class="o">Voir ↓</span><span class="f">Replier ↑</span></summary><div class="corps">
+    <ul class="alt">
+      <li><b>En 2026 : aucune sanction.</b> Le ministère l'a annoncé le 1er septembre. Ce n'est pas un report : c'est le temps de s'équiper.</li>
+      <li><b>À partir de 2027 : jusqu'à 50&nbsp;€ par facture</b> qui aurait dû être électronique, plafonnés à 15&nbsp;000&nbsp;€ par an. Ta première erreur en quatre ans n'est pas sanctionnée, si tu la corriges de toi-même ou dans les 30 jours après la demande des impôts.</li>
+      <li><b>Pas de plateforme pour recevoir ?</b> Les impôts envoient d'abord une mise en demeure. Trois mois plus tard, sans changement : 500&nbsp;€, puis 1&nbsp;000&nbsp;€ tous les trois mois.</li>
+      <li><b>Jusqu'au 1er septembre 2027, la loi ne permet pas à ton client de t'imposer</b> la facture électronique, sauf si vous l'avez prévu dans votre contrat. Et il ne doit pas refuser de te payer parce que ta facture est en PDF.</li>
+    </ul>
+  </div></details>
+  <details class="plus-loin" data-sec="arnaques"><summary>Les arnaques à reconnaître<span class="o">Voir ↓</span><span class="f">Replier ↑</span></summary><div class="corps">
+    <ul class="alt">
+      <li><b>Le faux mail « Transmission de votre facture électronique »</b>, avec un logo officiel et une facture de quelques milliers d'euros à régler.</li>
+      <li><b>Le faux conseiller</b> qui appelle en parlant d'amende immédiate et propose de « régulariser » tout de suite. Il n'y a aucune sanction en 2026.</li>
+      <li><b>Le faux changement de RIB</b> d'un fournisseur « à cause de la facture électronique ». Appelle ton fournisseur au numéro que tu connais avant de payer.</li>
+    </ul>
+  </div></details>
+
+  <div class="fin">
+    <h2>Tu veux que ta facturation <mark>tourne toute seule</mark>, sans y passer tes soirées ?</h2>
+    <p>Installer l'agent, tu peux le faire seul si tes outils ont un connecteur. Le brancher sur un logiciel qui n'en a pas, et le faire tourner <strong>sans rien oublier</strong>, c'est ce que je construis.</p>
+    <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener" class="btn-cta" data-evt="clic_ecrire_fin"><span class="txt"><span>Écris-moi</span><span aria-hidden="true">Écris-moi</span></span><span class="sq"><svg viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" stroke-width="1.6"/></svg></span></a>
+    <p class="note">un message sur LinkedIn suffit · ou <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">prends 30 minutes avec moi</a></p>
+  </div>
+  <footer class="pied"><span><b>Saens Studio</b> · Le travail qui se répète n'a pas besoin de vous.</span><span>Sources : FAQ et guide pratique de la DGFiP (septembre et juillet 2026), liste officielle des plateformes agréées (22/09/2026), communiqué du ministère du 01/09/2026, service-public.gouv.fr, norme AFNOR XP Z12-014, pages tarifs des éditeurs · vérifiés le 29/09/2026 · <a href="https://saens-studio.fr/confidentialite.html" target="_blank" rel="noopener" style="border-bottom:1px solid var(--m-20)">Confidentialité</a></span></footer>
+</main>
+
+<script>
+/* ---- le suivi (anonyme) ----
+   Un numéro de visiteur tiré au hasard, jamais un nom. Rien ne part tant que ENDPOINT est vide. */
+var SAENS=(function(){
+  var endpoint='https://script.google.com/macros/s/AKfycbz9aLIqCLqCeTILABonxJ11dbmS-ogNq2FSSI8uuiwhgKRG8zzpk2yiGiEJqBKKIKbF/exec';   /* récepteur make.saens, branché le 24/09 */
+  var ressource='facture', vid='?';
+  try{ vid=localStorage.getItem('saens_vid'); var n=+localStorage.getItem('saens_vid_t')||0; if(!vid||Date.now()-n>34128e6){ vid=Math.random().toString(36).slice(2,10); localStorage.setItem('saens_vid',vid); localStorage.setItem('saens_vid_t',Date.now()); } }catch(e){ vid='?'; }   /* renouvelé au bout de 13 mois au plus (CNIL, mesure d'audience exemptée) */
+  var src=(new URLSearchParams(location.search).get('src')||'direct').slice(0,30);
+  var app=/Mobi|Android|iPhone/i.test(navigator.userAgent)?'mobile':'ordinateur';
+  var ref=(document.referrer||'').replace(/^https?:\/\//,'').split('/')[0];
+  function evt(nom,detail){
+    if(!endpoint) return;
+    var d=new URLSearchParams({type:'evt',ressource:ressource,evt:nom,detail:detail||'',visiteur:vid,src:src,appareil:app,ref:ref});
+    try{ if(!(navigator.sendBeacon&&navigator.sendBeacon(endpoint,d))) fetch(endpoint,{method:'POST',mode:'no-cors',body:d,keepalive:true}); }catch(e){}
+  }
+  return {endpoint:endpoint,evt:evt,vid:vid,src:src,app:app};
+})();
+SAENS.evt('visite');
+document.addEventListener('click',function(e){
+  var a=e.target.closest('a,button'); if(!a) return;
+  if(a.classList.contains('btn-copier')&&!a.classList.contains('btn-dl')){ var c=a.closest('.copie'); SAENS.evt('prompt_copie', c? c.querySelector('.copie-tete span').textContent.trim() : 'copie'); }
+  else if(a.classList.contains('btn-cta')) SAENS.evt('clic_ecrire');
+  else if(a.href && a.href.indexOf('cal.com')>-1) SAENS.evt('clic_rdv');
+  else if(a.classList.contains('lien')) SAENS.evt('clic_source', a.textContent.replace('→','').trim());
+});
+document.querySelectorAll('details.plus-loin').forEach(function(d){
+  d.addEventListener('toggle',function(){ if(d.open) SAENS.evt('prompt_ouvert', d.querySelector('summary').firstChild.textContent.trim()); });
+});
+var t0=Date.now(), lu=0, parti=false;
+window.addEventListener('scroll',function(){ var h=document.documentElement, v=Math.round(100*(h.scrollTop+innerHeight)/h.scrollHeight); if(v>lu) lu=v; },{passive:true});
+function depart(){ if(parti) return; parti=true; SAENS.evt('depart', Math.round((Date.now()-t0)/1000)+' s · '+Math.min(lu,100)+' % lu'); }
+window.addEventListener('pagehide',depart);
+document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') depart(); });
+</script>
+<script>
+/* ---- boutons Copier ---- */
+document.querySelectorAll('.btn-copier:not(.btn-dl)').forEach(function(b){
+  b.addEventListener('click',function(){
+    var pre=b.closest('.copie').querySelector('pre'), txt=pre?pre.innerText:'';
+    var fini=function(){b.textContent='Copié';b.setAttribute('data-ok','1');
+      setTimeout(function(){b.textContent='Copier';b.removeAttribute('data-ok');},1800);};
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(fini,function(){secours(txt,fini);});}
+    else{secours(txt,fini);}
+  });
+});
+function secours(txt,fini){var z=document.createElement('textarea');z.value=txt;z.setAttribute('readonly','');
+  z.style.cssText='position:fixed;opacity:0';document.body.appendChild(z);z.select();
+  try{document.execCommand('copy');fini();}catch(e){}document.body.removeChild(z);}
+
+</script>
+<script>
+/* ---- facture (29/09) : compte à rebours, liste à cocher, lecture section par section ---- */
+(function(){
+  var j=document.getElementById('jours');
+  if(j){ var d=Math.ceil((new Date(2027,8,1)-new Date())/864e5); j.textContent=d>0?d:0; }
+  document.querySelectorAll('[data-evt]').forEach(function(a){ a.addEventListener('click',function(){ if(window.SAENS) SAENS.evt(a.getAttribute('data-evt')); }); });
+  /* jusqu'où on lit : chaque titre vu une fois, dans l'ordre de la page */
+  if('IntersectionObserver' in window && window.SAENS){
+    var vus={}, titres=[].slice.call(document.querySelectorAll('main h2, main h3.groupe'));
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(!e.isIntersecting) return; var t=e.target, k=titres.indexOf(t); if(vus[k]) return; vus[k]=1; SAENS.evt('section', (k+1)+' · '+t.textContent.trim().slice(0,60)); io.unobserve(t); }); },{rootMargin:'0px 0px -35% 0px'});
+    titres.forEach(function(t){ io.observe(t); });
+  }
+  var l=document.getElementById('coche');
+  if(l){
+    var CLE='saens_facture_coche', faits={};
+    try{ faits=JSON.parse(localStorage.getItem(CLE)||'{}'); }catch(e){}
+    [].forEach.call(l.children,function(li,i){
+      if(faits[i]) li.classList.add('fait');
+      li.setAttribute('role','checkbox'); li.setAttribute('tabindex','0'); li.setAttribute('aria-checked',faits[i]?'true':'false');
+      function bascule(e){ if(e.target.closest('a')) return; li.classList.toggle('fait'); var on=li.classList.contains('fait'); faits[i]=on; li.setAttribute('aria-checked',on?'true':'false'); try{ localStorage.setItem(CLE,JSON.stringify(faits)); }catch(x){} if(on&&window.SAENS) SAENS.evt('coche',String(i+1)); }
+      li.addEventListener('click',bascule);
+      li.addEventListener('keydown',function(e){ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); bascule(e); } });
+    });
+  }
+})();
+</script>
+</body>
+</html>
