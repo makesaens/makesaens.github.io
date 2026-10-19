@@ -500,7 +500,8 @@ footer.bloc-encre{padding-bottom:3rem}
 .case-tab .t-sub{display:block;margin-top:.3rem;font-family:var(--font-mono);font-size:var(--text-mono-caption);letter-spacing:.04em;text-transform:uppercase;color:var(--color-ink-faint)}
 .case-tab[aria-selected="true"]{border-top-color:var(--color-border-strong)}
 @media(max-width:1200px){
-  .case-slide-grid{grid-template-columns:1fr;min-height:0}
+  /* 03/10 : minmax(0,…) — « 1fr » seul ne descend pas sous le contenu, la fiche sortait de l'écran sur téléphone (442 px dans 318) */
+  .case-slide-grid{grid-template-columns:minmax(0,1fr);min-height:0}
   .case-slide{--case-padding:1.125rem}
   .case-tabs{grid-template-columns:1fr;gap:.8rem}
 }
@@ -699,6 +700,9 @@ footer.bloc-encre{padding-bottom:3rem}
 .mth .pin-bloc{position:sticky;top:0;height:100vh;min-height:900px;display:flex;flex-direction:column;justify-content:flex-start;padding-top:360px;pointer-events:none}
 .mth .pin-bloc .etape-texte{pointer-events:auto}
 .mth .pan{position:absolute;left:calc(50% + var(--x));top:var(--y);border-radius:12px;overflow:hidden}
+/* 03/10 : écrans moyens — les panneaux sont placés pour 1 440 px ; on resserre leurs écarts au centre pour qu'ils restent dans l'écran */
+@media(max-width:1240px){.mth .pan{left:calc(50% + var(--x) * .8)}}
+@media(max-width:1023px){.mth .pan{left:calc(50% + var(--x) * .4)}.mth .pilule{white-space:normal;text-align:center;max-width:100%}}
 .mth .pan img, .mth .pan video{width:100%;height:100%;object-fit:cover;display:block}
 .mth .pan-aa{width:204px;height:226px;border-radius:24px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:20px;color:var(--blanc);border:1px solid rgba(255,255,255,.05)}
 .mth .pan-aa .n{display:block;font-size:14px;letter-spacing:-.28px}
@@ -724,14 +728,31 @@ footer.bloc-encre{padding-bottom:3rem}
 .mth .mnode .b{position:absolute;top:-11px;left:-11px;width:22px;height:22px;border-radius:50%;background:#fff;color:#0f1825;display:grid;place-items:center;font-size:10px;font-weight:700}
 .mth .mnode .b.v{background:#8a5cf5;color:#fff}
 .mth .mnode .lab{position:absolute;top:calc(100% + 6px);left:2px;font-size:11px;color:var(--t40);white-space:nowrap}
-@media(max-width:1240px){.mth .scene, .mth .grand{transform:scale(.8);transform-origin:top center}
+@media(max-width:1240px){.mth .grand{transform:scale(.8);transform-origin:top center}
+/* 03/10 : la scène de l'audit garde son dessin de 1 200 px et se réduit par zoom (JS « ajusteMethode ») — le scale la coupait à droite */
+.mth .scene{transform:none;width:1200px;max-width:none;margin-left:60px;margin-right:0}   /* la maquette part de −60 px : la marge l'inclut, le zoom se calcule sur 1 306 px */
 .mth .bandeau-grille{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.mth .pilule{font-size:28px;line-height:1.15;white-space:normal;text-align:center}
 .mth .etape-texte{font-size:20px;line-height:1.3;letter-spacing:-.4px}
-.mth .bandeau-grille{grid-template-columns:1fr 1fr;gap:20px}
-.mth .scene, .mth .grand{transform:scale(.45)}
 .mth .pan{display:none}
-.mth .pin-bloc{padding-top:220px}}
+/* 03/10 — téléphone : plus d'épinglage ni de vides, visuels réduits d'un bloc (JS « ajusteMethode »), bandeau d'étape compact */
+.mth{padding-top:72px;padding-bottom:88px}
+.mth .tete-colle{top:56px;height:84px}
+.mth .tete{top:6px;transform:translateX(-50%) scale(.9);transform-origin:top center}
+.mth .etape{padding-top:88px}
+.mth #audit{padding-top:24px}
+.mth #build{margin-top:0;height:auto}
+.mth #produit{padding-top:88px}
+.mth .pin-bloc{position:relative;height:auto;min-height:0;padding-top:0}
+.mth .fin-image{position:relative;left:auto;top:auto;margin:36px auto 0;max-width:100%}
+.mth .pilules{margin-top:36px}
+.mth .scene{transform:none;width:666px;max-width:none;height:564px;margin:44px 0 0}
+.mth .scene>:not(.laptop){display:none}
+.mth .scene .laptop{left:0;top:0}
+.mth .bandeau{margin-top:44px;padding:24px 18px 28px}
+.mth .bandeau-titre{font-size:24px;line-height:1.15;letter-spacing:-.5px}
+.mth .bandeau-grille{grid-template-columns:1fr 1fr;gap:22px 16px;margin-top:24px}
+.mth .liv p{font-size:14px;line-height:1.3;margin-top:12px}}
 
 /* ————— Footer ————— */
 footer.bloc-encre{padding:var(--spacing-section-y) var(--spacing-section-x) 3rem}
@@ -1237,7 +1258,13 @@ footer.bloc-encre{padding:3rem var(--spacing-section-x) 1.6rem;border-top:1px so
 /* ————— v27b : la fenêtre garde sa mise en page de 1200 px et se réduit à l'échelle, centrée, sans trou dessous ————— */
 @media(max-width:1240px){.mth .grand,.mth .grand.app.in{width:1200px;max-width:none;left:50%;margin-left:-600px;transform:scale(.8);transform-origin:top center;margin-bottom:calc(-737px * .2)}}
 @media(max-width:1023px){.mth .grand,.mth .grand.app.in{transform:scale(.62);margin-bottom:calc(-737px * .38)}}
-@media(max-width:760px){.mth .grand,.mth .grand.app.in{transform:scale(.27);margin-bottom:calc(-737px * .73);margin-top:40px}}
+/* 03/10 : au téléphone, plus de scale + marge négative — le zoom (JS « ajusteMethode ») réduit aussi la place prise */
+@media(max-width:760px){.mth .grand,.mth .grand.app.in{transform:none;width:auto;max-width:none;height:auto;left:auto;margin:40px 0 0;padding:28px 0 26px}
+.mth .grand-titre,.mth .grand-bas{position:static;transform:none;width:auto;padding:0 18px}
+.mth .grand-titre{font-size:24px;letter-spacing:-.5px}
+.mth .grand-bas{margin-top:18px;font-size:14px}
+.mth .grand .mth-constel{display:none}
+.mth .grand .grand-mob{display:block;width:100%;height:auto;margin-top:22px}}
 
 /* ————— v28 (07/09) : le même style de nœud PARTOUT — hero, diaporama, produit. Pastille carrée, briques visuelles, logos SumUp et Mondial Relay ————— */
 .nd-badge,.mth .nd-badge,.cn .nd-badge{border-radius:7px}
@@ -1367,6 +1394,20 @@ footer.bloc-encre{padding:3rem var(--spacing-section-x) 1.6rem;border-top:1px so
 .constel-dense .cn.nd{zoom:.62}
 .constel-dense .cn .nd-site .vue{height:150px}
 @media(max-width:1023px){.constel-cas .cn.nd{zoom:.72}.constel-dense .cn.nd{zoom:.56}}
+/* 03/10 — téléphone : la fiche prend toute la largeur, le schéma garde les proportions de 480 px (JS « ajusteSchemas ») */
+@media(max-width:600px){
+  .case-slide{--case-padding:16px;width:100%}
+  .case-slide:last-child{margin-inline-end:0}
+  .case-slide .mw-body{padding:6px}
+  /* un seul zoom, sur les cartes (Safari calcule mal deux zooms empilés) : --k = largeur disponible / 480, posé par « ajusteSchemas » */
+  .case-slide .constel-cas{margin:0;height:calc(340px * var(--k,1))}
+  .case-slide .constel-dense{height:calc(430px * var(--k,1))}
+  .case-slide .constel-cas .cn.nd{zoom:calc(.72 * var(--k,1))}
+  .case-slide .constel-dense .cn.nd{zoom:calc(.56 * var(--k,1))}
+}
+/* 03/10 — sur téléphone, les schémas vivants sont remplacés par leur image (Safari remonte le texte sous ~9 px et les cartes débordent) ; images régénérées par ~/saens-sites/tools/schemas-mobile.mjs */
+.schema-mob,.grand-mob{display:none}
+@media(max-width:600px){.case-slide .constel-cas{display:none}.case-slide .schema-mob{display:block;width:100%;height:auto}}
 @media(max-width:1023px){.cn .nd-badge{left:-14px;top:-12px}}
 
 /* ————— variante hero « Cadran » : une adresse, des sources publiques, un rendu qui charge, un dossier, vous ————— */
@@ -1651,6 +1692,59 @@ mark:hover{rotate:calc(var(--rot,-.7deg) * 3.8);transform:translateY(-2px) scale
 .hero-h1 .crayon{font-weight:inherit}
 /* PROPALE : graisse du TEXTE COURANT — titres, pilules et scènes animées exclus */
 #hero .hero-lead,section .intro-section,.faq-corps,.case-description,.d-note,.frise p,.contact-ligne,.roi-traduction,.hero-socle .hp-cell span,.lc p,.tr p,.rdv-etapes li,.f-val,.pied-desc{font-weight:500}
+
+/* 03/10 — lisibilité téléphone : pas de mot seul en fin de paragraphe, titres équilibrés, livrables en liste compacte, interlignes alignés à 1,4 */
+@media(max-width:760px){
+  main p,main li,.faq-corps,.mth .etape-texte{text-wrap:pretty}
+  main h2,main h3{text-wrap:balance}
+  .mth .bandeau-grille{grid-template-columns:1fr;gap:8px}
+  .mth .liv{display:flex;align-items:center;gap:14px;padding:11px 14px}
+  .mth .liv-ic{width:38px;height:38px;flex:none;border-radius:10px}
+  .mth .liv-ic svg{width:18px;height:18px}
+  .mth .liv p{margin:0;font-size:15px;line-height:1.35}
+  .roi-duo .roi-traduction,.fde{line-height:1.4}
+}
+
+/* 03/10 — accroche du hero : au téléphone, « …et je construis » puis la phrase soulignée seule sur sa ligne */
+.br-mobile{display:none}
+@media(max-width:760px){.br-bureau{display:none}.br-mobile{display:inline}}
+/* 03/10 — pagination des projets sous 1 024 px : une seule barre — flèches de part et d'autre, quatre segments, celui du projet affiché s'élargit et porte son nom */
+@media(max-width:1023px){
+  .case-pied{position:relative;margin-top:20px;padding:0 54px}
+  /* les flèches sont placées dans la zone du carrousel, qui finit 20 px au-dessus de la barre (48 px de haut) : on les descend au milieu de la barre */
+  .case-btn--cote{display:grid;top:auto;bottom:-66px;transform:none}
+  .case-tabs{flex-direction:row;width:100%;max-width:none;gap:6px;padding:6px;margin:0;border-radius:24px;align-items:stretch}
+  .case-tab{flex:0 0 30px;width:auto;min-width:0;height:36px;padding:0 6px;justify-content:center;align-items:stretch;gap:7px;border-radius:18px;transition:flex-basis .45s var(--ease-quint),background-color .35s var(--ease-quint),box-shadow .35s var(--ease-quint)}
+  .case-tab .t-nom{display:none}
+  .case-tab:after{width:100%;height:4px}
+  .case-tab[aria-selected="true"]{flex:1 1 auto;padding:0 14px;background:var(--m-07)}
+  .case-tab[aria-selected="true"] .t-nom{display:block;font-size:13px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+
+/* 07/10 — les projets en grille : deux encarts par ligne, tous visibles (plus de carrousel), l'image calée en bas de l'encart */
+.case-grille{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,28px);margin-top:clamp(2rem,4vw,3rem);align-items:stretch}
+.case-grille .case-slide{width:auto;margin:0;display:flex;flex-direction:column;gap:26px;min-width:0}
+.case-grille .case-copy h3{font-size:clamp(1.3rem,1vw + .8rem,1.65rem)}
+.case-fig{margin:auto 0 0;min-width:0}
+.case-fig img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 18px 50px rgba(16,28,46,.10)}
+.case-fig a{display:block;border-radius:12px;transition:transform .35s var(--ease-quint)}
+.case-fig a:hover{transform:translateY(-3px)}
+.case-lien{display:inline-block;margin-top:14px;color:var(--bleu);text-decoration:none}
+.case-lien:hover{text-decoration:underline}
+@media(max-width:900px){.case-grille{grid-template-columns:minmax(0,1fr)}}
+/* la maquette du Cockpit : six agents et leur état */
+.ck-fen .ck-liste{display:flex;flex-direction:column;gap:6px;padding:14px}
+.ck-l{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;background:var(--m-07);font-size:13px;letter-spacing:-.2px}
+.ck-l b{font-weight:600;color:var(--m-100)}
+.ck-l span{color:var(--m-60);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ck-l em{font-style:normal;font-size:11px;padding:2px 8px;border-radius:20px;color:var(--bleu);border:1px solid var(--bleu)}
+.ck-l em.ck-a{color:var(--m-60);border-color:var(--m-20)}
+@media(max-width:600px){.ck-l{grid-template-columns:minmax(0,1fr) auto}.ck-l span{grid-column:1/-1;grid-row:2}}
+/* la note Malt sous l'accroche */
+.hero-malt{margin-top:6px}
+.hero-malt a{display:inline-flex;align-items:center;gap:8px;color:var(--m-60);text-decoration:none;font-weight:500;transition:color .3s}
+.hero-malt a:hover{color:var(--bleu)}
+.hero-malt .etoiles{color:var(--bleu);letter-spacing:1px;font-size:13px}
 </style>
 <style>
 /* page unique : la section Calcul plein écran, le logo seul au centre, le rendez-vous en bas */
@@ -1753,7 +1847,7 @@ mark:hover{rotate:calc(var(--rot,-.7deg) * 3.8);transform:translateY(-2px) scale
     </div>
   <div class="roi-bas">
       <a href="https://cal.com/saens-studio/diagnostic" target="_blank" rel="noopener" class="btn-cta btn-cta--pleine"><span class="txt"><span>Réserver mon diagnostic</span><span aria-hidden="true">Réserver mon diagnostic</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
-      <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener" class="btn-cta btn-cta--ghost"><span class="txt"><span>Écrivez-moi</span><span aria-hidden="true">Écrivez-moi</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
+      <a href="https://www.linkedin.com/in/guillaume-prat-saens/" target="_blank" rel="noopener" class="btn-cta btn-cta--ghost"><span class="txt"><span>Écrivez-moi</span><span aria-hidden="true">Écrivez-moi</span></span><span class="sq" aria-hidden="true"><svg viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"></path></svg></span></a>
     </div>
   </div>
 </section>
@@ -1765,7 +1859,7 @@ mark:hover{rotate:calc(var(--rot,-.7deg) * 3.8);transform:translateY(-2px) scale
     <div class="mm-panneau" id="mm-panneau" aria-hidden="true">
       <div class="mm-social">
         <p class="mm-sl">Réseaux</p>
-        <a href="https://www.linkedin.com/in/guillaume-prat-220371a3/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener">Instagram</a><a href="https://github.com/makesaens" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/guillaume-prat-saens/" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.malt.fr/profile/guillaumeprat" target="_blank" rel="noopener">Malt</a><a href="https://www.instagram.com/saens_studio/" target="_blank" rel="noopener">Instagram</a><a href="https://github.com/makesaens" target="_blank" rel="noopener">GitHub</a>
       </div>
       <div class="mm-pages">
         <a href="#corvees" data-nav-link><span>Corvées</span><span class="mm-fl" aria-hidden="true"><i><svg viewBox="0 0 13 13" fill="none"><path d="M6.304 0L13 6.5L6.304 13L4.96 11.672L9.328 7.4552L0 7.4552L0 5.5448L9.328 5.5448L4.96 1.30466L6.304 0Z" fill="currentColor"/></svg></i></span></a>
@@ -1936,6 +2030,14 @@ addEventListener('scroll', function(){ requestAnimationFrame(themeBarre); }, {pa
 
 /* ————— Constellations : fils Bézier (gueule midu) + nodes déplaçables ————— */
 (function(){
+  /* 03/10 — téléphone : chaque schéma de projet garde les proportions de sa mise en page de 480 px (cartes et hauteur réduites du même facteur) */
+  function ajusteSchemas(){
+    document.querySelectorAll('.case-slide .constel-cas').forEach(function(z){
+      if(innerWidth > 600){ z.style.removeProperty('--k'); return; }
+      z.style.setProperty('--k', Math.min(1, z.clientWidth / 480).toFixed(3));
+    });
+  }
+  ajusteSchemas(); window.addEventListener('resize', ajusteSchemas);
   var SVGNS = 'http://www.w3.org/2000/svg';
   var compteur = 0;
   document.querySelectorAll('.constel').forEach(function(zone){
@@ -1959,10 +2061,12 @@ addEventListener('scroll', function(){ requestAnimationFrame(themeBarre); }, {pa
     function centre(id){
       var n = zone.querySelector('[data-noeud="'+id+'"]');
       if(!n) return null;
-      var zb = zone.getBoundingClientRect(), nb = n.getBoundingClientRect();
-      return { x: nb.left - zb.left + nb.width/2, y: nb.top - zb.top + nb.height/2 };
+      var zb = zone.getBoundingClientRect(), nb = n.getBoundingClientRect(), k = echelle(zb);
+      return { x: (nb.left - zb.left + nb.width/2) / k, y: (nb.top - zb.top + nb.height/2) / k };
     }
-    function boite(id){ var n = zone.querySelector('[data-noeud="'+id+'"]'); if(!n) return null; var zb = zone.getBoundingClientRect(), nb = n.getBoundingClientRect(); return { l: nb.left - zb.left, r: nb.right - zb.left, cx: nb.left - zb.left + nb.width/2, cy: nb.top - zb.top + nb.height/2 }; }
+    /* 03/10 : sur téléphone le schéma entier est réduit (zoom) : les mesures écran sont ramenées à son échelle, sinon les fils sont réduits deux fois */
+    function echelle(zb){ return (zone.offsetWidth && zb.width / zone.offsetWidth) || 1; }
+    function boite(id){ var n = zone.querySelector('[data-noeud="'+id+'"]'); if(!n) return null; var zb = zone.getBoundingClientRect(), nb = n.getBoundingClientRect(), k = echelle(zb); return { l: (nb.left - zb.left) / k, r: (nb.right - zb.left) / k, cx: (nb.left - zb.left + nb.width/2) / k, cy: (nb.top - zb.top + nb.height/2) / k }; }
     function redessine(){
       liens.forEach(function(l, k){
         var A = boite(l[0]), Bx = boite(l[1]);
@@ -2299,12 +2403,22 @@ addEventListener('scroll', function(){ requestAnimationFrame(themeBarre); }, {pa
     if(ouvert) html += '</span>';
     t.innerHTML = html;
   });
+  /* 03/10 — la scène de l'audit garde son dessin (1 306 px, ou l'ordinateur portable seul de 666 px au téléphone) et se réduit pour tenir dans la largeur */
+  function ajusteMethode(){
+    document.querySelectorAll('.mth .scene').forEach(function(el){
+      var scene = el.classList.contains('scene');
+      if(!scene || innerWidth > 1240){ el.style.zoom = ''; return; }
+      var dispo = el.parentElement.clientWidth, base = innerWidth > 760 ? 1306 : 666;
+      el.style.zoom = Math.min(1, dispo / base).toFixed(3);
+    });
+  }
+  ajusteMethode(); addEventListener('resize', ajusteMethode);
   var build = document.getElementById('build');
   function allume(){
     var vh = innerHeight, y = window.scrollY;
     textes.forEach(function(t){
       var prog;
-      if(t.closest('#build')){ prog = (y + 194 - (build.getBoundingClientRect().top + y)) / (build.offsetHeight * .32); }
+      if(t.closest('#build') && innerWidth > 760){ prog = (y + 194 - (build.getBoundingClientRect().top + y)) / (build.offsetHeight * .32); }
       else { var r = t.getBoundingClientRect(); var debut = vh*.85, fin = vh*.45; prog = (debut - r.top) / (r.height + (debut - fin)); }
       prog = Math.max(0, Math.min(1, prog));
       var ws = t.querySelectorAll('.w'), n = Math.round(prog * ws.length);
@@ -2329,7 +2443,7 @@ addEventListener('scroll', function(){ requestAnimationFrame(themeBarre); }, {pa
     var vifs = liens.map(function(){ var p = document.createElementNS(NS,'path'); p.setAttribute('class','vif'); svg.appendChild(p); return p; });
     chemins.forEach(function(p){ p.setAttribute('class','base'); });
     /* l'ancre : le fil quitte le visuel par son bord droit et entre dans le suivant par son bord gauche, tangentes horizontales */
-    function ancre(id, sortie){ var n = zone.querySelector('[data-noeud="'+id+'"]'); var v = n.querySelector('.nd-dossier, .nd-carte, .nd-feuilles, .nd-pile, .nd-phone') || n; var zb = zone.getBoundingClientRect(), nb = v.getBoundingClientRect(); return {x: (sortie ? nb.right : nb.left) - zb.left, y: nb.top - zb.top + nb.height/2}; }
+    function ancre(id, sortie){ var n = zone.querySelector('[data-noeud="'+id+'"]'); var v = n.querySelector('.nd-dossier, .nd-carte, .nd-feuilles, .nd-pile, .nd-phone') || n; var zb = zone.getBoundingClientRect(), nb = v.getBoundingClientRect(), k = (zone.offsetWidth && zb.width / zone.offsetWidth) || 1; return {x: ((sortie ? nb.right : nb.left) - zb.left) / k, y: (nb.top - zb.top + nb.height/2) / k}; }
     function redessine(){ liens.forEach(function(l,k){ var a = ancre(l[0], true), b = ancre(l[1], false); var dx = Math.max(40, (b.x - a.x) * .5); var d = 'M '+a.x+' '+a.y+' C '+(a.x+dx)+' '+a.y+', '+(b.x-dx)+' '+b.y+', '+b.x+' '+b.y; chemins[k].setAttribute('d', d); halos[k].setAttribute('d', d); vifs[k].setAttribute('d', d); }); }
     /* le tiret qui court : longueur 9 % du fil, 75 px/s, chaque fil décalé, comme mesuré chez midu */
     var pulseOn = false;
@@ -2531,5 +2645,30 @@ addEventListener('scroll', function(){ requestAnimationFrame(themeBarre); }, {pa
   });
 })();
 
+</script>
+<script>
+/* 03/10 — pas de mot seul en fin de paragraphe : les deux derniers mots sont liés par une espace insécable
+   (aussi avant chaque <br> ; passe après le découpage en mots des textes animés) */
+(function(){
+  function lie(el){
+    var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT), noeuds = [], n;
+    while((n = w.nextNode())){ if(n.nodeType === 1){ if(n.tagName === 'BR') noeuds.push('BR'); } else noeuds.push(n); }
+    /* chaque segment (avant chaque <br> et en fin de bloc) lie ses deux derniers mots */
+    var mot = false, fait = false;
+    for(var k = noeuds.length - 1; k >= 0; k--){
+      var t = noeuds[k]; if(t === 'BR'){ mot = false; fait = false; continue; }
+      if(fait) continue;
+      var d = t.data;
+      for(var j = d.length - 1; j >= 0; j--){
+        var esp = /\s/.test(d[j]) && d[j] !== '\u00a0';
+        if(!esp){ mot = true; continue; }
+        if(mot){ t.data = d = d.slice(0, j) + '\u00a0' + d.slice(j + 1); fait = true; break; }
+      }
+    }
+  }
+  function tout(){ document.querySelectorAll('main p, main li, main .faq-corps').forEach(lie); }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(tout, 0); });
+  else setTimeout(tout, 0);
+})();
 </script>
 </body></html>
